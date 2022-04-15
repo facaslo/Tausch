@@ -9,7 +9,10 @@ const postRegister = (req,res)=>{
             firstName, 
             lastName, 
             age, 
-            phoneNumber} = req.body
+            phoneNumber,
+            facebook,
+            twitter,
+            instagram} = req.body
         
         res.status(200).send(
             `Usuario: ${userName}, Contraseña: ${password}, Correo: ${email},
