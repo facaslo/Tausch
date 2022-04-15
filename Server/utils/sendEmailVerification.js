@@ -1,7 +1,7 @@
 const getUserInfoFromDB = require('../models/getUserInfo');
 const nodemailer = require('nodemailer');
 
-// Información sobre 
+// Información del email de origen
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {

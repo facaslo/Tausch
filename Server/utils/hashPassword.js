@@ -32,12 +32,13 @@ const comparePassword = (password, hash) => {
     return false;
 };
 
-
-// (async function(){
-//     let a = await hashPassword("12345678");
-//     //let b = await comparePassword("123", a);
-//     console.log(a);
-// })();
-
+/*
+console.log("Hola");
+(async function(){
+    let a = await hashPassword('abv');
+    //let b = await comparePassword("123", a);
+    console.log(a.length);
+})();
+*/
 
 module.exports = {hashPassword, comparePassword}
