@@ -10,6 +10,11 @@ const loginRoute = require('./routes/loginRouter');
 // Configuración del servidor, puerto 3000
 app.set('port', process.env.PORT || 3000); 
 
+// parse form data
+app.use(express.urlencoded({extended: false}))
+// parse json
+app.use(express.json())
+
 // Llamada a midlewares
 app.use(printRequestType);
 app.use('/register', registerRoute);
