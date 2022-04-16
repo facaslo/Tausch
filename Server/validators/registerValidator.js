@@ -25,8 +25,19 @@ const validateCreate = [
         .isNumeric(),
     check('phoneNumber')
         .exists()
-        .isNumeric()
-        ,
+        .isNumeric(),
+    check('facebook')
+        .exists()
+        .not()
+        .isEmpty(),
+    check('twitter')
+        .exists()
+        .not()
+        .isEmpty(),
+    check('instagram')
+        .exists()
+        .not()
+        .isEmpty(),
     (req, res, next) => {
         validateResult(req, res, next)
     }

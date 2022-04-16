@@ -13,10 +13,19 @@ const postRegister = (req,res)=>{
             facebook,
             twitter,
             instagram} = req.body
-        
-        res.status(200).send(
-            `Usuario: ${userName}, Contraseña: ${password}, Correo: ${email},
-            Nombres: ${firstName}, Apellido: ${lastName}, Edad: ${age}, Celular: ${phoneNumber}`)
+
+        res.status(200).send(`
+        usuario: ${userName},
+        contraseña: ${password},
+        correo: ${email},
+        nombre: ${firstName},
+        apellido: ${lastName},
+        edad: ${age},
+        telefono: ${phoneNumber},
+        facebook: ${facebook},
+        twitter: ${twitter},
+        instagram: ${instagram}
+        `)
     }
     catch (err) {
         console.log('error in controller');
