@@ -4,8 +4,8 @@
 const express = require('express');
 const router = express.Router();
 const {postRegister} = require('../controllers/getPostRequest')
-const {validateCreate} = require('../validators/registerValidator')
 
-router.post('/', validateCreate, postRegister);
+
+router.post('/', postRegister);
 
 module.exports = router;

@@ -1,15 +1,17 @@
 // Los modelos se encargan de conectar y hacer transacciones en la base de datos
 const client = require('./databaseConnection');
+const {hashPassword} = require('../utils/hashPassword');
 
 const postUserInfoFromDBNoGoogle = async (infoUsuario) => {
+    const hashedPassword = await hashPassword(infoUsuario.password);
     client.connect();
-    fecha = new Date()
-    resultUsuario = await client.query(`BEGIN;
+    const fecha = new Date()
+    const resultUsuario = await client.query(`BEGIN;
         INSERT into usuario VALUES 
         ('${infoUsuario.userName}', 
         '${infoUsuario.email}',
         false,
-        '${infoUsuario.password}',
+        '${hashedPassword}',
         false,
         'Regular',
         '${fecha.getFullYear()}-${fecha.getMonth()+1}-${fecha.getDate()}'); \n
