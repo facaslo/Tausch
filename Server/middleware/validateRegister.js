@@ -4,8 +4,7 @@ const {postUserInfoFromDBNoGoogle} = require('../models/registerUserToDatabase')
 const  validateRegister = (req, res, next) =>{
     try{
         validationResult(req).throw()
-        postUserInfoFromDBNoGoogle(req.body)        
-        res.send(req.body)
+        postUserInfoFromDBNoGoogle(req.body)
         return next()
     }
     catch(err){

@@ -4,8 +4,8 @@
 const express = require('express');
 const router = express.Router();
 const {postRegister} = require('../controllers/getPostRequest')
+const {responseRegister} = require('../middleware/outAPIRegister')
 
-
-router.post('/', postRegister);
+router.post('/', postRegister, responseRegister);
 
 module.exports = router;
