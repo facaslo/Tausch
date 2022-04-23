@@ -12,6 +12,7 @@ import { TabView, TabPanel } from 'primereact/tabview';
 //<Avatar image="../images/look.png" size="xlarge" shape="circle" className="mx-1" />
 import { Image } from 'primereact/image';
 import { ReactFinalFormDemo } from './FormularioRegistro.js';
+import { ReactFormLogin } from './FormularioLogin.js';
 import './TabViewD.css';
 
 
@@ -46,6 +47,7 @@ export const TabViewDemo = () => {
                         </TabPanel>
                         <TabPanel header="Inicia sesión">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <ReactFormLogin />
                         </TabPanel>
                         <TabPanel header="Regístrate gratis"  >
                             <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.</p>
