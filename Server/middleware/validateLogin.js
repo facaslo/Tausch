@@ -12,18 +12,17 @@ const checkUserLogin = async (req,res) => {
     else if(req.body.email){
         userInfo = await getUserInfoFromDB(null, req.body.email)
     }
-        
+    const activated = userInfo[0].estado_de_cuenta;
     const passwordCheck = await comparePassword(req.body.password, userInfo[0].password); 
 
-    return passwordCheck
+    return {passwordCheck, activated}
 }
 
 const validateLogin = async (req, res, next) =>{
     try{
         validationResult(req).throw() 
-        const validCredentials = await checkUserLogin(req,res);  
-        console.log(validCredentials);
-        responseLogin(req,res, validCredentials);
+        const validCredentials = await checkUserLogin(req,res);          
+        responseLogin(req,res, validCredentials.passwordCheck, validCredentials.activated);
         return next()
     }
     catch(err){

@@ -4,7 +4,6 @@
 const express = require('express');
 const router = express.Router();
 const {postRegister} = require('../controllers/Login-RegisterHandler')
-const responseRegister = require('../middleware/outAPIRegister')
 
 router.post('/', postRegister);
 

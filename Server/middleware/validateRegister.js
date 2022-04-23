@@ -10,7 +10,7 @@ const checkAvailability = async (req,res) => {
     return userInfo.length === 0    
 }
 
-const  validateRegister = async (req, res, next) =>{
+const validateRegister = async (req, res, next) =>{
     try{
         validationResult(req).throw()
         let result = await checkAvailability(req,res)

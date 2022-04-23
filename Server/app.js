@@ -6,6 +6,7 @@ const app = express();
 // Routes
 const registerRoute = require('./routes/registerRouter');
 const loginRoute = require('./routes/loginRouter');
+const activationRoute = require('./routes/accountActivation');
 
 // Configuración del servidor, puerto 3000
 app.set('port', process.env.PORT || 3000); 
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use(printRequestType);
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
+app.use('/activate', activationRoute);
 
 // Iniciar servidor
 app.listen(app.get('port'), ()=>{
