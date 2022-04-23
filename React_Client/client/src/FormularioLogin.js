@@ -3,17 +3,13 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './index.css';
-import ReactDOM from 'react-dom';
 
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-//import { Calendar } from 'primereact/calendar';
 import { Password } from 'primereact/password';
-import { Checkbox } from 'primereact/checkbox';
 import { Dialog } from 'primereact/dialog';
-import { Divider } from 'primereact/divider';
 import { classNames } from 'primereact/utils';
 import './FormReg.css';
 
@@ -97,6 +93,4 @@ export const ReactFormLogin = () => {
     
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<ReactFormLogin />, rootElement);
 
