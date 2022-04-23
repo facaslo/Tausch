@@ -1,10 +1,24 @@
 const {validationResult} = require('express-validator')
 const {postUserInfoFromDBNoGoogle} = require('../models/registerUserToDatabase')
+const checkEmailOrUsername = require('../models/checkEmailOrUsername')
+const responseRegister = require('./outAPIRegister')
 
-const  validateRegister = (req, res, next) =>{
+const checkAvailability = async (req,res) => {
+    const userInfo = await checkEmailOrUsername(req.body.userName, req.body.email)    
+    return userInfo.length === 0    
+}
+
+const  validateRegister = async (req, res, next) =>{
     try{
         validationResult(req).throw()
-        postUserInfoFromDBNoGoogle(req.body)
+        let result = await checkAvailability(req,res)
+        if(result){            
+            await postUserInfoFromDBNoGoogle(req.body)
+            responseRegister(req,res,true)
+        }
+        else{
+            responseRegister(req,res,false)
+        }        
         return next()
     }
     catch(err){

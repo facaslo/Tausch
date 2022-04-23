@@ -4,9 +4,10 @@ const {hashPassword} = require('../utils/hashPassword');
 
 const postUserInfoFromDBNoGoogle = async (infoUsuario) => {
     const hashedPassword = await hashPassword(infoUsuario.password);
-    client.connect();
     const fecha = new Date()
-    const resultUsuario = await client.query(`BEGIN;
+    const cliente = await client.connect();
+    try{
+        const resultUsuario = await cliente.query(`BEGIN;
         INSERT into usuario VALUES 
         ('${infoUsuario.userName}', 
         '${infoUsuario.email}',
@@ -25,7 +26,10 @@ const postUserInfoFromDBNoGoogle = async (infoUsuario) => {
         '${infoUsuario.instagram}',
         '${infoUsuario.email}');
         COMMIT;`).then(res=> res.rows).catch(e=> console.log(e));
-    client.end();
+    } finally {
+        cliente.release()
+    } 
+    
     return;
 }
 
