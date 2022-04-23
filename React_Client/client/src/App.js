@@ -1,9 +1,15 @@
-import logo from './logo.svg';
+import React from 'react';
+//import logo from './logo.svg';
 import './App.css';
+
+import { ReactFinalFormDemo } from './FormularioRegistro.js';
+import { TabViewDemo } from './TabViewDemo.js';
+
+//const ReactFinalFormDemo = React.lazy(() => import('./FormularioRegistro'));
 
 function App() {
   return (
-    <div className="App">
+    /*<div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -18,8 +24,23 @@ function App() {
           Learn React
         </a>
       </header>
+    </div>*/
+    <div className="App">
+      <header className="App-header">
+        <div>
+          <h1>Tausch</h1>
+          <p>"Tu llave a lo que buscas"</p>
+        </div>
+      </header>
+      <body>
+        <div><TabViewDemo /></div>
+        
+        
+      </body>
     </div>
   );
+
 }
+
 
 export default App;
