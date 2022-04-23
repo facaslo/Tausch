@@ -1,9 +1,15 @@
-const responseLogin = (req,res) => {
+const responseLogin = (req,res, isCorrect) => {    
     try{
-        const userLogin = {"email":req.body.email, "password":req.body.password}
+        let userLogin;
+        if(isCorrect){
+            userLogin = {"email":req.body.email, "userName":req.body.userName, "firstName":req.body.firstName, "lastName" : req.body.firstName};
 
-        //res.status(200).json({success:true, msg:'Inicio de sesion exitoso.', data:getUserInfoFromDB(req.body.userName)})
-        res.status(200).json({success:true, msg:'Inicio de sesion exitoso.', data:userLogin})
+            res.status(200).json({success:true, data:userLogin});
+        }
+        else{           
+            
+            res.status(200).json({success:false});
+        }                    
         
     }
     catch(err){
@@ -11,4 +17,5 @@ const responseLogin = (req,res) => {
     }
 }
 
-module.exports = {responseLogin}
+
+module.exports = responseLogin

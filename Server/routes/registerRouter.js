@@ -3,9 +3,9 @@
 // dirección url: /register
 const express = require('express');
 const router = express.Router();
-const {postRegister} = require('../controllers/getPostRequest')
-const {responseRegister} = require('../middleware/outAPIRegister')
+const {postRegister} = require('../controllers/Login-RegisterHandler')
+const responseRegister = require('../middleware/outAPIRegister')
 
-router.post('/', postRegister, responseRegister);
+router.post('/', postRegister);
 
 module.exports = router;

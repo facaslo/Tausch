@@ -1,4 +1,4 @@
-const getUserInfoFromDB = require('../models/getUserInfo');
+const getUserNotConfirmedInfoFromDB = require('../models/getUserInfo');
 const nodemailer = require('nodemailer');
 
 // Información del email de origen

@@ -22,10 +22,10 @@ const comparePassword = (password, hash) => {
     if(typeof password === "string" && typeof  hash === "string" &&  password.length>0 && hash.length === 60){
         return new Promise((resolve,reject) => {
             bcrypt.compare(password, hash, (err, result) => {
-                if (result)
+                if (result != null)
                     resolve(result);
                 else
-                    reject.err;
+                    reject(err);
             });
         }).then(result => result).catch(err=> console.log(err));
     }
