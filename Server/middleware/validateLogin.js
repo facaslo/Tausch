@@ -2,7 +2,7 @@ const {validationResult} = require('express-validator')
 const {comparePassword} = require('../utils/hashPassword')
 const getUserInfoFromDB = require('../models/getUserInfo')
 const responseLogin = require('./outAPILogin')
-//const {getUserInfoFromDB} = require('../models/getUserInfo')
+
 
 const checkUserLogin = async (req,res) => {
     let userInfo;

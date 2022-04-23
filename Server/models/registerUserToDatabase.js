@@ -2,7 +2,7 @@
 const client = require('./databaseConnection');
 const {hashPassword} = require('../utils/hashPassword');
 
-const postUserInfoFromDBNoGoogle = async (infoUsuario) => {
+const postUserInfoFromDBNoGoogle = async (infoUsuario,token) => {
     const hashedPassword = await hashPassword(infoUsuario.password);
     const fecha = new Date()
     const cliente = await client.connect();
@@ -25,6 +25,12 @@ const postUserInfoFromDBNoGoogle = async (infoUsuario) => {
         '${infoUsuario.twitter}',
         '${infoUsuario.instagram}',
         '${infoUsuario.email}');
+        INSERT INTO activation_token VALUES
+        ('${infoUsuario.email}', 
+        '${token}',
+        '${fecha.getFullYear()}-${fecha.getMonth()+1}-${fecha.getDate()}',
+        '${fecha.getHours()}:${fecha.getMinutes()}'
+        );
         COMMIT;`).then(res=> res.rows).catch(e=> console.log(e));
     } finally {
         cliente.release()
