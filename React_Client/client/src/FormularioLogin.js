@@ -13,7 +13,7 @@ import { Dialog } from 'primereact/dialog';
 import { classNames } from 'primereact/utils';
 import './FormReg.css';
 
-export const ReactFormLogin = () => {
+function ReactFormLogin(){
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});
     let responseFromServer;
@@ -102,9 +102,9 @@ export const ReactFormLogin = () => {
         </div>
 
 
-    );
-
-    
+    );    
 }
+
+export default ReactFormLogin
 
 

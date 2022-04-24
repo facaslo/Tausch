@@ -3,20 +3,18 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './index.css';
-import ReactDOM from 'react-dom';
-
 import React from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
 //import { Avatar } from 'primereact/avatar';
 //<Avatar image="../images/look.png" size="xlarge" shape="circle" className="mx-2" />
 //<Avatar image="../images/look.png" size="xlarge" shape="circle" className="mx-1" />
 import { Image } from 'primereact/image';
-import { ReactFinalFormDemo } from './FormularioRegistro.js';
-import { ReactFormLogin } from './FormularioLogin.js';
+import ReactFinalFormDemo  from './FormularioRegistro.js';
+import ReactFormLogin  from './FormularioLogin.js';
 import './TabViewD.css';
 
 
-export const TabViewDemo = () => {
+function TabViewDemo (){
         const tabHeaderHomeTemplate = (options) => {
             return (
                 <div className="flex align-items-center px-2" style={{ cursor: 'pointer' }} onClick={options.onClick}>
@@ -65,3 +63,4 @@ export const TabViewDemo = () => {
                     
     //const rootElement = document.getElementById("root");
     //ReactDOM.render(<TabViewDemo />, rootElement);
+export default TabViewDemo

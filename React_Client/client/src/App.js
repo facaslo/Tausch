@@ -1,9 +1,7 @@
 import React from 'react';
 //import logo from './logo.svg';
 import './App.css';
-
-import { ReactFinalFormDemo } from './FormularioRegistro.js';
-import { TabViewDemo } from './TabViewDemo.js';
+import TabViewDemo from './TabViewDemo.js';
 
 //const ReactFinalFormDemo = React.lazy(() => import('./FormularioRegistro'));
 

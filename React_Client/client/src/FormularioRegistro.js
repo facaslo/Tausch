@@ -18,7 +18,7 @@ import { classNames } from 'primereact/utils';
 import './FormReg.css';
 
 
-export const ReactFinalFormDemo = () => {
+function ReactFinalFormDemo () {
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});
     let responseFromServer;
@@ -109,7 +109,7 @@ export const ReactFinalFormDemo = () => {
         return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
     };
 
-    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false) } /></div>;
+    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessage(false) } /></div>;
     const passwordHeader = <h6>Digita una contraseña</h6>;
     const passwordFooter = (
         <React.Fragment>
@@ -157,7 +157,7 @@ export const ReactFinalFormDemo = () => {
                             <Field name="userName" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="userName" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="userName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="userName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Usuario*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -185,7 +185,7 @@ export const ReactFinalFormDemo = () => {
                             <Field name="firstName" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="firstName" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="firstName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="firstName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Nombres*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -194,7 +194,7 @@ export const ReactFinalFormDemo = () => {
                             <Field name="lastName" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="lastName" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="lastName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="lastName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Apellidos*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -203,7 +203,7 @@ export const ReactFinalFormDemo = () => {
                             <Field name="age" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="age" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="age" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="age" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Edad*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -212,7 +212,7 @@ export const ReactFinalFormDemo = () => {
                             <Field name="phoneNumber" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="phoneNumber" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="phoneNumber" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="phoneNumber" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Celular*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -221,7 +221,7 @@ export const ReactFinalFormDemo = () => {
                             <Field name="facebook" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="facebook" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="facebook" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="facebook" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Facebook</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -230,7 +230,7 @@ export const ReactFinalFormDemo = () => {
                             <Field name="twitter" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="twitter" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="twitter" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="twitter" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Twitter</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -239,7 +239,7 @@ export const ReactFinalFormDemo = () => {
                             <Field name="instagram" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="instagram" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputText id="instagram" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="instagram" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Instagram</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -261,6 +261,6 @@ export const ReactFinalFormDemo = () => {
     );
 }
                 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<ReactFinalFormDemo />, rootElement);
+export default ReactFinalFormDemo
+// ReactDOM.render(<ReactFinalFormDemo />, rootElement);
 
