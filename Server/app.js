@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require('path');
+const cors = require('cors');
 const printRequestType = require('./middleware/requestType');
 const app = express();
 
@@ -8,9 +9,11 @@ const registerRoute = require('./routes/registerRouter');
 const loginRoute = require('./routes/loginRouter');
 const activationRoute = require('./routes/accountActivation');
 
-// Configuración del servidor, puerto 3000
-app.set('port', process.env.PORT || 3000); 
+// Configuración del servidor, puerto 3080
+app.set('port', process.env.PORT || 3080); 
 
+//Cross origin resource sharing
+app.use(cors());
 // parse form data
 app.use(express.urlencoded({extended: false}))
 // parse json

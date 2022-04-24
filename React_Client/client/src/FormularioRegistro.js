@@ -21,12 +21,13 @@ import './FormReg.css';
 export const ReactFinalFormDemo = () => {
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});
+    let responseFromServer;
 
     const validate = (data) => {
         let errors = {};
 
-        if (!data.usu) {
-        errors.usu = "El nombre de usuario con el que te identificarán es requerido.";
+        if (!data.userName) {
+        errors.userName = "El nombre de usuario con el que te identificarán es requerido.";
         }
     
         if (!data.password) {
@@ -45,20 +46,20 @@ export const ReactFinalFormDemo = () => {
         errors.email = "Direción de correo inválida. Ej.: example@email.com";
         }
 
-        if (!data.name) {
-        errors.name = "Tu nombre es requerido.";
+        if (!data.firstName) {
+        errors.firstName = "Tu nombre es requerido.";
         } else if (
-        !/^[a-zA-ZÀ-ÿ\s]{1,40}$/i.test(data.name) // Letras y espacios, pueden llevar acentos.
+        !/^[a-zA-ZÀ-ÿ\s]{1,40}$/i.test(data.firstName) // Letras y espacios, pueden llevar acentos.
         ){
-        errors.name = "Los nombres solo pueden contener letras, espacios y acentos.";
+        errors.firstName = "Los nombres solo pueden contener letras, espacios y acentos.";
         }
 
-        if (!data.lastname) {
-        errors.lastname = "Tu apellido es requerido.";
+        if (!data.lastName) {
+        errors.lastName = "Tu apellido es requerido.";
         } else if (
-        !/^[a-zA-ZÀ-ÿ\s]{1,40}$/i.test(data.lastname) // Letras y espacios, pueden llevar acentos.
+        !/^[a-zA-ZÀ-ÿ\s]{1,40}$/i.test(data.lastName) // Letras y espacios, pueden llevar acentos.
         ){
-        errors.lastname = "Los apellidos solo pueden contener letras, espacios y acentos.";
+        errors.lastName = "Los apellidos solo pueden contener letras, espacios y acentos.";
         }
         
         //if (!data.date) {
@@ -73,20 +74,20 @@ export const ReactFinalFormDemo = () => {
                                 </div>
                             )} /> */
         
-        if (!data.edad) {
-        errors.edad = "Tu edad es requerida.";
+        if (!data.age) {
+        errors.age = "Tu edad es requerida.";
         }else if (
-        !/^.{1,2}$/i.test(data.edad) // 1 a 2 digitos.
+        !/^.{1,2}$/i.test(data.age) // 1 a 2 digitos.
         ){
-        errors.edad = "La edad solo puede contener dígitos.";
+        errors.age = "La edad solo puede contener dígitos.";
         }
 
-        if (!data.celu) {
-        errors.celu = "Tu número de celular es requerido.";
+        if (!data.phoneNumber) {
+        errors.phoneNumber = "Tu número de celular es requerido.";
         }else if (
-        !/^.{10}$/i.test(data.celu) // 10 digitos.
+        !/^.{10}$/i.test(data.phoneNumber) // 10 digitos.
         ){
-        errors.celu = "El celular solo puede contener 10 dígitos.";
+        errors.phoneNumber = "El celular solo puede contener 10 dígitos.";
         }
 
         if (!data.accept) {
@@ -95,11 +96,11 @@ export const ReactFinalFormDemo = () => {
 
         return errors;
     };
-
+    
     const onSubmit = (data, form) => {
         setFormData(data);
         setShowMessage(true);
-
+        sendRegisterToServer(data)
         form.restart();
     };
 
@@ -123,6 +124,18 @@ export const ReactFinalFormDemo = () => {
         </React.Fragment>
     );
 
+    const sendRegisterToServer = async (data) => {
+        await fetch(`http://localhost:3080/register`,{            
+            method : 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => responseFromServer=response).catch(error=> console.log(error));
+    };
+
     return (
         <div className="form-demo">
             <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
@@ -138,14 +151,14 @@ export const ReactFinalFormDemo = () => {
             <div className="flex justify-content-center">
                 <div className="card">
                     <h5 className="text-center">Registro</h5>
-                    <Form onSubmit={onSubmit} initialValues={{ usu: "", password: "", email: "", name: "", lastname: "", date: null, celu: "", face: "", twit: "", inst: "", accept: false}} validate={validate} render={({ handleSubmit }) => (
+                    <Form onSubmit={onSubmit} initialValues={{ userName: "", password: "", email: "", firstName: "", lastName: "", phoneNumber: "", facebook: "", twitter: "", instagram: "", accept: false}} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
                             
-                            <Field name="usu" render={({ input, meta }) => (
+                            <Field name="userName" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="usu" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="usu" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Usuario*</label>
+                                        <InputText id="userName" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="userName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Usuario*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
@@ -169,65 +182,65 @@ export const ReactFinalFormDemo = () => {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="name" render={({ input, meta }) => (
+                            <Field name="firstName" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="name" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="name" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Nombres*</label>
+                                        <InputText id="firstName" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="firstName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Nombres*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="lastname" render={({ input, meta }) => (
+                            <Field name="lastName" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="lastname" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="lastname" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Apellidos*</label>
+                                        <InputText id="lastName" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="lastName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Apellidos*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="edad" render={({ input, meta }) => (
+                            <Field name="age" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="edad" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="edad" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Edad*</label>
+                                        <InputText id="age" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="age" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Edad*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="celu" render={({ input, meta }) => (
+                            <Field name="phoneNumber" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="celu" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="celu" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Celular*</label>
+                                        <InputText id="phoneNumber" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="phoneNumber" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Celular*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />     
-                            <Field name="face" render={({ input, meta }) => (
+                            <Field name="facebook" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="face" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="face" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Facebook</label>
+                                        <InputText id="facebook" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="facebook" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Facebook</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} /> 
-                            <Field name="twit" render={({ input, meta }) => (
+                            <Field name="twitter" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="twit" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="twit" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Twitter</label>
+                                        <InputText id="twitter" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="twitter" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Twitter</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />     
-                            <Field name="inst" render={({ input, meta }) => (
+                            <Field name="instagram" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="inst" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
-                                        <label htmlFor="inst" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Instagram</label>
+                                        <InputText id="instagram" {...input} autoFocus className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <label htmlFor="instagram" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Instagram</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>

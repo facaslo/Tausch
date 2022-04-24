@@ -4,7 +4,7 @@ import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './index.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
@@ -16,6 +16,8 @@ import './FormReg.css';
 export const ReactFormLogin = () => {
     const [showMessage, setShowMessage] = useState(false);
     const [formData, setFormData] = useState({});
+    let responseFromServer;
+
     const validate = (data) => {
         let errors = {};
         if (!data.email) {
@@ -27,12 +29,12 @@ export const ReactFormLogin = () => {
 
         return errors;
 
-    };
+    };    
 
-    const onSubmit = (data, form) => {
-        setFormData(data);
-        setShowMessage(true);
-
+    const onSubmit = async (data, form) => {
+        await setFormData(data);        
+        // setShowMessage(true);        
+        await sendLoginToServer(data);
         form.restart();
     };
 
@@ -42,6 +44,18 @@ export const ReactFormLogin = () => {
     };
 
     const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false) } /></div>;
+
+    const sendLoginToServer = async (data) => {
+        await fetch(`http://localhost:3080/login`,{            
+            method : 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => responseFromServer = response).catch(error=> console.log(error));
+    };
 
     return(
         <div className="form-demo">

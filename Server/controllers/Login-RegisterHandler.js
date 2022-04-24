@@ -27,19 +27,7 @@ const postRegister =[
         .isNumeric(),
     check('phoneNumber')
         .exists()
-        .isNumeric(),
-    check('facebook')
-        .exists()
-        .not()
-        .isEmpty(),
-    check('twitter')
-        .exists()
-        .not()
-        .isEmpty(),
-    check('instagram')
-        .exists()
-        .not()
-        .isEmpty(),
+        .isNumeric(),       
     (req, res, next) => {
         validateRegister(req, res, next)        
     }

@@ -2,7 +2,7 @@ const responseActivation = (req,res,status) => {
     try{
         let userLogin;
         if(status){
-            userLogin = {"email":req.body.email, "userName":req.body.userName, "firstName":req.body.firstName, "lastName" : req.body.firstName};
+            userLogin = {"userName":req.body.userName};
 
             res.status(200).json({activationSuccess:true, activated:true, data:userLogin});
         }

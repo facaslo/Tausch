@@ -12,7 +12,7 @@ const responseLogin = (req,res, isCorrect, activated) => {
             }                        
         }
         else{           
-            res.status(200).json({credentialsValidated:false});
+            res.status(200).json({loginSuccess: false, credentialsValidated:false});
         }                    
         
     }

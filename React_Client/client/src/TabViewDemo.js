@@ -46,11 +46,9 @@ export const TabViewDemo = () => {
                             <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.</p>
                         </TabPanel>
                         <TabPanel header="Inicia sesión">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                             <ReactFormLogin />
                         </TabPanel>
-                        <TabPanel header="Regístrate gratis"  >
-                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.</p>
+                        <TabPanel header="Regístrate gratis"  >                            
                             <ReactFinalFormDemo />
                         </TabPanel>
                         <TabPanel header="Comunidad">
