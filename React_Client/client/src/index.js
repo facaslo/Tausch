@@ -2,16 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {BrowserRouter} from 'react-router-dom'
+import Activation from './routes/activation';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 ReactDOM.render(
-  <BrowserRouter>
-   
-      <App />
-    
-  
-  </BrowserRouter>
-    ,
+  <BrowserRouter>   
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/activacion" element={<Activation/>} />        
+        {/* <Route path="/inicio"element={<Inicio />}/> */}
+      </Routes>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

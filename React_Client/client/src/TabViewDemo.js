@@ -61,6 +61,4 @@ function TabViewDemo (){
         )
     }
                     
-    //const rootElement = document.getElementById("root");
-    //ReactDOM.render(<TabViewDemo />, rootElement);
 export default TabViewDemo
