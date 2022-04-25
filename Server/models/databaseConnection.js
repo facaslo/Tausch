@@ -1,5 +1,5 @@
-const {Client} = require('pg');
-const  client = new Client(
+const {Pool} = require('pg');
+const  client = new Pool(
     {
         host : "93.188.164.106",
         port : 5432,
