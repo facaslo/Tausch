@@ -14,9 +14,11 @@ import { classNames } from 'primereact/utils';
 import './FormReg.css';
 
 function ReactFormLogin(){
-    const [showMessage, setShowMessage] = useState(false);
+    const [showMessageCredentials, setShowMessageCredentials] = useState(false);
+    const [showMessageActivation, setShowMessageActivation] = useState(false);
     const [formData, setFormData] = useState({});
     let responseFromServer;
+    let dataFromApiLogin;
 
     const validate = (data) => {
         let errors = {};
@@ -32,8 +34,7 @@ function ReactFormLogin(){
     };    
 
     const onSubmit = async (data, form) => {
-        await setFormData(data);        
-        // setShowMessage(true);        
+        await setFormData(data);             
         await sendLoginToServer(data);
         form.restart();
     };
@@ -43,10 +44,12 @@ function ReactFormLogin(){
         return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
     };
 
-    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessage(false) } /></div>;
+    const dialogFooterCredentials = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessageCredentials(false) } /></div>;
+    const dialogFooterActivation = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessageActivation(false) } /></div>;
 
     const sendLoginToServer = async (data) => {
-        await fetch(`http://localhost:3080/login`,{            
+        //Se cambio a localhost:3000. ANTES APARECIA como 3080
+        await fetch(`http://localhost:3000/login`,{            
             method : 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -54,12 +57,27 @@ function ReactFormLogin(){
             },
             body: JSON.stringify(data)
         })
-        .then((response) => responseFromServer = response).catch(error=> console.log(error));
+        .then((response) => responseFromServer = response.json()).then((data)=> dataFromApiLogin=data).catch(error=> console.log(error));
+        
+        //Verificar si las credenciales fueron correctas
+        if (dataFromApiLogin.credentialsValidated){
+            
+            //Verificar si la cuenta esta activada
+            if (dataFromApiLogin.isActivated){
+                //Ir a la pagina para mostrar los datos despues de loggearse
+                window.location = `/datos/${data.email}/`;
+
+            }else{
+                setShowMessageActivation(true);
+            }
+        }else{
+            setShowMessageCredentials(true);
+        }
     };
 
     return(
         <div className="form-demo">
-            <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+            <Dialog visible={showMessageCredentials} onHide={() => setShowMessageCredentials(false)} position="top" footer={dialogFooterCredentials} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
                 <div className="flex align-items-center flex-column pt-6 px-3">
                     <i className="pi pi-times-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
                     <h5>Correo o contraseña incorrectos</h5>
@@ -69,6 +87,15 @@ function ReactFormLogin(){
                 </div>
             </Dialog>
 
+            <Dialog visible={showMessageActivation} onHide={() => setShowMessageActivation(false)} position="top" footer={dialogFooterActivation} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                <div className="flex align-items-center flex-column pt-6 px-3">
+                    <i className="pi pi-exclamation-triangle" style={{ fontSize: '5rem', color: 'var(--yellow-500)' }}></i>
+                    <h5>La cuenta no ha sido activada por medio de correo electronico.</h5>
+                    <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
+                        Revisa tu bandeja de entrada y spam.
+                    </p>
+                </div>
+            </Dialog>
             
             <div className="flex justify-content-center">
                 <div className="card">
