@@ -7,7 +7,7 @@ const activateAccount = async(req,res,next) => {
         await activateAccountDB(result[0].nombre_de_usuario, result[0].email);
         responseActivation(req,res,true);
     }
-    else{
+    else if (result.length === 0){
         responseActivation(req,res,false);
     }
     return next();
