@@ -33,7 +33,7 @@ function TabViewDemo (){
         return (
             <div className="tabview-demo">
                 <div className="card">
-                    <TabView>
+                    <TabView scrollable> 
                         <TabPanel headerTemplate={tabHeaderHomeTemplate} headerClassName="flex align-items-center">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                         </TabPanel>
