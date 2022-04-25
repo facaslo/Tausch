@@ -19,13 +19,13 @@ const getUserInfoFromDB = async (usuario,email) => {
     return result;
 }
 
-
+/*
 console.log("a");
 (async function(){
     // let a = await getUserInfoFromDB('Pepita', null)
     let a = await getUserInfoFromDB(null, 'facaslo.99@gmail.com')
     console.log(a);
 })(); 
- 
+*/
 
 module.exports = getUserInfoFromDB;

@@ -16,7 +16,7 @@ const sendActivationEmail = async (user, token, email) => {
             from: 'tausch.email.token@gmail.com',
             to: email,
             subject: 'Verificación de cuenta de Tausch',            
-            html: `<p> Para activar su cuenta de Tausch acceda al siguiente enlace <hr/> <a href="http://localhost:3000/activate?user=${user}&token=${token}"> enlace de activación </a>`
+            html: `<p> Para activar su cuenta de Tausch acceda al siguiente enlace <hr/> <a href="http://localhost:3000/activacion?user=${user}&token=${token}"> enlace de activación </a>`
         }
 
         await transporter.sendMail(emailOptions);

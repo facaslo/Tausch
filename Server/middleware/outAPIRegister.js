@@ -1,7 +1,7 @@
 const responseRegister = (req,res,status)=>{    
     try{
         if(status){
-            res.status(200).json({registerSuccess:true, email: req.email})
+            res.status(200).json({registerSuccess:true, email: req.body.email})
         }
         else{
             res.status(200).json({registerSuccess:false, emailOrUserAvailable: false})
