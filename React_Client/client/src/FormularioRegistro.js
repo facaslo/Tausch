@@ -122,7 +122,8 @@ function ReactFinalFormDemo () {
             <li>Al menos una minúscula</li>
             <li>Al menos una mayúscula</li>
             <li>Al menos un número</li>
-            <li>Mínimo 8 caracteres</li>
+            <li>Al menos un caracter especial: /.$ </li>
+            <li>Mínimo 8 caracteres</li>            
         </ul>
         </React.Fragment>
     );
