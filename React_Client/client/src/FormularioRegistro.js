@@ -19,9 +19,12 @@ import './FormReg.css';
 
 
 function ReactFinalFormDemo () {
-    const [showMessage, setShowMessage] = useState(false);
+    const [showMessageAccept, setShowMessageAccept] = useState(false);
+    const [showMessageDeny, setShowMessageDeny] = useState(false);
     const [formData, setFormData] = useState({});
     let responseFromServer;
+    let dataFromApiRegister;
+
 
     const validate = (data) => {
         let errors = {};
@@ -77,7 +80,7 @@ function ReactFinalFormDemo () {
         if (!data.age) {
         errors.age = "Tu edad es requerida.";
         }else if (
-        !/^.{1,2}$/i.test(data.age) // 1 a 2 digitos.
+        !/^\d{1,2}$/i.test(data.age) // 1 a 2 digitos.
         ){
         errors.age = "La edad solo puede contener dígitos.";
         }
@@ -85,7 +88,7 @@ function ReactFinalFormDemo () {
         if (!data.phoneNumber) {
         errors.phoneNumber = "Tu número de celular es requerido.";
         }else if (
-        !/^.{10}$/i.test(data.phoneNumber) // 10 digitos.
+        !/^\d{10}$/i.test(data.phoneNumber) // 10 digitos.
         ){
         errors.phoneNumber = "El celular solo puede contener 10 dígitos.";
         }
@@ -97,10 +100,9 @@ function ReactFinalFormDemo () {
         return errors;
     };
     
-    const onSubmit = (data, form) => {
-        setFormData(data);
-        setShowMessage(true);
-        sendRegisterToServer(data)
+    const onSubmit = async (data, form) => {
+        await setFormData(data);
+        await sendRegisterToServer(data);
         form.restart();
     };
 
@@ -109,7 +111,8 @@ function ReactFinalFormDemo () {
         return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
     };
 
-    const dialogFooter = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessage(false) } /></div>;
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessageAccept(false) } /></div>;
+    const dialogFooterDeny = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessageDeny(false) } /></div>;
     const passwordHeader = <h6>Digita una contraseña</h6>;
     const passwordFooter = (
         <React.Fragment>
@@ -133,20 +136,42 @@ function ReactFinalFormDemo () {
             },
             body: JSON.stringify(data)
         })
-        .then((response) => responseFromServer=response).catch(error=> console.log(error));
+        .then((response) => responseFromServer = response.json()).then((data)=> dataFromApiRegister=data).catch(error=> console.log(error));
+    
+        if (dataFromApiRegister.registerSuccess){//verifica si se realiza el registro en la bd correctamente
+            setShowMessageAccept(true);
+        }else{
+            setShowMessageDeny(true);
+    
+        }
     };
+
+
+
+    
 
     return (
         <div className="form-demo">
-            <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+            <Dialog visible={showMessageAccept} onHide={() => setShowMessageAccept(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
                 <div className="flex align-items-center flex-column pt-6 px-3">
                     <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
                     <h5>¡Registro exitoso!</h5>
                     <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
-                        Tu cuenta está registrada bajo el nombre <b>{formData.usu}</b>
+                        Tu cuenta está registrada bajo el nombre <b>{formData.userName}</b> y se te envió un correo para que actives tu cuenta
                     </p>
                 </div>
             </Dialog>
+
+            <Dialog visible={showMessageDeny} onHide={() => setShowMessageDeny(false)} position="top" footer={dialogFooterDeny} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                <div className="flex align-items-center flex-column pt-6 px-3">
+                    <i className="pi pi-times-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                    <h5>El correo o nombre de usuario ya están registrados</h5>
+                    <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
+                        Verifica tus datos y vuelve a intentar
+                    </p>
+                </div>
+            </Dialog>
+
 
             <div className="flex justify-content-center">
                 <div className="card">
