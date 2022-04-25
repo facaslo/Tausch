@@ -7,6 +7,7 @@ export default function Activation() {
     const [activationParams, setActivationParams] = useSearchParams();
     const [showMessage, setShowMessage] = useState(false);
     const [SuccessMessage, setSuccessMessage] = useState("La cuenta ha sido activada");
+    const [onLoad, setOnload] = useState(true);
 
     const sendActivationToServer = async (data) => {
       return await fetch(`http://localhost:3080/activate`,{            
@@ -26,14 +27,17 @@ export default function Activation() {
       let token = activationParams.get("token"); 
       
       (async () =>{
-        let result = await sendActivationToServer({"userName": user, "token": token}).then(data=> data); 
-        console.log(result);
-        if(result.activationSuccess){
-          setTimeout(()=>setShowMessage(true),5000)
-        }else{
-          setSuccessMessage("Token o nombre de usuario incorrectos");
-          setTimeout(()=>setShowMessage(true),5000);
-        }
+        if(onLoad){
+          let result = await sendActivationToServer({"userName": user, "token": token}).then(data=> data);
+          setOnload(false);
+          console.log(result);
+          if(result.activationSuccess){
+            setTimeout(()=>setShowMessage(true),5000)
+          }else{
+            setSuccessMessage("Token o nombre de usuario incorrectos");
+            setTimeout(()=>setShowMessage(true),5000);
+          }
+        }        
       })();    
     })   
 
@@ -50,7 +54,7 @@ export default function Activation() {
 
       
 
-      <Dialog header="Header" visible={showMessage} style={{ width: '50vw' }} footer={footer} onHide={() => setShowMessage(false)}>
+      <Dialog header="Alerta" visible={showMessage} style={{ width: '50vw' }} footer={footer} onHide={() => setShowMessage(false)}>
           <p> {SuccessMessage} </p>
       </Dialog>
       </div>
