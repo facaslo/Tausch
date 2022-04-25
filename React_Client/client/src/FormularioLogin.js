@@ -48,8 +48,7 @@ function ReactFormLogin(){
     const dialogFooterActivation = <div className="flex justify-content-center"><Button label="OK" className="p-button-text" autoFocus onClick={() => setShowMessageActivation(false) } /></div>;
 
     const sendLoginToServer = async (data) => {
-        //Se cambio a localhost:3000. ANTES APARECIA como 3080
-        await fetch(`http://localhost:3000/login`,{            
+        await fetch(`http://localhost:3080/login`,{            
             method : 'POST',
             headers: {
                 'Accept': 'application/json',
