@@ -128,9 +128,9 @@ export const ReactFinalFormDemo = () => {
             <Dialog visible={showMessage} onHide={() => setShowMessage(false)} position="top" footer={dialogFooter} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
                 <div className="flex align-items-center flex-column pt-6 px-3">
                     <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
-                    <h5>¡Registro exitoso!</h5>
+                    <h5>Para culminar su registro</h5>
                     <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
-                        Tu cuenta está registrada bajo el nombre <b>{formData.usu}</b>
+                        Se ha enviado un email de confirmación al correo <b>{formData.email}</b>
                     </p>
                 </div>
             </Dialog>
