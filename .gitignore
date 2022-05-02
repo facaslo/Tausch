@@ -175,7 +175,7 @@ sketch
 .ionide
 
 # Ignorar la configuración de conexión de la base de datos
-./Server/models/databaseConnection.js
+Server/models/databaseConnection.js
 
 # Support for Project snippet scope
 
