@@ -3,7 +3,7 @@
 // dirección url: /register
 const express = require('express');
 const router = express.Router();
-const {postRegister} = require('../controllers/Login-RegisterHandler')
+const {postRegister} = require('../controllers/postHandler')
 
 router.post('/', postRegister);
 
