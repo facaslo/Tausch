@@ -1,0 +1,47 @@
+:root {
+    --primary: #86868686;
+}
+
+.btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    margin: 10px;
+}
+
+.btn:hover {
+    padding: 8px 15px;
+    transition: all 0.3s ease-out;
+    background: rgb(0, 152, 179);
+    color: rgb(230, 211, 247);
+    transition:  90ms;
+    font-size: 1.8rem;
+}
+
+.btn--primary {
+    background-color: var(--primary);
+}
+
+.btn--outline {
+    background-color: transparent;
+    color: aliceblue;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: all 0.3s ease-out;
+}
+
+.btn--medium {
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.btn--large {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 22px;
+    color: aliceblue;
+}

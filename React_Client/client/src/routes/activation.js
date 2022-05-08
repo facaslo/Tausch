@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 export default function Activation() {    
     const [activationParams, setActivationParams] = useSearchParams();
     const [showMessage, setShowMessage] = useState(false);
-    const [SuccessMessage, setSuccessMessage] = useState("La cuenta ha sido activada");
+    const [SuccessMessage, setSuccessMessage] = useState("La cuenta ha sido activada.");
     const [onLoad, setOnload] = useState(true);
 
     const sendActivationToServer = async (data) => {
@@ -50,7 +50,7 @@ export default function Activation() {
     
     return (    
       <div className='main'>
-        <h2> Estamos activando tu cuenta, espera unos segundos </h2>       
+        <h2> Estamos activando tu cuenta, espera unos segundos... </h2>       
 
       
 

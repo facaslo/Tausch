@@ -147,10 +147,6 @@ function ReactFinalFormDemo () {
         }
     };
 
-
-
-    
-
     return (
         <div className="form-demo">
             <Dialog visible={showMessageAccept} onHide={() => setShowMessageAccept(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
@@ -288,5 +284,5 @@ function ReactFinalFormDemo () {
 }
                 
 export default ReactFinalFormDemo
-// ReactDOM.render(<ReactFinalFormDemo />, rootElement);
+
 

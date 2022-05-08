@@ -1,0 +1,44 @@
+.navbar-logo {
+    color: aliceblue;
+    justify-self: start;
+    margin: 20px;
+    cursor: pointer;
+    font-family: 'Milonga', cursive;
+    letter-spacing: 0.2rem;
+}
+
+.navbar-logo:hover {
+    font-size: 3.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-slogan {
+    font-family: 'Kalam', cursive;
+    font-size: 18px;
+    margin: 0;
+    letter-spacing: 0.2rem;
+}
+
+.main-footer {
+    background: linear-gradient(90deg , rgb(73,63,252,1) 0%, rgb(0, 8, 85) 100%);
+    color: aliceblue;
+    padding-top: 3em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+  
+
+@media screen and (max-width:1500px) {
+    .navbar-slogan {
+        width: 150%;
+        /*transform: translate(16%);*/
+    }
+}
+
+@media screen and (max-width:654px) {
+    .navbar-slogan {
+        width: 90%;
+        transform: translate(8%);
+    }
+}
