@@ -1,11 +1,22 @@
 const {validationResult} = require('express-validator');
-// const {postUserInfoFromDBNoGoogle} = require('../models/registerUserToDatabase');
+const createPublication = require('../models/createPublication');
 const responseNewPost = require('./outAPINewPost');
 
 const validateNewPost = async (req, res, next) =>{
     try{
         validationResult(req).throw()
-        //await postUserInfoFromDBNoGoogle(req.body, token)
+        let image_path;
+        let image_hash;
+        // Configurar servidor
+        await createPublication(
+            req.title,
+            req.category,
+            req.subcategory,
+            req.description,
+            req.publication_date,
+            req.iteam_status,
+            req.exchange_for
+        )
         responseNewPost(req,res)
         return next()
     }

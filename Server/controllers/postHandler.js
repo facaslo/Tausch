@@ -49,7 +49,9 @@ const postLogin = [
     }
 ]
 
-const postNewPost = [
+
+
+const postNewPublication = [
 
     // email ?
     // id ?
@@ -76,30 +78,30 @@ const postNewPost = [
         .not()
         .isEmpty(),
     // fecha_post
-    check('date')
+    check('publication_date')
         .exists()
         .isDate(), // el formato predeterminado es yyyy/mm/dd, se puede cambiar (ver validator en github)
     // estado_item
-    check('itemCondition')
+    check('item_status')
         .exists()
         .not()
         .isEmpty(),
     // activa
-    check('isActive')
-        .exists()
-        .isBoolean(),
+    // check('isActive')
+    //     .exists()
+    //     .isBoolean(),
     // intercambio_por
-    check('exchange')
+    check('exchange_for')
         .exists()
         .not()
         .isEmpty(),
     // numero_propuestas
-    check('numProposal')
-        .exists()
-        .isNumeric(),
+    // check('numProposal')
+    //     .exists()
+    //     .isNumeric(),
     (req, res, next) => {
         validateNewPost(req, res, next)
     }
 ]
 
-module.exports = {postRegister, postLogin, postNewPost}
+module.exports = {postRegister, postLogin, postNewPublication}
