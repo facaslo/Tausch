@@ -1,14 +1,14 @@
 // Los controladores son la api que se encarga de procesar las llamadas de react y responder a las peticiones, bien sea llamando un modelo o enviando un json de respuesta
-const {check, body} = require('express-validator')
+const path = require('path')
+const {check, body, oneOf} = require('express-validator')
 const {validateRegister} = require('../middleware/validateRegister')
 const {validateLogin} = require('../middleware/validateLogin')
-const {validateNewPost} = require('../middleware/validateNewPost')
+const {validateNewPublication} = require('../middleware/validateNewPublication')
 
 const postRegister =[
     check('userName')
         .exists()
-        .not()
-        .isEmpty(),
+        .notEmpty(),
     check('password')
         .exists()
         .isStrongPassword(),
@@ -17,12 +17,10 @@ const postRegister =[
         .isEmail(),
     check('firstName')
         .exists()
-        .not()
-        .isEmpty(),
+        .notEmpty(),
     check('lastName')
         .exists()
-        .not()
-        .isEmpty(),
+        .notEmpty(),
     check('age')
         .exists()
         .isNumeric(),
@@ -34,13 +32,15 @@ const postRegister =[
     }
 ]
 
-const categories = ['Tecnología', 'Ropa y Accesorios', 'Deportes', 'Arte', 'Entretenimiento', 
-    'Hogar', 'Servicios', 'Libros y Revistas', 'Música', 'Vehículos', 'Otros']
-
 const postLogin = [
-    check('email')
-         .exists()
-         .isEmail(),
+    oneOf(// se revisa si alguno de los checks pasa la validacion
+        check('email')
+            .exists()
+            .isEmail(),
+        check('userName')
+            .exists()
+            .isEmail(),
+    ),
     check('password')
         .exists()
         .isStrongPassword(),
@@ -49,58 +49,70 @@ const postLogin = [
     }
 ]
 
+const categories = ['Tecnología', 'Ropa y Accesorios', 'Deportes', 'Arte', 'Entretenimiento', 
+    'Hogar', 'Servicios', 'Libros y Revistas', 'Música', 'Vehículos', 'Otros']
 
+const subcategories = {
+    'Tecnología':['Videojuegos', 'Computadores', 'Cámaras', 'Televisores', 'Celulares'],
+    'Ropa y Accesorios':['Formal', 'Deportiva', 'De playa', 'Casual', 'De trabajo', 'Accesorios'],
+    'Deportes':['Gimnasio', 'Implementos deportivos', 'Bicicletas y movilidad'],
+    'Arte':['Obras', 'Materiales', 'Afiches'],
+    'Entretenimiento':['Juegos de mesa', 'Juguetes', 'Películas'],
+    'Hogar':['Electrodomésticos', 'Decoración', 'Muebles', 'Jardineria'],
+    'Libros y revistas':['Literatura', 'Comics', 'Revistas'],
+    'Música':['Instrumentos', 'Discos'],
+    'Vehículos':['Motos', 'Automóviles', 'Accesorios y herramientas', 'Repuestos y partes']
+}
+
+const itemState = ["Nuevo", "Usado"]
+
+const imageExtensions = ['.bmp', '.gif', '.jpg', '.tif', '.png']
 
 const postNewPublication = [
-
-    // email ?
-    // id ?
-    // titulo
     check('title')
         .exists()
-        .not()
-        .isEmpty(),
-    // imagen (dataURI ?, que se recibe)
-    // categoria
+        .notEmpty(),
+    body().custom((value) => {
+        if(value.image){
+            if(imageExtensions.includes(path.extname(value.image))){
+                return true
+            }
+        }
+        return false
+    }),
     check('category')
         .exists()
-        .not()
-        .isEmpty()
+        .notEmpty()
         .isIn(categories),
-    // subcategoria
-    check('subcategory') // diccionario para subcategorias ?
-        .exists()
-        .not()
-        .isEmpty(),
-    // descripcion
+    body().custom((value) => {
+        if(value.subcategory || value.subcategory === ''){
+            if(value.subcategory !== ''){
+                if(subcategories[value.category].includes(value.subcategory)){
+                    return true
+                }
+            }
+            else if(value.category === 'Servicios' || value.category === 'Otros'){
+                return true
+            }
+        }
+        return false
+    }),
     check('description')
         .exists()
-        .not()
-        .isEmpty(),
-    // fecha_post
+        .notEmpty(),
     check('publication_date')
         .exists()
         .isDate(), // el formato predeterminado es yyyy/mm/dd, se puede cambiar (ver validator en github)
-    // estado_item
     check('item_status')
         .exists()
-        .not()
-        .isEmpty(),
-    // activa
-    // check('isActive')
-    //     .exists()
-    //     .isBoolean(),
-    // intercambio_por
+        .notEmpty()
+        .isIn(itemState),
     check('exchange_for')
         .exists()
-        .not()
-        .isEmpty(),
-    // numero_propuestas
-    // check('numProposal')
-    //     .exists()
-    //     .isNumeric(),
+        .notEmpty()
+        .isIn(categories),
     (req, res, next) => {
-        validateNewPost(req, res, next)
+        validateNewPublication(req, res, next)
     }
 ]
 

@@ -1,14 +1,14 @@
 const {validationResult} = require('express-validator');
 const createPublication = require('../models/createPublication');
-const responseNewPost = require('./outAPINewPost');
+const responseNewPublication = require('./outAPINewPublication');
 
-const validateNewPost = async (req, res, next) =>{
+const validateNewPublication = async (req, res, next) =>{
     try{
         validationResult(req).throw()
         let image_path;
         let image_hash;
         // Configurar servidor
-        await createPublication(
+        /* await createPublication(
             req.title,
             req.category,
             req.subcategory,
@@ -16,8 +16,9 @@ const validateNewPost = async (req, res, next) =>{
             req.publication_date,
             req.iteam_status,
             req.exchange_for
-        )
-        responseNewPost(req,res)
+        ) */
+
+        responseNewPublication(req,res)
         return next()
     }
     catch(err){
@@ -25,4 +26,4 @@ const validateNewPost = async (req, res, next) =>{
     }
 }
 
-module.exports = {validateNewPost}
+module.exports = {validateNewPublication}

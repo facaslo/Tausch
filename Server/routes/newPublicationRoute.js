@@ -3,9 +3,9 @@
 // dirección url: /login
 const express = require('express');
 const router = express.Router();
-const {postNewPost} = require('../controllers/postHandler');
+const {postNewPublication} = require('../controllers/postHandler');
 
 // La dirección '/' es relativa a '/login'. Si fuera '/url', la dirección absoluta sería '/login/url'
-router.post('/', postNewPost);
+router.post('/', postNewPublication);
 
 module.exports = router;

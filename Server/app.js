@@ -8,7 +8,7 @@ const app = express();
 const registerRoute = require('./routes/registerRouter');
 const loginRoute = require('./routes/loginRouter');
 const activationRoute = require('./routes/accountActivation');
-const newPostRoute = require('./routes/newPostRoute')
+const newPublicationRoute = require('./routes/newPublicationRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -25,7 +25,7 @@ app.use(printRequestType);
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/activate', activationRoute);
-app.use('/new-post', newPostRoute);
+app.use('/new-post', newPublicationRoute);
 
 // Iniciar servidor
 app.listen(app.get('port'), ()=>{
