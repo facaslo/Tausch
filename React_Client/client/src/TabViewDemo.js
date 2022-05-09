@@ -11,6 +11,7 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import { Image } from 'primereact/image';
 import ReactFinalFormDemo  from './FormularioRegistro.js';
 import ReactFormLogin  from './FormularioLogin.js';
+import Publication from './Publication.js';
 import './TabViewD.css';
 
 
@@ -52,7 +53,7 @@ function TabViewDemo (){
                             <ReactFinalFormDemo />
                         </TabPanel>
                         <TabPanel header="Comunidad">
-                            <p>En construcción... </p>
+                            <Publication />
                         </TabPanel>                        
                         <TabPanel headerTemplate={tabHeaderBuscarTemplate} headerClassName="flex align-items-center">
                             <p>En construcción...</p>

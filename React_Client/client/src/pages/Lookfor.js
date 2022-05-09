@@ -1,4 +1,5 @@
 import React from "react";
+import FormPublication from '../FormPublication';
 
 function Lookfor () {
     return(
@@ -6,6 +7,7 @@ function Lookfor () {
             <h1>
             En construcción... Buscar.
             </h1>
+            <FormPublication />
         </>
     );
 }
