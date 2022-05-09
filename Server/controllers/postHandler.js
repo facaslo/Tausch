@@ -39,7 +39,7 @@ const postLogin = [
             .isEmail(),
         check('userName')
             .exists()
-            .isEmail(),
+            .notEmpty(),
     ),
     check('password')
         .exists()

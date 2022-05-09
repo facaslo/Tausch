@@ -9,6 +9,7 @@ const registerRoute = require('./routes/registerRouter');
 const loginRoute = require('./routes/loginRouter');
 const activationRoute = require('./routes/accountActivation');
 const newPublicationRoute = require('./routes/newPublicationRoute')
+const filterRoute = require('./routes/filterRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -26,8 +27,12 @@ app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/activate', activationRoute);
 app.use('/new-post', newPublicationRoute);
+app.use('/filter', filterRoute);
 
 // Iniciar servidor
 app.listen(app.get('port'), ()=>{
     console.log("Server on port ", app.get('port'))  //start server with the selected port
 });
+
+// exportar el app.js para usarlo en las pruebas
+module.exports = app

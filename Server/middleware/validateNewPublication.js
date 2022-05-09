@@ -8,7 +8,7 @@ const validateNewPublication = async (req, res, next) =>{
         let image_path;
         let image_hash;
         // Configurar servidor
-        /* await createPublication(
+        await createPublication(
             req.title,
             req.category,
             req.subcategory,
@@ -16,7 +16,7 @@ const validateNewPublication = async (req, res, next) =>{
             req.publication_date,
             req.iteam_status,
             req.exchange_for
-        ) */
+        )
 
         responseNewPublication(req,res)
         return next()
