@@ -5,27 +5,46 @@ import 'primeflex/primeflex.css';
 import './index.css';
 import ReactDOM from 'react-dom';
 
-import React, { useState } from 'react';
+import React, { useRef,useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
 import { Dialog } from 'primereact/dialog';
-import { Divider } from 'primereact/divider';
 import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
+import { FileUpload } from 'primereact/fileupload';
+import { Toast } from 'primereact/toast';
+import { Tooltip } from 'primereact/tooltip';
 import './FormReg.css';
 
 
 function FormPublication () {
+    const [showMessageAccept, setShowMessageAccept] = useState(false);
+    const [showbutup, setShowbutup] = useState(false);
     const [formData, setFormData] = useState({});
     let responseFromServer;
     let dataFromApiLogin;
+    const [showSubcategory, setShowSubcategory]=useState(false)
+    //let val1;
+    //const toast = useRef(null);
+    //const componentRef = React.useRef();
 
+    /*const onUpload = () => {
+        console.log('b');
+        toast.current.show({severity: 'info', summary: 'Success', detail: 'File Uploaded'});
+    }*/
 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedExCategory, setSelectedExCategory] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+    const [selectedState, setSelectedState] = useState(null);
+
+
+    const stateOptions= [
+        {label: 'nuevo', code:'nuevo'},
+        {label: 'usado', code:'usado'}
+    ]
 
     let subcategoryOptions=[]
 
@@ -139,17 +158,31 @@ function FormPublication () {
         setSelectedExCategory(e.value);       
     }
 
+    const onStateChange =(e) => {
+        setSelectedState(e.value);
+    }
+
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessageAccept(false) } /></div>;
+
     const validate = (data) => {
         let errors = {};
+        
+        //console.log(componentRef.current);
 
         if (selectedCategory != null){
             let sCategory=selectedCategory.label;
             data.category=sCategory;
-            subcategoryOptions=subcategories[sCategory];
-            console.log(subcategories.Tecnología)
-        }else if (data.category == 'Otros' || data.category == 'Servicios' ){
+            subcategoryOptions=subcategories[sCategory]; 
             
         }
+
+        if (selectedCategory != null && selectedCategory.label != 'Otros' && selectedCategory.label != 'Servicios' ){
+            setShowSubcategory(true);
+        }
+        else{
+            setShowSubcategory(false);
+        }
+        
 
         if (selectedSubcategory != null){
             data.subcategory=selectedSubcategory.label;
@@ -157,8 +190,12 @@ function FormPublication () {
             data.subcategory='';
         }
         
-        if(selectedExCategory != null){
+        if (selectedExCategory != null){
             data.exchange_for=selectedExCategory.label;
+        }
+
+        if (selectedState != null){
+            data.item_status=selectedState.label;
         }
 
         if (!data.title) {
@@ -191,9 +228,10 @@ function FormPublication () {
     };
 
     const onSubmit = async (data, form) => {
-        /*await setFormData(data);
-        await sendRegisterToServer(data);
-        form.restart();*/
+        //onUpload();
+        //await setFormData(data);
+        //await sendRegisterToServer(data);
+        //form.restart();
     };
 
 
@@ -203,7 +241,7 @@ function FormPublication () {
     };
 
     /*const sendRegisterToServer = async (data) => {
-        await fetch(`http://localhost:3080/register`,{            
+        await fetch(`http://localhost:3080/new-post`,{            
             method : 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -211,25 +249,55 @@ function FormPublication () {
             },
             body: JSON.stringify(data)
         })
-        .then((response) => responseFromServer = response.json()).then((data)=> dataFromApiRegister=data).catch(error=> console.log(error));
+        .then((response) => responseFromServer = response.json()).then((data)=> dataFromApiPublication=data).catch(error=> console.log(error));
     
-        if (dataFromApiRegister.registerSuccess){//verifica si se realiza el registro en la bd correctamente
+        if (dataFromApiPublication.postingSuccess){//verifica si se realiza el registro en la bd correctamente
             setShowMessageAccept(true);
         }else{
             setShowMessageDeny(true);
     
         }
     };*/
+    //const chooseOptions = {label: 'Elegir', icon: 'pi pi-fw pi-check-circle'};
+    //const uploadOptions = {label: 'Uplaod', icon: 'pi pi-upload', className: 'butup'};
+    //const cancelOptions = {label: 'Cancelar', icon: 'pi pi-times', className: 'p-button-danger'};
+
+    /*const customBase64Uploader = async (event) => {
+        // convert file to base64 encoded 
+        const file = event.files[0];
+        const reader = new FileReader();
+        let blob = await fetch(file.objectURL).then(r => r.blob()); //blob:url
+        reader.readAsDataURL(blob); 
+        reader.onloadend = function () {
+            const base64data = reader.result;
+            console.log(base64data);
+        }
+    }*/
+
 
     return (
+        
         <div className="form-demo">
+            {/*<Toast ref={toast}></Toast>
+            <Tooltip target=".custom-choose-btn" content="Choose" position="bottom" />
+            <Tooltip target=".custom-upload-btn" content="Upload" position="bottom" />
+            <Tooltip target=".custom-cancel-btn" content="Clear" position="bottom" />*/}
+            <Dialog visible={showMessageAccept} onHide={() => setShowMessageAccept(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                <div className="flex align-items-center flex-column pt-6 px-3">
+                    <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
+                    <h5>¡Tu publicación ha sido creada!</h5>
+                    <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
+                        Ahora puedes empezar a recibir propuestas
+                    </p>
+                </div>
+            </Dialog>
 
 
             <div className="flex justify-content-center">
                 <div className="card">
                     <h5 className="text-center">Crear publicación</h5>
-                    <Form onSubmit={onSubmit} initialValues={{ title: "", category: "", subcategory: "", description: "", item_status: "", exchange_for: "", accept: false}} validate={validate} render={({ handleSubmit }) => (
-                        <form onSubmit={handleSubmit} className="p-fluid">
+                    <Form onSubmit={onSubmit} initialValues={{ title: "", category: "", subcategory: "", description: "", item_status: "", exchange_for: "", file:"", accept: false}} validate={validate} render={({ handleSubmit }) => (
+                        <form onSubmit={handleSubmit} className="p-fluid" action="https://93.188.164.106:4000/upload" enctype="multipart/form-data" method="POST">
                             
                             <Field name="title" render={({ input, meta }) => (
                                 <div className="field">
@@ -250,7 +318,7 @@ function FormPublication () {
                                 </div>
                                 
                             )} />
-                           
+                           <div className={showSubcategory ? "":"butup"}>
                             <Field name="subcategory" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -260,6 +328,7 @@ function FormPublication () {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            </div>
                             <Field name="description" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -272,7 +341,7 @@ function FormPublication () {
                             <Field name="item_status" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="item_status" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <Dropdown id="item_status" {...input} value={selectedState} options={stateOptions} onChange={onStateChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>
                                         <label htmlFor="item_status" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Estado*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -286,7 +355,13 @@ function FormPublication () {
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
-                            )} />                   
+                            )} />      
+
+                            <h6>Sube las imágenes de tu publicación:</h6>
+                            <input  type="file" name="file" accept="image/*" multiple='true'/>
+                            <br/>
+                            <br/>
+
                             <Field name="accept" type="checkbox" render={({ input, meta }) => (
                                 <div className="field-checkbox">
                                     <Checkbox inputId="accept" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
@@ -295,11 +370,18 @@ function FormPublication () {
                             )} />
 
                             
+                            
+                            {/*<FileUpload id="file" name="file" url="https://93.188.164.106:4000/upload" multiple type="file" accept="image/*"  chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions} maxFileSize={1000000} ref={node => componentRef.current = node}
+                                emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />*/}
+                            
+                            
 
                             <Button type="submit" label="Publicar" className="mt-2" />
+
+                           
+                        
                         </form>
                     )} />
-                    
                 </div>
                 
             </div>
