@@ -1,4 +1,5 @@
 import React from "react";
+import Publication from '../Publication.js';
 
 function Community () {
     return(
@@ -6,6 +7,7 @@ function Community () {
             <h1>
             En construcción... Comunidad.
             </h1>
+            <Publication />
         </>
     );
 }
