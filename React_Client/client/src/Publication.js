@@ -16,7 +16,7 @@ import { Galleria } from 'primereact/galleria';
 
 
 
-function Publication (){
+function Publication (){//aquí recibiría un objeto?
    
    let datos= ({
     "name":"Fabián",
@@ -24,7 +24,7 @@ function Publication (){
     "title":"Zapatos Rojos",
     "category":"Ropa y accesorios",
     "subcategory":"formal",
-    "description":"zapatos buenos",
+    "description":"zapatos buenos créanme",
     "publication_date":"2020-12-15",
     "item_state":"nuevo",
     "exchange_for":"Arte",
@@ -112,6 +112,7 @@ let ima=[
                     <br/>
                     <br/>
                     <Button label="Hacer propuesta" icon="pi pi-comments" />
+                    <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger"/>{/*la idea es que solo aparezca un boton depende del usuario*/}
                 </Card>
 
             </div>

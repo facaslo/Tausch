@@ -24,8 +24,9 @@ function FormPublication () {
     const [showbutup, setShowbutup] = useState(false);
     const [formData, setFormData] = useState({});
     let responseFromServer;
-    let dataFromApiLogin;
+    let dataFromApiPublication;
     const [showSubcategory, setShowSubcategory]=useState(false)
+    //const [showImageError, setShowImageError]=useState(false)
     //let val1;
     //const toast = useRef(null);
     //const componentRef = React.useRef();
@@ -167,12 +168,15 @@ function FormPublication () {
     const validate = (data) => {
         let errors = {};
         
-        //console.log(componentRef.current);
+
+
+        //console.log(document.getElementsBy);
 
         if (selectedCategory != null){
             let sCategory=selectedCategory.label;
             data.category=sCategory;
-            subcategoryOptions=subcategories[sCategory]; 
+            subcategoryOptions=subcategories[sCategory];
+            //console.log(componentRef.current.value)
             
         }
 
@@ -220,18 +224,29 @@ function FormPublication () {
         errors.item_status = "Especifica el estado de tu producto";
         }
 
-        if (!data.accept) {
+        if (!data.accept ) {
         errors.accept = "Es necesario estar de acuerdo con los términos y condiciones.";
         }
+        
+        /*if (componentRef.current == null){
+            console.log('m')
+            
+        }else if (componentRef.current.value==""){
+            console.log('j')
+            setShowImageError(true)
+        }
+        else{
+            setShowImageError(false)
+        }*/
 
         return errors;
     };
 
     const onSubmit = async (data, form) => {
         //onUpload();
-        //await setFormData(data);
-        //await sendRegisterToServer(data);
-        //form.restart();
+        await setFormData(data);
+        await sendRegisterToServer(data);
+        form.restart();
     };
 
 
@@ -240,7 +255,7 @@ function FormPublication () {
         return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
     };
 
-    /*const sendRegisterToServer = async (data) => {
+    const sendRegisterToServer = async (data) => {
         await fetch(`http://localhost:3080/new-post`,{            
             method : 'POST',
             headers: {
@@ -253,11 +268,8 @@ function FormPublication () {
     
         if (dataFromApiPublication.postingSuccess){//verifica si se realiza el registro en la bd correctamente
             setShowMessageAccept(true);
-        }else{
-            setShowMessageDeny(true);
-    
         }
-    };*/
+    };
     //const chooseOptions = {label: 'Elegir', icon: 'pi pi-fw pi-check-circle'};
     //const uploadOptions = {label: 'Uplaod', icon: 'pi pi-upload', className: 'butup'};
     //const cancelOptions = {label: 'Cancelar', icon: 'pi pi-times', className: 'p-button-danger'};
@@ -358,7 +370,11 @@ function FormPublication () {
                             )} />      
 
                             <h6>Sube las imágenes de tu publicación:</h6>
-                            <input  type="file" name="file" accept="image/*" multiple='true'/>
+                            <input id="file" type="file" name="file" accept="image/*" multiple='true'  required/>
+                            {/*<br/>
+                            <div className={showImageError ? "":"butup"}>
+                                Sube al menos una imagen
+                            </div>*/}
                             <br/>
                             <br/>
 
