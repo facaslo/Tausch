@@ -10,7 +10,7 @@ import { Image } from 'primereact/image';
 import "./NavBar.css"
 
 class NavBar extends Component {
-    state = [{ clicked : false}, { estadoModal1 : false}, { estadoModal2 : false}]
+    state = [{ clicked : false}, { estadoModal1 : false}, { estadoModal2 : false}, {name: ''}]
 
     handleClick = () => {
         this.setState({ clicked: !this.state.clicked})
@@ -24,6 +24,14 @@ class NavBar extends Component {
         this.setState({ estadoModal2: !this.state.estadoModal2})
     }
 
+    //Para hacer logout eliminar la token
+    //y redirigirlo a la pantalla de home
+    logout = (e) => {
+        localStorage.removeItem("token");
+        console.log("log out exitoso")
+        window.location.replace("/");
+    }
+
     render() {
         return (
             <div>
@@ -33,6 +41,31 @@ class NavBar extends Component {
                         {/*Tausch
                         <h6 className="navbar-slogan">Tu llave a lo que buscas</h6> */}
                     </h1>
+                    
+                    <div className={this.props.isAuthenticated ? "no-display-login":""}>
+                        <Button onClick={(this.cambiarEstadoModal2)}>
+                            Inicia Sesión
+                        </Button>
+                        <Modal className="contenido-modal" estado={this.state.estadoModal2} cambiarEstado={this.cambiarEstadoModal2}>
+                            <ReactFormLogin />
+                        </Modal>
+                        <Button onClick={(this.cambiarEstadoModal1)}>
+                            Regístrate gratis
+                        </Button>
+                        <Modal className="contenido-modal" estado={this.state.estadoModal1} cambiarEstado={this.cambiarEstadoModal1}>
+                            <ReactFinalFormDemo />
+                        </Modal>
+                    </div>
+                    <div className={this.props.isAuthenticated ? "":"no-display-login"}>
+                        <h6 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h6>
+                        <Button>
+                            Crear Publicación
+                        </Button>
+                        <Button onClick={e => this.logout(e)}>
+                            Cerrar Sesión
+                        </Button>
+                    </div>
+
                     <div className="menu-icon" onClick={this.handleClick}>
                         <i className={this.state.clicked ? 'pi pi-times' : 'pi pi-bars'}></i>                  
                     </div>
@@ -48,21 +81,10 @@ class NavBar extends Component {
                             })
                         }                  
                     </ul>
-                    <Button onClick={(this.cambiarEstadoModal2)}>
-                        Inicia Sesión
-                    </Button>
-                    <Modal className="contenido-modal" estado={this.state.estadoModal2} cambiarEstado={this.cambiarEstadoModal2}>
-                        <ReactFormLogin />
-                    </Modal>
-                    <Button onClick={(this.cambiarEstadoModal1)}>
-                        Regístrate gratis
-                    </Button>
-                    <Modal className="contenido-modal" estado={this.state.estadoModal1} cambiarEstado={this.cambiarEstadoModal1}>
-                        <ReactFinalFormDemo />
-                    </Modal>
-                </nav>  
+                </nav>
             </div>
-                    
+            
+             
         )
     }
 }

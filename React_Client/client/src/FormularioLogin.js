@@ -63,8 +63,12 @@ function ReactFormLogin(){
             
             //Verificar si la cuenta esta activada
             if (dataFromApiLogin.isActivated){
-                //Ir a la pagina para mostrar los datos despues de loggearse
-                window.location = `/datos/${data.email}/`;
+                //Guardar la token del usuario
+                //En el localstorage para saber que hizo log in
+                localStorage.setItem("token",dataFromApiLogin.token);
+
+                //Ir a la pagina home despues de hacer log in
+                window.location = `/`;
 
             }else{
                 setShowMessageActivation(true);
