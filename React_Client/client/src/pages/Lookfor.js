@@ -4,9 +4,12 @@ import FormPublication from '../FormPublication';
 function Lookfor () {
     return(
         <>
-            <h1>
-            En construcción... Buscar.
-            </h1>
+            <div className="general-container">
+                <div className="page-container">
+                <h1>Buscar</h1>
+                    En construcción...  Buscar.
+                </div>
+            </div>
         </>
     );
 }

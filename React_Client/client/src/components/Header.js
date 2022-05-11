@@ -1,5 +1,7 @@
+import { Image } from 'primereact/image';
 import React, {useState,useEffect} from "react";
 import NavBar from "./NavBar/NavBar.js"
+import "./Content.css"
 
 const Header = () => {
     //Estado para saber si el usuario se autentico
@@ -53,7 +55,12 @@ const Header = () => {
 
 
     return(
-        <div className="">
+        <div>
+            <div className="header-logo">
+                <div className="imag">
+                <Image src="images/LogoT2.png" alt="logot2" width="80%"/>
+                </div>
+            </div>
             <header>
                 <NavBar isAuthenticated={isAuthenticated} nombreDeUsuario={nombreDeUsuario}/>
             </header>

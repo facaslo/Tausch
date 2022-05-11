@@ -29,7 +29,7 @@ function FormPublication (authenticated) {
     //const [showImageError, setShowImageError]=useState(false)
     //let val1;
     //const toast = useRef(null);
-    //const componentRef = React.useRef();
+    const componentRef = React.useRef();
 
     /*const onUpload = () => {
         console.log('b');
@@ -40,6 +40,7 @@ function FormPublication (authenticated) {
     const [selectedExCategory, setSelectedExCategory] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const [selectedState, setSelectedState] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
 
 
     const stateOptions= [
@@ -147,15 +148,15 @@ function FormPublication (authenticated) {
 
     const onCategoryChange = (e) => {
         setSelectedCategory(e.value);
+        // console.log(selectedCategory);
         setSelectedSubcategory(null);        
     }
 
     const onSubcategoryChange = (e,data) => {
-        setSelectedSubcategory(e.value);
-        console.log(data)        
+        setSelectedSubcategory(e.value);        
     }
 
-    const onCategoryExChange = (e) => {
+    const onCategoryExChange = (e) => {        
         setSelectedExCategory(e.value);       
     }
 
@@ -167,9 +168,7 @@ function FormPublication (authenticated) {
 
     const validate = (data) => {
         let errors = {};
-        
-
-
+                
         //console.log(document.getElementsBy);
 
         if (selectedCategory != null){
@@ -203,8 +202,7 @@ function FormPublication (authenticated) {
         }
 
         if (!data.title) {
-        errors.title = "Debes ingresar un título a tu publicación";
-        console.log(data)
+        errors.title = "Debes ingresar un título a tu publicación";      
                
         }
     
@@ -237,15 +235,21 @@ function FormPublication (authenticated) {
         }
         else{
             setShowImageError(false)
-        }*/
-
+        }*/       
+        
+        //console.log(data)        
         return errors;
     };
 
-    const onSubmit = async (data, form) => {
-        //onUpload();
-        await setFormData(data);
-        await sendRegisterToServer(data);
+    const onSubmit = async (data, form) => {               
+
+        let objectForm = {"title":data.title, "category": selectedCategory.label, "subcategory": selectedSubcategory.label, "description": data.description, "item_status": selectedState.label, "exchange_for": selectedExCategory.label, "file": selectedFile , "accept": data.accept};
+        let request = new FormData();
+        for(let field in objectForm){
+            request.append(field, objectForm[field])
+        }
+        console.log(request)
+        await sendRegisterToServer(objectForm);
         form.restart();
     };
 
@@ -259,6 +263,7 @@ function FormPublication (authenticated) {
         await fetch(`http://localhost:3080/new-post`,{            
             method : 'POST',
             headers: {
+                'token': localStorage.token,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -270,21 +275,27 @@ function FormPublication (authenticated) {
             setShowMessageAccept(true);
         }
     };
-    //const chooseOptions = {label: 'Elegir', icon: 'pi pi-fw pi-check-circle'};
-    //const uploadOptions = {label: 'Uplaod', icon: 'pi pi-upload', className: 'butup'};
-    //const cancelOptions = {label: 'Cancelar', icon: 'pi pi-times', className: 'p-button-danger'};
+    const chooseOptions = {label: 'Elegir', icon: 'pi pi-fw pi-check-circle'};
+    const uploadOptions = {label: 'Upload', icon: 'pi pi-upload'};
+    const cancelOptions = {label: 'Cancelar', icon: 'pi pi-times', className: 'p-button-danger'};
 
-    /*const customBase64Uploader = async (event) => {
-        // convert file to base64 encoded 
+    const customBase64Uploader = async (event) => {
+        // convert file to base64 encoded         
+        try{
         const file = event.files[0];
         const reader = new FileReader();
         let blob = await fetch(file.objectURL).then(r => r.blob()); //blob:url
         reader.readAsDataURL(blob); 
         reader.onloadend = function () {
             const base64data = reader.result;
+            setSelectedFile(base64data)
             console.log(base64data);
         }
-    }*/
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
 
     return (
         
@@ -308,7 +319,7 @@ function FormPublication (authenticated) {
                 <div className="card">
                     <h5 className="text-center">Crear publicación</h5>
                     <Form onSubmit={onSubmit} initialValues={{ title: "", category: "", subcategory: "", description: "", item_status: "", exchange_for: "", file:"", accept: false}} validate={validate} render={({ handleSubmit }) => (
-                        <form onSubmit={handleSubmit} className="p-fluid" action="https://93.188.164.106:4000/upload" enctype="multipart/form-data" method="POST">
+                        <form onSubmit={handleSubmit} className="p-fluid" >
                             
                             <Field name="title" render={({ input, meta }) => (
                                 <div className="field">
@@ -319,10 +330,10 @@ function FormPublication (authenticated) {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="category"   render={({ input, meta }) => (
+                            <Field name="category" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Dropdown id="category" {...input} value={selectedCategory} options={categoryOptions} onChange={onCategoryChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>
+                                        <Dropdown  name="category" id="category" {...input} value={selectedCategory} options={categoryOptions} onChange={onCategoryChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>
                                         <label htmlFor="category" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Categoria*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
@@ -358,7 +369,7 @@ function FormPublication (authenticated) {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <Field name="exchange_for" render={({ input, meta }) => (
+                            <Field name="exchange_for" type="dropdown" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
                                         <Dropdown id="exchange_for" {...input} value={selectedExCategory} options={categoryOptions} onChange={onCategoryExChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>
@@ -368,8 +379,8 @@ function FormPublication (authenticated) {
                                 </div>
                             )} />      
 
-                            <h6>Sube las imágenes de tu publicación:</h6>
-                            <input id="file" type="file" name="file" accept="image/*" multiple='true'  required/>
+                            {/* <h6>Sube las imágenes de tu publicación:</h6>
+                            <input id="file" type="file" name="file" accept="image/*" multiple='true'  required/> */}
                             {/*<br/>
                             <div className={showImageError ? "":"butup"}>
                                 Sube al menos una imagen
@@ -385,10 +396,7 @@ function FormPublication (authenticated) {
                             )} />
 
                             
-                            
-                            {/*<FileUpload id="file" name="file" url="https://93.188.164.106:4000/upload" multiple type="file" accept="image/*"  chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions} maxFileSize={1000000} ref={node => componentRef.current = node}
-                                emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} />*/}
-                            
+                            <FileUpload name="file" accept="image/*" auto customUpload uploadHandler={customBase64Uploader} uploadOptions={uploadOptions} />                            
                             
 
                             <Button type="submit" label="Publicar" className="mt-2" />

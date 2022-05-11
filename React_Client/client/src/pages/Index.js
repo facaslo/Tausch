@@ -4,9 +4,12 @@ import './General-container.css'
 function Home () {
     return(
         <>
-            <body className="App">
-            En construcción...  Home
-            </body>
+            <div className="general-container">
+                <div className="page-container">
+                <h1>Home</h1>
+                    En construcción...  Home
+                </div>
+            </div>            
         </>
     );
 }
