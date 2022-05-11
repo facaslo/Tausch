@@ -33,14 +33,9 @@ const postRegister =[
 ]
 
 const postLogin = [
-    oneOf(// se revisa si alguno de los checks pasa la validacion
-        check('email')
-            .exists()
-            .isEmail(),
-        check('userName')
-            .exists()
-            .notEmpty(),
-    ),
+    check('email')
+        .exists()
+        .isEmail(),
     check('password')
         .exists()
         .isStrongPassword(),

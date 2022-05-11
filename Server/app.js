@@ -9,6 +9,7 @@ const registerRoute = require('./routes/registerRouter');
 const loginRoute = require('./routes/loginRouter');
 const activationRoute = require('./routes/accountActivation');
 const newPublicationRoute = require('./routes/newPublicationRoute')
+const deletePublicationRoute = require('./routes/deletePublicationRoute')
 const filterRoute = require('./routes/filterRoute')
 
 // Configuración del servidor, puerto 3080
@@ -27,6 +28,7 @@ app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/activate', activationRoute);
 app.use('/new-post', newPublicationRoute);
+app.use('/delete-post', deletePublicationRoute);
 app.use('/filter', filterRoute);
 
 // Iniciar servidor
