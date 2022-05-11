@@ -19,7 +19,7 @@ ReactDOM.render(
     <BrowserRouter>   
         <Header />
         <Routes>
-        <Route path="/" element={<App />} />
+        {/* <Route path="/" element={<App />} /> */}
         <Route path="/activacion" element={<Activation/>} />
         <Route path="/datos/:email" element={<Datos />}/>       
         {/* <Route path="/inicio"element={<Inicio />}/> */}

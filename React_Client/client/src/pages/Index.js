@@ -1,13 +1,15 @@
 import React from "react";
 import './General-container.css'
+import Gallery from "../components/Gallery";
 
 function Home () {
     return(
         <>
             <div className="general-container">
                 <div className="page-container">
-                <h1>Home</h1>
-                    En construcción...  Home
+                    <div className="flex justify-content-center">
+                        < Gallery />
+                    </div>
                 </div>
             </div>            
         </>

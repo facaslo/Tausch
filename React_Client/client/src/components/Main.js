@@ -1,5 +1,5 @@
 import React from "react";
-//import Gallery from "./Gallery";
+import Gallery from "./Gallery";
 
 const Main = () => {
     return(
@@ -7,8 +7,7 @@ const Main = () => {
           <div className="general-container">
               <div className="page-container">
               <h1>Home</h1>
-                  En construcción...  Home
-                  {/*<Gallery />*/}
+                  <Gallery />
               </div>
           </div>
         </>
