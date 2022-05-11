@@ -7,7 +7,6 @@ function Lookfor () {
             <h1>
             En construcción... Buscar.
             </h1>
-            <FormPublication />
         </>
     );
 }

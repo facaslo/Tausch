@@ -5,7 +5,7 @@ import 'primeflex/primeflex.css';
 import './index.css';
 import ReactDOM from 'react-dom';
 
-import React, { useRef,useState } from 'react';
+import React, { useEffect, useRef,useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
@@ -19,7 +19,7 @@ import { Tooltip } from 'primereact/tooltip';
 import './FormReg.css';
 
 
-function FormPublication () {
+function FormPublication (authenticated) {
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [showbutup, setShowbutup] = useState(false);
     const [formData, setFormData] = useState({});
@@ -285,7 +285,6 @@ function FormPublication () {
             console.log(base64data);
         }
     }*/
-
 
     return (
         

@@ -28,8 +28,12 @@ class NavBar extends Component {
     //y redirigirlo a la pantalla de home
     logout = (e) => {
         localStorage.removeItem("token");
-        console.log("log out exitoso")
         window.location.replace("/");
+    }
+
+    //Funcion para ir al formulario de crear publicación
+    goToCreatePublication = (e) => {
+        window.location.replace("/createpublication");
     }
 
     render() {
@@ -41,7 +45,6 @@ class NavBar extends Component {
                         {/*Tausch
                         <h6 className="navbar-slogan">Tu llave a lo que buscas</h6> */}
                     </h1>
-                    
                     <div className={this.props.isAuthenticated ? "no-display-login":""}>
                         <Button onClick={(this.cambiarEstadoModal2)}>
                             Inicia Sesión
@@ -58,7 +61,7 @@ class NavBar extends Component {
                     </div>
                     <div className={this.props.isAuthenticated ? "":"no-display-login"}>
                         <h6 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h6>
-                        <Button>
+                        <Button onClick={e => this.goToCreatePublication(e)}>
                             Crear Publicación
                         </Button>
                         <Button onClick={e => this.logout(e)}>
