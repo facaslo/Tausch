@@ -58,6 +58,18 @@
     align-items: center;
 }
 
+.no-display-login {
+    display:none;
+}
+
+.mensaje-bienvenida {
+    display:inline;
+    color:white;
+    text-align: center; 
+    font-family: 'Yanone Kaffeesatz', sans-serif;  
+    letter-spacing: 0.1rem;
+}
+
 @media screen and (max-width:960px) {
     .NavBarItems {
         position: relative;
@@ -145,6 +157,19 @@
         font-family: 'Yanone Kaffeesatz', sans-serif;
         /*display: none;*/
     }
+    
+    .no-display-login {
+        display:none;
+    }
+
+    .mensaje-bienvenida {
+        display:inline;
+        color:white;
+        text-align: center; 
+        font-family: 'Yanone Kaffeesatz', sans-serif;  
+        letter-spacing: 0.1rem;
+    }
+
 }
 
 @media screen and (max-width:752px) {
@@ -156,5 +181,17 @@
         transform: translate(-40%, 20%);
         font-size: 1.8rem;
         cursor: pointer;
+    }
+
+    .no-display-login {
+        display:none;
+    }
+
+    .mensaje-bienvenida {
+        display:inline;
+        color:white;
+        text-align: center; 
+        font-family: 'Yanone Kaffeesatz', sans-serif;  
+        letter-spacing: 0.1rem;
     }
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import FormPublication from '../FormPublication';
 
 function Lookfor () {
     return(

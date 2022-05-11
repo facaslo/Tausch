@@ -10,8 +10,10 @@ import Who from './pages/Who';
 import How from './pages/How';
 import Community from './pages/Community';
 import Lookfor from './pages/Lookfor';
+import CreatePublication from './pages/CreatePublication';
 import Header from './components/Header';
 import Footer from './components/Footer';
+
 
 ReactDOM.render(
     <BrowserRouter>   
@@ -26,6 +28,7 @@ ReactDOM.render(
         <Route exact path='/how' element={<How />}/>
         <Route exact path='/community' element={<Community />}/>
         <Route exact path='/lookfor' element={<Lookfor />}/>
+        <Route exact path='/createpublication' element={<CreatePublication />}/>
         </Routes>
         {/*<Footer />*/}
     </BrowserRouter>,
