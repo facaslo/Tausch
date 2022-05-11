@@ -32,9 +32,9 @@ app.use('/delete-post', deletePublicationRoute);
 app.use('/filter', filterRoute);
 
 // Iniciar servidor
-app.listen(app.get('port'), ()=>{
+const server = app.listen(app.get('port'), ()=>{
     console.log("Server on port ", app.get('port'))  //start server with the selected port
 });
 
 // exportar el app.js para usarlo en las pruebas
-module.exports = app
+module.exports = {app, server}

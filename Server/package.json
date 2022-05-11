@@ -4,8 +4,9 @@
   "description": "Una aplicación web para realizar trueques",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "mocha"
+    "start": "cross-env NODE_ENV=development nodemon app.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --silent",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",

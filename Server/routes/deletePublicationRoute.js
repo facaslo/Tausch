@@ -9,8 +9,7 @@ const deletePublication = require('../models/deletePublication')
 router.delete('/', async (req, res) => {// validacion ?
 
     try{
-        const deleted = await deletePublication(req.body.id)// req.body.email ?
-        console.log(deleted)
+        await deletePublication(req.body.id)// req.body.email
         res.status(200).json({deleteSuccess:true, msg: 'Publicacion borrada exitosamente.'})
     }
     catch(err){

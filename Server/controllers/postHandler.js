@@ -56,7 +56,9 @@ const subcategories = {
     'Hogar':['Electrodomésticos', 'Decoración', 'Muebles', 'Jardineria'],
     'Libros y revistas':['Literatura', 'Comics', 'Revistas'],
     'Música':['Instrumentos', 'Discos'],
-    'Vehículos':['Motos', 'Automóviles', 'Accesorios y herramientas', 'Repuestos y partes']
+    'Vehículos':['Motos', 'Automóviles', 'Accesorios y herramientas', 'Repuestos y partes'],
+    'Servicios':[],
+    'Otros':[]
 }
 
 const itemState = ["Nuevo", "Usado"]
@@ -80,17 +82,19 @@ const postNewPublication = [
         .notEmpty()
         .isIn(categories),
     body().custom((value) => {
-        if(value.subcategory || value.subcategory === ''){
+        if(value.subcategory === ''){
+            if(value.category === 'Servicios' || value.category === 'Otros'){
+                return true
+            }
+        }
+        if(value.subcategory){
             if(value.subcategory !== ''){
                 if(subcategories[value.category].includes(value.subcategory)){
                     return true
                 }
             }
-            else if(value.category === 'Servicios' || value.category === 'Otros'){
-                return true
-            }
         }
-        return false
+        throw new Error('Campo de subcategoria invalido.')
     }),
     check('description')
         .exists()
