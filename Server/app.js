@@ -11,6 +11,7 @@ const activationRoute = require('./routes/accountActivation');
 const authenticationRoute = require('./routes/authenticationRoute');
 const newPublicationRoute = require('./routes/newPublicationRoute')
 const filterRoute = require('./routes/filterRoute')
+const getLast10 = require('./routes/getLast10PubRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -30,6 +31,7 @@ app.use('/activate', activationRoute);
 app.use('/authentication',authenticationRoute);
 app.use('/new-post', newPublicationRoute);
 app.use('/filter', filterRoute);
+app.use('/getLastTen', getLast10)
 
 // Iniciar servidor
 app.listen(app.get('port'), ()=>{
