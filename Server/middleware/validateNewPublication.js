@@ -4,24 +4,24 @@ const responseNewPublication = require('./outAPINewPublication');
 
 const validateNewPublication = async (req, res, next) =>{
     try{
-        validationResult(req).throw()
-        let image_path;
-        let image_hash;
+        validationResult(req).throw()        
         // Configurar servidor
         await createPublication(
-            req.title,
-            req.category,
-            req.subcategory,
-            req.description,
-            req.publication_date,
-            req.iteam_status,
-            req.exchange_for
+            req.user_email,
+            req.body.title,
+            req.body.category,
+            req.body.subcategory,
+            req.body.description,            
+            req.body.item_status,
+            req.body.exchange_for,
+            req.body.file
         )
 
         responseNewPublication(req,res)
         return next()
     }
     catch(err){
+        console.log(err)
         res.status(403).send(err)
     }
 }

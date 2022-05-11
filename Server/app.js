@@ -20,7 +20,7 @@ app.use(cors());
 // parse form data
 app.use(express.urlencoded({extended: false}))
 // parse json
-app.use(express.json())
+app.use(express.json({limit: '25mb'}))
 
 // Llamada a midlewares
 app.use(printRequestType);

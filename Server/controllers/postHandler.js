@@ -52,12 +52,12 @@ const postLogin = [
     }
 ]
 
-const categories = ['Tecnología', 'Ropa y Accesorios', 'Deportes', 'Arte', 'Entretenimiento', 
+const categories = ['Tecnología', 'Ropa y accesorios', 'Deportes', 'Arte', 'Entretenimiento', 
     'Hogar', 'Servicios', 'Libros y Revistas', 'Música', 'Vehículos', 'Otros']
 
 const subcategories = {
     'Tecnología':['Videojuegos', 'Computadores', 'Cámaras', 'Televisores', 'Celulares'],
-    'Ropa y Accesorios':['Formal', 'Deportiva', 'De playa', 'Casual', 'De trabajo', 'Accesorios'],
+    'Ropa y accesorios':['Formal', 'Deportiva', 'De playa', 'Casual', 'De trabajo', 'Accesorios'],
     'Deportes':['Gimnasio', 'Implementos deportivos', 'Bicicletas y movilidad'],
     'Arte':['Obras', 'Materiales', 'Afiches'],
     'Entretenimiento':['Juegos de mesa', 'Juguetes', 'Películas'],
@@ -67,22 +67,17 @@ const subcategories = {
     'Vehículos':['Motos', 'Automóviles', 'Accesorios y herramientas', 'Repuestos y partes']
 }
 
-const itemState = ["Nuevo", "Usado"]
+const itemState = ["nuevo", "usado"]
 
-const imageExtensions = ['.bmp', '.gif', '.jpg', '.tif', '.png']
+const imageExtensions = ['.webp','.vsg','.bmp', '.gif', '.jpg', '.tif', '.png']
 
 const postNewPublication = [
     check('title')
         .exists()
         .notEmpty(),
-    body().custom((value) => {
-        if(value.image){
-            if(imageExtensions.includes(path.extname(value.image))){
-                return true
-            }
-        }
-        return false
-    }),
+    check('file')
+        .exists()
+        .notEmpty(),
     check('category')
         .exists()
         .notEmpty()
@@ -102,10 +97,7 @@ const postNewPublication = [
     }),
     check('description')
         .exists()
-        .notEmpty(),
-    check('publication_date')
-        .exists()
-        .isDate(), // el formato predeterminado es yyyy/mm/dd, se puede cambiar (ver validator en github)
+        .notEmpty(),    
     check('item_status')
         .exists()
         .notEmpty()
