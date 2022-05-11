@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 //Acceder a variables de ambiente
 //Se accede a la clave secreta en el archivo .env
 require('dotenv').config();
+//console.log(process.env)
 
 //Como parametro se indica el email
 //Que se almacenara en la token
@@ -18,7 +19,7 @@ function jwtGenerator(email) {
 
     //Retornar la JWT completa
     //Lo token tiene duracion de 1 dia
-    return jwt.sign(payload,process.env.jwtSecret, {expiresIn: "1d"});
+    return jwt.sign(payload,process.env.jwtSecret, {expiresIn: "1d"});    
 }
 
 module.exports = jwtGenerator;
