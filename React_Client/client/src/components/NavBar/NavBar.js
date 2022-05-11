@@ -28,11 +28,11 @@ class NavBar extends Component {
         return (
             <div>
                 <nav className="NavBarItems">
-                    <h1>
-                    <Image src="images/LogoT2.png" alt="logot2" width="70px" />  
-                        {/*Tausch
-                        <h6 className="navbar-slogan">Tu llave a lo que buscas</h6> */}
-                    </h1>
+                    {/*<h1>
+                    <Image src="images/LogoT3.png" alt="logot3" width="70px" /> 
+                        Tausch
+                        <h6 className="navbar-slogan">Tu llave a lo que buscas</h6>
+                    </h1>*/}
                     <div className="menu-icon" onClick={this.handleClick}>
                         <i className={this.state.clicked ? 'pi pi-times' : 'pi pi-bars'}></i>                  
                     </div>

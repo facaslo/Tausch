@@ -28,7 +28,7 @@ const Footer = () => {
                     <div className="row">
                         <p className="col-md-4 footer-col">
                             &copy;{new Date().getFullYear()}
-                            Tausch | Todos los derechos reservados | Términos del servicio
+                            Tausch | Todos los derechos reservados
                         </p>
                     </div>
                 </div>
