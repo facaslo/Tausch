@@ -251,6 +251,7 @@ function FormPublication (authenticated) {
         console.log(request)
         await sendRegisterToServer(objectForm);
         form.restart();
+        window.location.href = "localhost:3000/"
     };
 
 
