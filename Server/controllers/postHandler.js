@@ -53,23 +53,23 @@ const postLogin = [
 ]
 
 const categories = ['Tecnología', 'Ropa y accesorios', 'Deportes', 'Arte', 'Entretenimiento', 
-    'Hogar', 'Servicios', 'Libros y Revistas', 'Música', 'Vehículos', 'Otros']
+    'Hogar', 'Servicios', 'Libros y revistas', 'Música', 'Vehículos', 'Otros']
 
 const subcategories = {
-    'Tecnología':['Videojuegos', 'Computadores', 'Cámaras', 'Televisores', 'Celulares'],
-    'Ropa y accesorios':['Formal', 'Deportiva', 'De playa', 'Casual', 'De trabajo', 'Accesorios'],
-    'Deportes':['Gimnasio', 'Implementos deportivos', 'Bicicletas y movilidad'],
-    'Arte':['Obras', 'Materiales', 'Afiches'],
-    'Entretenimiento':['Juegos de mesa', 'Juguetes', 'Películas'],
-    'Hogar':['Electrodomésticos', 'Decoración', 'Muebles', 'Jardineria'],
-    'Libros y revistas':['Literatura', 'Comics', 'Revistas'],
-    'Música':['Instrumentos', 'Discos'],
-    'Vehículos':['Motos', 'Automóviles', 'Accesorios y herramientas', 'Repuestos y partes']
+    'Tecnología':['Videojuegos', 'Computadores', 'Cámaras', 'Televisores', 'Celulares','Otros'],
+    'Ropa y accesorios':['Formal', 'Deportiva', 'De playa', 'Casual', 'De trabajo', 'Accesorios','Otros'],
+    'Deportes':['Gimnasio', 'Implementos deportivos', 'Bicicletas y movilidad','Otros'],
+    'Arte':['Obras', 'Materiales', 'Afiches','Otros'],
+    'Entretenimiento':['Juegos de mesa', 'Juguetes', 'Películas','Otros'],
+    'Hogar':['Electrodomésticos', 'Decoración', 'Muebles', 'Jardineria','Otros'],
+    'Libros y revistas':['Literatura', 'Comics', 'Revistas','Otros'],
+    'Música':['Instrumentos', 'Discos','Otros'],
+    'Vehículos':['Motos', 'Automóviles', 'Accesorios y herramientas', 'Repuestos y partes','Otros']
 }
 
 const itemState = ["nuevo", "usado"]
 
-const imageExtensions = ['.webp','.vsg','.bmp', '.gif', '.jpg', '.tif', '.png']
+const imageExtensions = ['.webp','.svg','.bmp', '.gif', '.jpg','.jpeg', '.tif', '.png']
 
 const postNewPublication = [
     check('title')

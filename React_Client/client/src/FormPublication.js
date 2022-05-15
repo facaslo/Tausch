@@ -55,10 +55,10 @@ function FormPublication (authenticated) {
         {label: 'Ropa y accesorios', code: 'Ropa y accesorios'},
         {label: 'Deportes', code: 'Deportes'},
         {label: 'Arte', code: 'Arte'},
-        {label: 'Entretenimineto', code: 'Entretenimiento'},
+        {label: 'Entretenimiento', code: 'Entretenimiento'},
         {label: 'Hogar', code: 'Hogar'},
         {label: 'Servicios', code: 'Servicios'},
-        {label: 'Libros y Revistas', code: 'Libros y Revistas'},
+        {label: 'Libros y revistas', code: 'Libros y revistas'},
         {label: 'Música', code: 'Música'},
         {label: 'Vehículos', code: 'Vehículos'},
         {label: 'Otros', code: 'Otros'}
@@ -66,7 +66,7 @@ function FormPublication (authenticated) {
 
     
     const subTecnology = [
-        {label: 'Videojuegos', code: 'Videojuegos1'},
+        {label: 'Videojuegos', code: 'Videojuegos'},
         {label: 'Computadores', code: 'Computadores'},
         {label: 'Cámaras', code: 'Cámaras'},
         {label: 'Televisores', code: 'Televisores'},
@@ -78,13 +78,14 @@ function FormPublication (authenticated) {
         {label: 'Formal', code: 'Formal'},
         {label: 'Deportiva', code: 'Deportiva'},
         {label: 'De playa', code: 'De playa'},
+        {label: 'Casual', code: 'Casual'},
         {label: 'De trabajo', code: 'De trabajo'},
         {label: 'Accesorios', code: 'Accesorios'},
         {label: 'Otros', code: 'Otros'}
     ];
     
     const subSports = [
-        {label: 'Gimansio', code: 'Gimansio'},
+        {label: 'Gimnasio', code: 'Gimnasio'},
         {label: 'Implementos deportivos', code: 'Implementos deportivos'},
         {label: 'Bicicletas y movilidad', code: 'Bicicletas y movilidad'},
         {label: 'Otros', code: 'Otros'}
@@ -114,7 +115,7 @@ function FormPublication (authenticated) {
 
     const subBooks = [
         {label: 'Literatura', code: 'Literatura'},
-        {label: 'Comic', code: 'Comic'},
+        {label: 'Comics', code: 'Comics'},
         {label: 'Revistas', code: 'Revistas'},
         {label: 'Otros', code: 'Otros'}
     ];
@@ -138,9 +139,9 @@ function FormPublication (authenticated) {
         'Ropa y accesorios': subClothes,
         'Deportes':subSports,
         'Arte':subArt,
-        'Entretenimineto':subEntertaiment,
+        'Entretenimiento':subEntertaiment,
         'Hogar':subHome,
-        'Libros y Revistas':subBooks,
+        'Libros y revistas':subBooks,
         'Música':subMusic,
         'Vehículos':subVehicles,
         'Otros':[] 
@@ -241,9 +242,15 @@ function FormPublication (authenticated) {
         return errors;
     };
 
-    const onSubmit = async (data, form) => {               
+    const onSubmit = async (data, form) => { 
+        let objectForm              
 
-        let objectForm = {"title":data.title, "category": selectedCategory.label, "subcategory": selectedSubcategory.label, "description": data.description, "item_status": selectedState.label, "exchange_for": selectedExCategory.label, "file": selectedFile , "accept": data.accept};
+        if (selectedSubcategory!=null){
+            objectForm = {"title":data.title, "category": selectedCategory.label, "subcategory": selectedSubcategory.label, "description": data.description, "item_status": selectedState.label, "exchange_for": selectedExCategory.label, "file": selectedFile , "accept": data.accept};
+        }
+        else{
+            objectForm = {"title":data.title, "category": selectedCategory.label, "subcategory": '',"description": data.description, "item_status": selectedState.label, "exchange_for": selectedExCategory.label, "file": selectedFile , "accept": data.accept};
+        }
         let request = new FormData();
         for(let field in objectForm){
             request.append(field, objectForm[field])
