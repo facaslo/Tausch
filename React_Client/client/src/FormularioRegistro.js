@@ -116,15 +116,15 @@ function ReactFinalFormDemo () {
     const passwordHeader = <h6>Digita una contraseña</h6>;
     const passwordFooter = (
         <React.Fragment>
-        <Divider />
-        <p className="mt-2">Sugerencias</p>
-        <ul className="pl-2 ml-2 mt-0" style={{ lineHeight: "1.5" }}>
-            <li>Al menos una minúscula</li>
-            <li>Al menos una mayúscula</li>
-            <li>Al menos un número</li>
-            <li>Al menos un caracter especial: /.$ </li>
-            <li>Mínimo 8 caracteres</li>            
-        </ul>
+            <Divider />
+                <p className="mt-2">Sugerencias</p>
+                <ul className="pl-2 ml-2 mt-0" style={{ lineHeight: "1.0" }}>
+                    <li>Al menos una minúscula</li>
+                    <li>Al menos una mayúscula</li>
+                    <li>Al menos un número</li>
+                    <li>Al menos un caracter especial: /.$ </li>
+                    <li>Mínimo 8 caracteres</li>            
+                </ul>
         </React.Fragment>
     );
 
@@ -143,7 +143,6 @@ function ReactFinalFormDemo () {
             setShowMessageAccept(true);
         }else{
             setShowMessageDeny(true);
-    
         }
     };
 
@@ -151,9 +150,9 @@ function ReactFinalFormDemo () {
         <div className="form-demo">
             <Dialog visible={showMessageAccept} onHide={() => setShowMessageAccept(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
                 <div className="flex align-items-center flex-column pt-6 px-3">
-                    <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
+                    <i className="pi pi-check-circle" style={{ fontSize: '1.5rem', color: 'var(--green-500)' }}></i>
                     <h5>Para culminar su registro</h5>
-                    <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
+                    <p style={{ lineHeight: 0.75, textIndent: "1rem" }}>
                         Tu cuenta está registrada bajo el nombre <b>{formData.userName}</b> y se te envió un correo para que actives tu cuenta
                     </p>
                 </div>
@@ -172,13 +171,13 @@ function ReactFinalFormDemo () {
 
             <div className="flex justify-content-center">
                 <div className="card">
-                    <h5 className="text-center">Registro</h5>
+                    <h3 className="text-center">Registro</h3>
                     <Form onSubmit={onSubmit} initialValues={{ userName: "", password: "", email: "", firstName: "", lastName: "", phoneNumber: "", facebook: "", twitter: "", instagram: "", accept: false}} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
                             
                             <Field name="userName" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-only">
                                         <InputText id="userName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="userName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Usuario*</label>
                                     </span>
@@ -187,7 +186,7 @@ function ReactFinalFormDemo () {
                             )} />
                             <Field name="password" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-only">
                                         <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) })} header={passwordHeader} footer={passwordFooter} />
                                         <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Password*</label>
                                     </span>
@@ -196,7 +195,7 @@ function ReactFinalFormDemo () {
                             )} />
                             <Field name="email" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label p-input-icon-right">
+                                    <span className="ui-sr-only p-input-icon-right">
                                         <i className="pi pi-envelope" />
                                         <InputText id="email" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="email" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Email*</label>
@@ -206,7 +205,7 @@ function ReactFinalFormDemo () {
                             )} />
                             <Field name="firstName" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-only">
                                         <InputText id="firstName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="firstName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Nombres*</label>
                                     </span>
@@ -215,7 +214,7 @@ function ReactFinalFormDemo () {
                             )} />
                             <Field name="lastName" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-onlyl">
                                         <InputText id="lastName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="lastName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Apellidos*</label>
                                     </span>
@@ -224,7 +223,7 @@ function ReactFinalFormDemo () {
                             )} />
                             <Field name="age" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-only">
                                         <InputText id="age" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="age" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Edad*</label>
                                     </span>
@@ -233,7 +232,7 @@ function ReactFinalFormDemo () {
                             )} />
                             <Field name="phoneNumber" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-only">
                                         <InputText id="phoneNumber" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="phoneNumber" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Celular*</label>
                                     </span>
@@ -242,7 +241,7 @@ function ReactFinalFormDemo () {
                             )} />     
                             <Field name="facebook" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-only">
                                         <InputText id="facebook" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="facebook" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Facebook</label>
                                     </span>
@@ -251,7 +250,7 @@ function ReactFinalFormDemo () {
                             )} /> 
                             <Field name="twitter" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-only">
                                         <InputText id="twitter" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="twitter" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Twitter</label>
                                     </span>
@@ -260,7 +259,7 @@ function ReactFinalFormDemo () {
                             )} />     
                             <Field name="instagram" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="p-float-label">
+                                    <span className="ui-sr-only">
                                         <InputText id="instagram" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="instagram" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Instagram</label>
                                     </span>

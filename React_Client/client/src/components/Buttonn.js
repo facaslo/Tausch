@@ -1,5 +1,5 @@
-import React, { Children } from "react";
-import "./Button.css"
+import React, { children } from "react";
+import "./Buttonn.css"
 
 const STYLES = [
     "btn--primary",
@@ -11,7 +11,7 @@ const SIZES = [
     "btn--large"
 ]
 
-export const Button = ( {
+export const Buttonn = ( {
     children,
     type,
     onClick,

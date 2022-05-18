@@ -5,7 +5,7 @@
     top: 0;
     left: 0;
     background: rgba(0,0,0,.5);
-    padding: 40px;
+    padding: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,19 +19,21 @@
     position: relative;
     border-radius: 5px;
     box-shadow: rgba(100,100,111, 0.2) 0px 7px 29px 0px;
+    padding-top: 20px;
 }
 
 .pi-plus {
     color: rgb(15, 15, 15);
     transform: rotate(45deg);
-    font-size: 36px;
+    font-size: 30px;
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 30px;
     background: none;
     border: none;
     cursor: pointer;
     align-self: start;
+    z-index: 3;
 }
 
 .pi-plus:hover {

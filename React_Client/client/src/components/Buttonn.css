@@ -1,23 +1,31 @@
 :root {
-    --primary: #86868686;
+    --primary: rgb(0, 152, 179);
 }
 
 .btn {
-    padding: 6px 10px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    color: aliceblue;
+    list-style: none;
+    text-align: center;
+    justify-content: center;
+    font-size: 22px;
+    letter-spacing: 0.15rem;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    font-family: 'Yanone Kaffeesatz', sans-serif;
     margin: 10px;
+    display: flexbox;
 }
 
 .btn:hover {
     padding: 8px 15px;
     transition: all 0.3s ease-out;
-    background: rgb(0, 152, 179);
-    color: rgb(230, 211, 247);
+    background: rgb(128, 120, 185);
+    color: aliceblue;
     transition:  90ms;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
 }
 
 .btn--primary {

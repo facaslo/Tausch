@@ -7,7 +7,7 @@ const Modal = ( {children, estado, cambiarEstado} ) => {
             {estado &&
                 <div className ="overlay">
                     <div className ="contenedorModal">
-                        <button className="pi pi-plus" onClick={() => cambiarEstado(false)}></button>
+                        <i className="pi pi-plus" onClick={() => cambiarEstado(false)}></i>
                         {children}
                     </div>
                 </div>

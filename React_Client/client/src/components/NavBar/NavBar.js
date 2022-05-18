@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import Modal from "../Modal";
-import { Button } from "../Button"
+import { Buttonn } from "../Buttonn"
 import { MenuItems } from "./MenuItems"
 import ReactFinalFormDemo  from '../../FormularioRegistro';
 import ReactFormLogin  from '../../FormularioLogin';
 import { NavLink } from "react-router-dom";
-import { Image } from 'primereact/image';
 
 import "./NavBar.css"
 
@@ -45,28 +44,36 @@ class NavBar extends Component {
                         Tausch
                         <h6 className="navbar-slogan">Tu llave a lo que buscas</h6>
                     </h1>*/}
+                    {/*}
                     <div className={this.props.isAuthenticated ? "no-display-login":""}>
-                        <Button onClick={(this.cambiarEstadoModal2)}>
+                        <button className='btn btn-info btn-lg me-2' >Arte</button>
+                        <Buttonn onClick={(this.cambiarEstadoModal2)}>
                             Inicia Sesión
-                        </Button>
+                        </Buttonn>
                         <Modal className="contenido-modal" estado={this.state.estadoModal2} cambiarEstado={this.cambiarEstadoModal2}>
                             <ReactFormLogin />
                         </Modal>
-                        <Button onClick={(this.cambiarEstadoModal1)}>
+                        <Buttonn onClick={(this.cambiarEstadoModal1)}>
                             Regístrate gratis
-                        </Button>
+                        </Buttonn>
+                        <Modal className="contenido-modal" estado={this.state.estadoModal1} cambiarEstado={this.cambiarEstadoModal1}>
+                            <ReactFinalFormDemo />
+                        </Modal>
+                    </div>*/}
+                    <div className={this.props.isAuthenticated ? "no-display-login":""}>
+                        <button className='btn btn-info btn-lg me-2' onClick={(this.cambiarEstadoModal2)}>Inicia Sesión</button>
+                        <Modal className="contenido-modal" estado={this.state.estadoModal2} cambiarEstado={this.cambiarEstadoModal2}>
+                            <ReactFormLogin />
+                        </Modal>
+                        <button className='btn btn-info btn-lg me-2' onClick={(this.cambiarEstadoModal1)}>Regístrate gratis</button>
                         <Modal className="contenido-modal" estado={this.state.estadoModal1} cambiarEstado={this.cambiarEstadoModal1}>
                             <ReactFinalFormDemo />
                         </Modal>
                     </div>
                     <div className={this.props.isAuthenticated ? "":"no-display-login"}>
                         <h6 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h6>
-                        <Button onClick={e => this.goToCreatePublication(e)}>
-                            Crear Publicación
-                        </Button>
-                        <Button onClick={e => this.logout(e)}>
-                            Cerrar Sesión
-                        </Button>
+                        <button className='btn btn-info btn-lg me-2' onClick={e => this.goToCreatePublication(e)}>Crear Publicación</button>
+                        <button className='btn btn-info btn-lg me-2' onClick={e => this.logout(e)}>Cerrar Sesión</button>
                     </div>
 
                     <div className="menu-icon" onClick={this.handleClick}>

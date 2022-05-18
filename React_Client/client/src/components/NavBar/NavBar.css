@@ -9,14 +9,15 @@
 
 .nav-menu {
     display: grid;
+    padding-top: 15px;
     list-style: none;
     grid-template-columns: repeat(7, auto);
     text-align: center;
-    width: 60vw;
+    width: 70vw;
     justify-content: center;
     font-family: 'Yanone Kaffeesatz', sans-serif;
     font-size: 22px;
-    letter-spacing: 0.2rem;
+    letter-spacing: 0.15rem;
 }
 
 .nav-links {
@@ -26,7 +27,8 @@
 }
 
 .nav-links:hover{
-    background-color: rgb(0, 152, 179);
+    background-color: rgb(0, 179, 211);
+    color: aliceblue;
     border-radius: 4px;
     transition: all 0.2s ease-out;
     font-size: 1.8rem;
@@ -39,7 +41,7 @@
 }
 
 .pi-bars:hover {
-    color: rgb(0, 152, 179);
+    color: rgb(0, 179, 211);
     align-self: start;
     transition: all 0.3s ease-in-out;
 }
@@ -64,10 +66,25 @@
 
 .mensaje-bienvenida {
     display:inline;
-    color:white;
+    color:aliceblue;
     text-align: center; 
     font-family: 'Yanone Kaffeesatz', sans-serif;  
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.2rem;
+}
+
+@media screen and (max-width:1270px) {
+    .nav-menu {
+        font-size: 1.3rem;
+        padding-left: 130px;
+    }
+
+    .nav-links:hover{
+        background-color: rgb(0, 179, 211);
+        color: aliceblue;
+        border-radius: 4px;
+        transition: all 0.2s ease-out;
+        font-size: 1.4rem;
+    }
 }
 
 @media screen and (max-width:960px) {
@@ -79,13 +96,14 @@
         display: inline-flex;
         flex-direction: column;
         width: 100%;
-        height: 260px;
+        height: 350px;
         position: absolute;
-        top: 22px;
+        top: 50px;
         left: -100%;
         opacity: 1;
         transition: all 0.5 ease;
         font-size: larger;
+        padding-left: 0px;
     }
 
     .nav-menu.active {
@@ -103,7 +121,7 @@
     }
     
     .pi-times:hover {
-        color: rgb(0, 152, 179);
+        color: rgb(0, 179, 211);
         align-self: start;
         transition: all 0.3s ease-in-out;
     }
@@ -116,7 +134,7 @@
     }
 
     .nav-links:hover {
-        background-color: darkslateblue;
+        background-color: rgb(0, 179, 211);
         font-size: 2.0rem;
     }
 
@@ -125,7 +143,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        transform: translate(-60%, 20%);
+        transform: translate(-60%, 10%);
         font-size: 1.8rem;
         cursor: pointer;
     }
@@ -152,11 +170,6 @@
         transition:  90ms;
         font-size: 2.1rem;
     }*/
-
-    Button {
-        font-family: 'Yanone Kaffeesatz', sans-serif;
-        /*display: none;*/
-    }
     
     .no-display-login {
         display:none;
@@ -164,7 +177,7 @@
 
     .mensaje-bienvenida {
         display:inline;
-        color:white;
+        color: aliceblue;
         text-align: center; 
         font-family: 'Yanone Kaffeesatz', sans-serif;  
         letter-spacing: 0.1rem;
@@ -174,11 +187,11 @@
 
 @media screen and (max-width:752px) {
     .nav-menu {
-        top: 22px;
+        top: 50px;
     }
 
     .menu-icon {
-        transform: translate(-40%, 20%);
+        transform: translate(-40%, 10%);
         font-size: 1.8rem;
         cursor: pointer;
     }
@@ -189,7 +202,7 @@
 
     .mensaje-bienvenida {
         display:inline;
-        color:white;
+        color: aliceblue;
         text-align: center; 
         font-family: 'Yanone Kaffeesatz', sans-serif;  
         letter-spacing: 0.1rem;

@@ -13,22 +13,24 @@ import Lookfor from './pages/Lookfor';
 import CreatePublication from './pages/CreatePublication';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/font-awesome/css/font-awesome.min.css";
 
 
 ReactDOM.render(
     <BrowserRouter>   
         <Header />
         <Routes>
-        {/* <Route path="/" element={<App />} /> */}
-        <Route path="/activacion" element={<Activation/>} />
-        <Route path="/datos/:email" element={<Datos />}/>       
-        {/* <Route path="/inicio"element={<Inicio />}/> */}
-        <Route exact path='/' element={<Home />}/>
-        <Route exact path='/who' element={<Who />}/>
-        <Route exact path='/how' element={<How />}/>
-        <Route exact path='/community' element={<Community />}/>
-        <Route exact path='/lookfor' element={<Lookfor />}/>
-        <Route exact path='/createpublication' element={<CreatePublication />}/>
+            {/* <Route path="/" element={<App />} /> */}
+            <Route path="/activacion" element={<Activation/>} />
+            <Route path="/datos/:email" element={<Datos />}/>       
+            {/* <Route path="/inicio"element={<Inicio />}/> */}
+            <Route exact path='/' element={<Home />}/>
+            <Route exact path='/who' element={<Who />}/>
+            <Route exact path='/how' element={<How />}/>
+            <Route exact path='/community' element={<Community />}/>
+            <Route exact path='/lookfor' element={<Lookfor />}/>
+            <Route exact path='/createpublication' element={<CreatePublication />}/>
         </Routes>
         {/*<Footer />*/}
     </BrowserRouter>,

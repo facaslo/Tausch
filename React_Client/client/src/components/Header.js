@@ -1,6 +1,6 @@
 import { Image } from 'primereact/image';
 import React, {useState,useEffect} from "react";
-import NavBar from "./NavBar/NavBar.js"
+import NavBar from "./NavBar/NavBar"
 import "./Content.css"
 
 const Header = () => {
@@ -58,7 +58,7 @@ const Header = () => {
         <div>
             <div className="header-logo">
                 <div className="imag">
-                <Image src="images/LogoT2.png" alt="logot2" width="80%"/>
+                    <Image src="images/LogoT2.png" alt="logot2" width="80%"/>
                 </div>
             </div>
             <header>
