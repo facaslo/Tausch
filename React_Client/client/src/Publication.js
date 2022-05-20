@@ -4,6 +4,7 @@ import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './index.css';
 import './FormReg.css';
+import './Publication.css';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
@@ -17,6 +18,15 @@ function Publication (){
 
     const [datos, setDatos] = useState({});
     const [imagenPublicacion, SetImagenPublicacion] = useState([]);
+    
+    //Estado para saber si el usuario se autentico
+    //Este estado solo se cambia si el usuario tiene token valida
+    const [isAuthenticated, setisAuthenticated] = useState(false);
+
+    //Estado para saber si el usuario actual es el propietario de la publicacion o no
+    const [propietario, setPropietario] = useState(false);
+    
+    //Recibir el id del producto por medio de la ruta
     const {id} = useParams();
     
     let usuarioDueño = true;
@@ -53,7 +63,43 @@ let ima=[
 ]
     
     //const [images, setImages] = useState(null);
-    
+
+    //Verificar si la token esta activa Con la funcion authorization
+    //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
+    async function isAuth(emailDueñoPublicacion){
+        try{
+            const response = await fetch("http://localhost:3080/authentication/is-verify",
+            {
+                method:"GET",
+                headers:{token: localStorage.token}
+            });
+
+            //Retorna True si se tiene token valida
+            const parseRes = await response.json();
+
+            //Si es true, es que hay una token activa, entonces esta autenticado
+            parseRes === true ? setisAuthenticated(true) : setisAuthenticated(false);
+            
+            if (parseRes == true){
+                //Si hay alguien autenticado,
+                //entonces buscar su nombre_de_usuario
+                const userData = await fetch("http://localhost:3080/authentication/getUserInfo",
+                {
+                    method:"GET",
+                    headers:{token: localStorage.token}
+                });
+
+                const userDataJson = await userData.json();
+                
+                if(emailDueñoPublicacion == userDataJson[0].email){
+                    setPropietario(true);
+                }
+            }
+        } catch(err){
+            console.error(err.message);
+        }
+    }
+
     useEffect(() => {
         (async () => {
             let respuesta = await requestPublicationInfo(id);
@@ -61,6 +107,7 @@ let ima=[
             ima.push(objetoImagen);
             SetImagenPublicacion(ima);
             setDatos(respuesta);
+            let respuestaAutenticacion = await isAuth(respuesta.email);
         })();
     },[]);
     
@@ -135,11 +182,16 @@ let ima=[
                     <span className="flex justify-content-start"><b>{datos.numero_propuestas}</b>&nbsp;Propuestas actualmente</span>
                     <br/>
                     <br/>
-                    <div className={usuarioDueño? "butup":""}>
-                        <Button label="Hacer propuesta" icon="pi pi-comments" />
+                    <div className={isAuthenticated? "":"no-display"}>
+                        <div className={propietario? "butup":""}>
+                            <Button label="Hacer propuesta" icon="pi pi-comments" />
+                        </div>
+                        <div className={propietario? "":"butup"}>
+                            <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger"/>
+                        </div>
                     </div>
-                    <div className={usuarioDueño? "":"butup"}>
-                        <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger"/>
+                    <div className={isAuthenticated? "no-display":""}>
+                        <p className="flex justify-content-start text-primary" >Para hacerle una propuesta de trueque a esta publicación primero Inicia Sesión</p>
                     </div>
                 </Card>
 
