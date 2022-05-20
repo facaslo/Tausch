@@ -191,7 +191,7 @@ let ima=[
                         </div>
                     </div>
                     <div className={isAuthenticated? "no-display":""}>
-                        <p className="flex justify-content-start text-primary" >Para hacerle una propuesta de trueque a esta publicación primero Inicia Sesión</p>
+                        <p className="flex justify-content-start text-primary" >Para hacer una propuesta de trueque a esta publicación primero Inicia Sesión</p>
                     </div>
                 </Card>
 
