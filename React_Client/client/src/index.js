@@ -15,7 +15,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
-
+import Publication from './Publication';
 
 ReactDOM.render(
     <BrowserRouter>   
@@ -31,6 +31,7 @@ ReactDOM.render(
             <Route exact path='/community' element={<Community />}/>
             <Route exact path='/lookfor' element={<Lookfor />}/>
             <Route exact path='/createpublication' element={<CreatePublication />}/>
+            <Route exact path='/publication/:id' element={<Publication />}/>
         </Routes>
         {/*<Footer />*/}
     </BrowserRouter>,

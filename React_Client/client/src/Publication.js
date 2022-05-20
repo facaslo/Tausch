@@ -3,44 +3,66 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './index.css';
+import './FormReg.css';
 
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import { Divider } from 'primereact/divider';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Image } from 'primereact/image';
 import { Galleria } from 'primereact/galleria';
 
+function Publication (){
 
-
-
-
-function Publication (){//aquí recibiría un objeto?
+    const [datos, setDatos] = useState({});
+    const [imagenPublicacion, SetImagenPublicacion] = useState([]);
+    const {id} = useParams();
+    
+    let usuarioDueño = true;
+    
+    const requestPublicationInfo= async (id) => {
+        const url = "http://localhost:3080/publication/" + id;
+        return await fetch(url,{            
+            method : 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },            
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+    };
    
-   let datos= ({
-    "name":"Fabián",
-    "last_name":"Castro",
-    "title":"Zapatos Rojos",
-    "category":"Ropa y accesorios",
-    "subcategory":"formal",
-    "description":"zapatos buenos créanme",
-    "publication_date":"2020-12-15",
-    "item_state":"nuevo",
-    "exchange_for":"Arte",
-    "proposal_number":1
-
-});
-
+    /*let datos= ({
+        "name":"Fabián",
+        "last_name":"Castro",
+        "title":"Zapatos Rojos",
+        "category":"Ropa y accesorios",
+        "subcategory":"formal",
+        "description":"zapatos buenos créanme",
+        "publication_date":"2020-12-15",
+        "item_state":"nuevo",
+        "exchange_for":"Arte",
+        "proposal_number":1
+    });
+    */
 let ima=[
-    {"itemImageSrc": "images/z2.png","alt": "z2","title": "Title 1"},
-    {"itemImageSrc": "images/z3.png","alt": "z3","title": "Title 2"},
-    {"itemImageSrc": "images/z.jpg","alt": "z1","title": "Title 0"}
+    //{"itemImageSrc": "../images/z2.png","alt": "z2","title": "Title 1"},
+    //{"itemImageSrc": "../images/z3.png","alt": "z3","title": "Title 2"},
+    //{"itemImageSrc": "../images/z.jpg","alt": "z1","title": "Title 0"}
 ]
     
     //const [images, setImages] = useState(null);
     
-
+    useEffect(() => {
+        (async () => {
+            let respuesta = await requestPublicationInfo(id);
+            let objetoImagen = {"itemImageSrc":respuesta.imagen, "alt":"No salio la imagen", "title":"Titulo de la imagen"};
+            ima.push(objetoImagen);
+            SetImagenPublicacion(ima);
+            setDatos(respuesta);
+        })();
+    },[]);
     
     const responsiveOptions = [
         {
@@ -90,7 +112,7 @@ let ima=[
                
                 
                 
-                <Galleria value={ima} responsiveOptions={responsiveOptions} numVisible={5} style={{  maxWidth:'600px' }}
+                <Galleria value={imagenPublicacion} responsiveOptions={responsiveOptions} numVisible={5} style={{  maxWidth:'600px' }}
                 showThumbnails={false} showIndicators item={itemTemplate} circular autoPlay transitionInterval={3000}/>
             
            
@@ -99,20 +121,24 @@ let ima=[
                 <Divider layout="vertical" />
                 
 
-                <Card title={datos.title} subTitle={datos.category+", "+datos.subcategory}>
-                    <p className="flex justify-content-start text-primary" >{datos.item_state}</p>
-                    <span className="flex justify-content-start" ><b>Publicado: </b>&nbsp;{datos.publication_date +" por "+ datos.name+" "+datos.last_name}</span>
+                <Card title={datos.titulo} subTitle={datos.categoria+", "+datos.subcategoria}>
+                    <p className="flex justify-content-start text-primary" >{datos.estado_item}</p>
+                    <span className="flex justify-content-start" ><b>Publicado: </b>&nbsp;{String (datos.fecha_publicacion).slice(0,10) +" por "+ datos.nombres + " " + datos.apellidos}</span>
                     <br/>
                     <br/>
-                    <span className="flex justify-content-start">{datos.description}</span>
+                    <span className="flex justify-content-start">{datos.descripcion}</span>
                     <br/>
                     <br/>
-                    <span className="flex justify-content-start"><b>Intercambio por:</b>&nbsp;{datos.exchange_for}</span>
-                    <span className="flex justify-content-start"><b>{datos.proposal_number}</b>&nbsp;Propuestas actualmente</span>
+                    <span className="flex justify-content-start"><b>Intercambio por:</b>&nbsp;{datos.intercambio_por}</span>
+                    <span className="flex justify-content-start"><b>{datos.numero_propuestas}</b>&nbsp;Propuestas actualmente</span>
                     <br/>
                     <br/>
-                    <Button label="Hacer propuesta" icon="pi pi-comments" />
-                    <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger"/>{/*la idea es que solo aparezca un boton depende del usuario*/}
+                    <div className={usuarioDueño? "butup":""}>
+                        <Button label="Hacer propuesta" icon="pi pi-comments" />
+                    </div>
+                    <div className={usuarioDueño? "":"butup"}>
+                        <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger"/>
+                    </div>
                 </Card>
 
             </div>

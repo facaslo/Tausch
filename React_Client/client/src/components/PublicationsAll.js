@@ -88,7 +88,7 @@ function PublicationsAll () {
                                     <div className='card-body'>
                                         <h5 className='car-title mb-2'>{item.titulo}</h5>
                                         <p className='card-text'>{item.descripcion.substring(0,22)}...</p>
-                                        <Link to = {`/publicaciones/${item.id}`} className="btn btn-outline-dark">
+                                        <Link to = {`/publication/${item.id}`} className="btn btn-outline-dark">
                                             Ver publicación
                                         </Link>
                                     </div>
