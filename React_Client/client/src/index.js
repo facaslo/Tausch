@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Activation from './routes/activation';
-import Datos from './routes/datos';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './pages/Index';
 import Who from './pages/Who';
@@ -22,8 +21,7 @@ ReactDOM.render(
         <Header />
         <Routes>
             {/* <Route path="/" element={<App />} /> */}
-            <Route path="/activacion" element={<Activation/>} />
-            <Route path="/datos/:email" element={<Datos />}/>       
+            <Route path="/activacion" element={<Activation/>} />    
             {/* <Route path="/inicio"element={<Inicio />}/> */}
             <Route exact path='/' element={<Home />}/>
             <Route exact path='/who' element={<Who />}/>
