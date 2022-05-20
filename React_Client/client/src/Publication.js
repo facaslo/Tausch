@@ -107,11 +107,13 @@ let ima=[
     return (
 
         <div >
+            <br/>
+            <br/>
             <div className="flex align-items-center justify-content-center">
                 
                
                 
-                
+            
                 <Galleria value={imagenPublicacion} responsiveOptions={responsiveOptions} numVisible={5} style={{  maxWidth:'600px' }}
                 showThumbnails={false} showIndicators item={itemTemplate} circular autoPlay transitionInterval={3000}/>
             
