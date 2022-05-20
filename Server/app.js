@@ -10,6 +10,7 @@ const loginRoute = require('./routes/loginRouter');
 const activationRoute = require('./routes/accountActivation');
 const authenticationRoute = require('./routes/authenticationRoute');
 const newPublicationRoute = require('./routes/newPublicationRoute')
+const deletePublicationRoute = require('./routes/deletePublicationRoute')
 const filterRoute = require('./routes/filterRoute')
 const getLast10 = require('./routes/getLast10PubRoute')
 const publicationRouter = require('./routes/publicationRouter')
@@ -31,14 +32,15 @@ app.use('/login', loginRoute);
 app.use('/activate', activationRoute);
 app.use('/authentication',authenticationRoute);
 app.use('/new-post', newPublicationRoute);
+app.use('/delete-post', deletePublicationRoute);
 app.use('/filter', filterRoute);
 app.use('/getLastTen', getLast10);
 app.use('/publication',publicationRouter);
 
 // Iniciar servidor
-app.listen(app.get('port'), ()=>{
+const server = app.listen(app.get('port'), ()=>{
     console.log("Server on port ", app.get('port'))  //start server with the selected port
 });
 
 // exportar el app.js para usarlo en las pruebas
-module.exports = app
+module.exports = {app, server}

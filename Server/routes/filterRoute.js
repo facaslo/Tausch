@@ -8,8 +8,8 @@ const filterPublication = require('../models/filteredPublications')
 // La dirección '/' es relativa a '/filter'. Si fuera '/url', la dirección absoluta sería '/filter/url'
 router.post('/', async (req, res) => {// validacion ?
 
-    const filteredPosts = await filterPublication(req, res)// llamado al modelo
     try{// salida de la api
+        const filteredPosts = await filterPublication(req, res)// llamado al modelo
         res.status(200).json({success:true, posts: filteredPosts})
     }
     catch(err){
