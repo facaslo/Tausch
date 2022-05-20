@@ -72,7 +72,7 @@ function PublicationsAll () {
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Deportes")}>Deportes</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Entretenimiento")}>Entretenimiento</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Hogar")}>Hogar</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Libros y Revistas")}>Libros y Revistas</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Libros y revistas")}>Libros y revistas</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Música")}>Música</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Otros")}>Otros</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Ropa y accesorios")}>Ropa y accesorios</button>
