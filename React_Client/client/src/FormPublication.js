@@ -19,7 +19,7 @@ import { Tooltip } from 'primereact/tooltip';
 import './FormReg.css';
 
 
-function FormPublication (authenticated) {
+function FormPublication () {
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [showbutup, setShowbutup] = useState(false);
     const [formData, setFormData] = useState({});

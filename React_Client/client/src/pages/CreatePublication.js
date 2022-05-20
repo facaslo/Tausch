@@ -21,23 +21,27 @@ const CreatePublication = () => {
     
             //Retorna True si se tiene token valida
             const parseRes = await response.json();
-    
-            //Si es true, es que hay una token activa, entonces esta autenticado
-            parseRes === true ? setauthenticated(true) : setauthenticated(false);
-                
+
+            //Si no esta logueado, entonces redirigirlo a la pantalla home
+            if (parseRes !== true){
+                window.location.replace("/");
+            }
+
             } catch(err){
                 console.error(err.message);
             }
     }
 
+    //Llamar la funcion para verificar si esta loggeado
     useEffect(() => {
-        isAuth();
-        console.log(authenticated);
+        (async () => {
+            await isAuth();
+        })();
     },[]);
 
     return(
         <>
-         <FormPublication authenticated={authenticated}/>     
+         <FormPublication/>     
         </>
     );
 }
