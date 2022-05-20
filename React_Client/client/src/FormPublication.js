@@ -258,7 +258,7 @@ function FormPublication () {
         console.log(request)
         await sendRegisterToServer(objectForm);
         form.restart();
-        window.location.href = "localhost:3000/"
+        window.location.replace("/");
     };
 
 
