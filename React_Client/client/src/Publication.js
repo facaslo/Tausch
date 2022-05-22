@@ -13,11 +13,13 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Image } from 'primereact/image';
 import { Galleria } from 'primereact/galleria';
+import { Dialog } from 'primereact/dialog';
 
 function Publication (){
 
     const [datos, setDatos] = useState({});
     const [imagenPublicacion, SetImagenPublicacion] = useState([]);
+    const [showDeletedMessage, setShowDeletedMessage] =useState(false);
     
     //Estado para saber si el usuario se autentico
     //Este estado solo se cambia si el usuario tiene token valida
@@ -28,8 +30,8 @@ function Publication (){
     
     //Recibir el id del producto por medio de la ruta
     const {id} = useParams();
-    
-    let usuarioDueño = true;
+    let responseFromServer;
+    let dataFromApiDeletePublication;
     
     const requestPublicationInfo= async (id) => {
         const url = "http://localhost:3080/publication/" + id;
@@ -42,27 +44,9 @@ function Publication (){
         })
         .then((response) => response.json()).catch(error=> console.log(error));
     };
-   
-    /*let datos= ({
-        "name":"Fabián",
-        "last_name":"Castro",
-        "title":"Zapatos Rojos",
-        "category":"Ropa y accesorios",
-        "subcategory":"formal",
-        "description":"zapatos buenos créanme",
-        "publication_date":"2020-12-15",
-        "item_state":"nuevo",
-        "exchange_for":"Arte",
-        "proposal_number":1
-    });
-    */
-let ima=[
-    //{"itemImageSrc": "../images/z2.png","alt": "z2","title": "Title 1"},
-    //{"itemImageSrc": "../images/z3.png","alt": "z3","title": "Title 2"},
-    //{"itemImageSrc": "../images/z.jpg","alt": "z1","title": "Title 0"}
-]
+
+let ima=[]
     
-    //const [images, setImages] = useState(null);
 
     //Verificar si la token esta activa Con la funcion authorization
     //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
@@ -111,6 +95,25 @@ let ima=[
         })();
     },[]);
     
+    const deletePub= async (id)=>{
+        await fetch("http://localhost:3080/delete-post",
+            {
+                method:"DELETE",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'id':id})
+            }).then((response) => responseFromServer = response.json()).then((data)=> dataFromApiDeletePublication=data).catch(error=> console.log(error));
+            
+           if (dataFromApiDeletePublication.deleteSuccess){
+               setShowDeletedMessage(true);
+            }
+            
+        }
+
+    
+
     const responsiveOptions = [
         {
             breakpoint: '1024px',
@@ -145,15 +148,19 @@ let ima=[
         )
     }
     
-    
-    
-// <<Image src="images/z2.png" width="600" preview alt="Image Text" />
-            
-            
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowDeletedMessage(false) } /></div>;
 
     return (
-
+        
         <div >
+            <Dialog visible={showDeletedMessage} onHide={() => setShowDeletedMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                <div className="flex align-items-center flex-column pt-6 px-3">
+                    <br/>
+                    <br/>
+                    <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                    <h5>¡Tu publicación ha sido borrada con éxito!</h5>
+                </div>
+            </Dialog>
             <br/>
             <br/>
             <div className="flex align-items-center justify-content-center">
@@ -187,11 +194,11 @@ let ima=[
                             <Button label="Hacer propuesta" icon="pi pi-comments" />
                         </div>
                         <div className={propietario? "":"butup"}>
-                            <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger"/>
+                            <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger" onClick={() => deletePub(id)}/>
                         </div>
                     </div>
                     <div className={isAuthenticated? "no-display":""}>
-                        <p className="flex justify-content-start text-primary" >Para hacer una propuesta de trueque a esta publicación primero Inicia Sesión</p>
+                        <p className="flex justify-content-start text-primary" >Para hacer una propuesta de trueque, primero Inicia Sesión</p>
                     </div>
                 </Card>
 
