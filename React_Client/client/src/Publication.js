@@ -147,17 +147,22 @@ let ima=[]
             </span>
         )
     }
+
+    const redirectHome= () =>{
+        window.location.replace("/");
+        setShowDeletedMessage(false)
+    }
     
-    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowDeletedMessage(false) } /></div>;
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => redirectHome() } /></div>;
 
     return (
         
         <div >
             <Dialog visible={showDeletedMessage} onHide={() => setShowDeletedMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
                 <div className="flex align-items-center flex-column pt-6 px-3">
-                    <br/>
-                    <br/>
                     <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                    <br/>
+                    <br/>
                     <h5>¡Tu publicación ha sido borrada con éxito!</h5>
                 </div>
             </Dialog>
