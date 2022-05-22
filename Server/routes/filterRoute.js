@@ -6,9 +6,9 @@ const router = express.Router();
 const filterPublication = require('../models/filteredPublications')
 
 // La dirección '/' es relativa a '/filter'. Si fuera '/url', la dirección absoluta sería '/filter/url'
-router.post('/', async (req, res) => {// validacion ?
+router.post('/', async (req, res) => {
 
-    try{// salida de la api
+    try{
         const filteredPosts = await filterPublication(req, res)// llamado al modelo
         res.status(200).json({success:true, posts: filteredPosts})
     }

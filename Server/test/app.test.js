@@ -1,13 +1,16 @@
 // Aquí van las pruebas unitarias
-
+//'use strict';
 const supertest = require('supertest')
 const {app, server} = require('../app')
+
+//jest.mock('../middleware/validateRegister')
 
 const api = supertest(app)
 
 describe('POST /register', () => {
 
     test('Registro exitoso.', async () => {
+        
         const newUser = {
                 "userName":"testUser",
                 "password":"O6@NsmXVJmoJ",
@@ -27,6 +30,7 @@ describe('POST /register', () => {
     })
 
     test('Registro incorrecto, usuario existente.', async () => {
+
         const newUser = {
                 "userName":"user-julio",
                 "password":"O6@NsmXVJmoJ",
@@ -60,14 +64,8 @@ describe('POST /register', () => {
             }
         
         const response = await api.post('/register').send(newUser).expect(403) // responseCode = 403 forbidden
-        expect((response) => {// mensaje del error igual a Invalid value
-            if(response.body.data.msg === 'Invalid value') return true
-            else return false
-        })
-        expect((response) => {// parametro incorrecto igual a email
-            if(response.body.data.param === 'email') return true
-            else return false
-        })
+        expect(response.errors[0].msg).toBe('Invalid value')
+        expect(response.body.errors[0].param).toBe('email')
     })
     
     afterAll(() => {
@@ -76,7 +74,7 @@ describe('POST /register', () => {
 
 })
 
-describe('POST /login', () => {
+describe.skip('POST /login', () => {
 
     test('Inicio de sesion exitoso.', async () => {
         const userLogin = {
@@ -119,7 +117,7 @@ describe('POST /login', () => {
 
 })
 
-describe('POST /new-post', () => {
+describe.skip('POST /new-post', () => {
 
     test('Publicacion creada exitosamente.', async () => {
 
@@ -164,7 +162,7 @@ describe('POST /new-post', () => {
 
 })
 
-describe('DELETE /delete-post', () => {
+describe.skip('DELETE /delete-post', () => {
 
     test('Eliminar publicacion por id.', async () => {
 

@@ -4,6 +4,9 @@ const {check, body, oneOf} = require('express-validator')
 const {validateRegister} = require('../middleware/validateRegister')
 const {validateLogin} = require('../middleware/validateLogin')
 const {validateNewPublication} = require('../middleware/validateNewPublication')
+//const jest = require('jest')
+
+//jest.mock('../middleware/validateRegister')
 
 const postRegister =[
     check('userName')
@@ -33,14 +36,6 @@ const postRegister =[
 ]
 
 const postLogin = [
-    /* oneOf(// se revisa si alguno de los checks pasa la validacion
-        check('email')
-            .exists()
-            .isEmail(),
-        check('userName')
-            .exists()
-            .notEmpty(),
-    ),*/
     check('email')
             .exists()
             .isEmail(),
