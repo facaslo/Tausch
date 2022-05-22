@@ -27,11 +27,14 @@ function Publication (){
 
     //Estado para saber si el usuario actual es el propietario de la publicacion o no
     const [propietario, setPropietario] = useState(false);
+
+    const [subcategoryText,setSubcategoryText]=useState("");
     
     //Recibir el id del producto por medio de la ruta
     const {id} = useParams();
     let responseFromServer;
     let dataFromApiDeletePublication;
+
     
     const requestPublicationInfo= async (id) => {
         const url = "http://localhost:3080/publication/" + id;
@@ -91,6 +94,9 @@ let ima=[]
             ima.push(objetoImagen);
             SetImagenPublicacion(ima);
             setDatos(respuesta);
+            if (respuesta.subcategoria != null){
+                setSubcategoryText(", "+respuesta.subcategoria)
+            }
             let respuestaAutenticacion = await isAuth(respuesta.email);
         })();
     },[]);
@@ -182,7 +188,7 @@ let ima=[]
                 <Divider layout="vertical" />
                 
 
-                <Card title={datos.titulo} subTitle={datos.categoria+", "+datos.subcategoria}>
+                <Card title={datos.titulo} subTitle={datos.categoria+subcategoryText}>
                     <p className="flex justify-content-start text-primary" >{datos.estado_item}</p>
                     <span className="flex justify-content-start" ><b>Publicado: </b>&nbsp;{String (datos.fecha_publicacion).slice(0,10) +" por "+ datos.nombres + " " + datos.apellidos}</span>
                     <br/>
