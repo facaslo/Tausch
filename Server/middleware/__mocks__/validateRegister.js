@@ -1,9 +1,7 @@
 const {validationResult} = require('express-validator');
-/* 
-HAY QUE ARREGLAR LOS TESTS PARA QUE FUNCIONEN CON LA MOCK DATABASE
-*/
+const responseRegister = require('../outAPIRegister');
 
-const mock = jest.createMockFromModule('../validateRegister')
+const mockValidateRegister = jest.createMockFromModule('../validateRegister')
 
 const checkAvailability = (req) => {
     const users = [
@@ -26,16 +24,15 @@ const checkAvailability = (req) => {
 
 const validateRegister = (req, res) =>{
     validationResult(req).throw()
-    console.log(validationResult(req).array())
     let result = checkAvailability(req,res)
     if(result){
-        res.status(200).json({registerSuccess:true, email: req.body.email})
+        responseRegister(req,res,true)
     }
     else{
-        res.status(200).json({registerSuccess:false, emailOrUserAvailable: false})
+        responseRegister(req,res,false)
     }
 }
 
-mock.validateRegister = validateRegister
+mockValidateRegister.validateRegister = validateRegister
 
-module.exports = mock
+module.exports = mockValidateRegister

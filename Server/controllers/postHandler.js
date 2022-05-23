@@ -4,9 +4,6 @@ const {check, body, oneOf} = require('express-validator')
 const {validateRegister} = require('../middleware/validateRegister')
 const {validateLogin} = require('../middleware/validateLogin')
 const {validateNewPublication} = require('../middleware/validateNewPublication')
-//const jest = require('jest')
-
-//jest.mock('../middleware/validateRegister')
 
 const postRegister =[
     check('userName')
@@ -64,7 +61,7 @@ const subcategories = {
 
 const itemState = ["nuevo", "usado"]
 
-const imageExtensions = ['.webp','.svg','.bmp', '.gif', '.jpg','.jpeg', '.tif', '.png']
+//const imageExtensions = ['.webp','.svg','.bmp', '.gif', '.jpg','.jpeg', '.tif', '.png']
 
 const postNewPublication = [
     check('title')

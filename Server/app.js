@@ -37,10 +37,12 @@ app.use('/filter', filterRoute);
 app.use('/getLastTen', getLast10);
 app.use('/publication',publicationRouter);
 
-// Iniciar servidor
-const server = app.listen(app.get('port'), ()=>{
-    console.log("Server on port ", app.get('port'))  //start server with the selected port
-});
+// Iniciar servidor solo si no es un test
+if(process.env.NODE_ENV !== 'test'){
+    app.listen(app.get('port'), ()=>{
+        console.log("Server on port ", app.get('port'))  //start server with the selected port
+    })
+}
 
 // exportar el app.js para usarlo en las pruebas
-module.exports = {app, server}
+module.exports = app
