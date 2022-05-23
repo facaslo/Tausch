@@ -9,14 +9,15 @@ import React, { useRef, useEffect, useState } from 'react';
 import { classNames } from 'primereact/utils';
 import { Button } from 'primereact/button';
 import { Galleria } from 'primereact/galleria';
+import PublicationsAll from './PublicationsAll';
 import './Gallery.css';
 
 function Gallery () {
     const [onLoad, setOnload] = useState(true);
-    const [lastTenPublications, setLastTenPublications] = useState([]);    
+    const [publicationList, setpublicationList] = useState([]);    
 
-    const requestLastTenPublicationsToServer = async () => {
-        return await fetch(`http://localhost:3080/getLastTen`,{            
+    const requestPublicationsFromServer = async () => {
+        return await fetch(`http://localhost:3080/publication_list?page=1&limit=12&category=all`,{            
             method : 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -31,13 +32,12 @@ function Gallery () {
           if(onLoad){
             setOnload(false);    
 
-            let result = await requestLastTenPublicationsToServer().then(data=> data);                          
+            let result = await requestPublicationsFromServer();                          
             
             await console.log(result)
             
             let imagenes = []
-            let id = 0
-                      
+                                  
             for(let publicacion in result){              
                 
                 let imagen = {"itemImageSrc": result[publicacion].imagen, "titulo": result[publicacion].titulo, "descripcion": result[publicacion].descripcion}
@@ -45,7 +45,7 @@ function Gallery () {
                 //imagenes = [...imagenes, imagen]
             }    
             
-            setLastTenPublications(imagenes)            
+            setpublicationList(imagenes)            
             
             //itemImageSrc
           }        
@@ -230,15 +230,18 @@ function Gallery () {
         <div>
             <div className="galleria-demo">
                 <div className="card">
-                    <Galleria ref={galleria} caption={caption} value={lastTenPublications} activeIndex={activeIndex} onItemChange={onItemChange}
+                    <Galleria ref={galleria} caption={caption} value={publicationList} activeIndex={activeIndex} onItemChange={onItemChange}
                         showThumbnails={showThumbnails} showItemNavigators showItemNavigatorsOnHover
                         numVisible={5} circular autoPlay transitionInterval={3000} responsiveOptions={responsiveOptions}
                         item={itemTemplate} thumbnail={thumbnailTemplate} footer={footer}
                         style={{ maxWidth: '640px' }} className={galleriaClassName} />
                 </div>
             </div>
+            < PublicationsAll all={publicationList}/>
         </div>
     );
+
+    
 }
             
 export default Gallery
