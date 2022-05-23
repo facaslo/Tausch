@@ -1,11 +1,12 @@
-// Aquí van las pruebas unitarias
-//'use strict';
+// Aquí van las pruebas donde la base de datos no es necesaria pero si se interactua con ella
+// y por lo mismo es mejor hacerle un mock
+
+// se puede evitar una prueba poniendo .skip despues de describe o de test
 const supertest = require('supertest')
 const app = require('../app')
 
 jest.mock('../middleware/validateRegister')
 jest.mock('../middleware/validateLogin')
-jest.mock('../middleware/validateNewPublication')
 
 const api = supertest(app)
 
@@ -92,47 +93,6 @@ describe('POST /login', () => {
         const response = await api.post('/login').send(userLogin).expect(200) // responseCode = 200 OK
         expect(response.body.loginSuccess).toBe(false) // loginSuccess = false
         expect(response.body.credentialsValidated).toBe(false) // credentialsValidated = false
-    })
-
-})
-
-describe.skip('POST /new-post', () => {// tenerla en cuenta
-
-    test('Publicacion creada exitosamente.', async () => {
-
-        const newPublication = {
-            "title": "zapatos malos",
-            "image": "imagen.png",
-            "category": "Servicios",
-            "subcategory": "",
-            "description": "zapatos malandros",
-            "publication_date": "2022/04/10",
-            "item_status": "Nuevo",
-            "exchange_for": "Vehículos"
-        }
-
-        const response = await api.post('/new-post').send(newPublication).expect(200)
-        expect(response.body.postingSuccess).toBe(true)
-        expect(response.body.title).toBe(newPublication.title)
-        expect(response.body.msg).toBe('Publicacion creada exitosamente.')
-    })
-
-    test('Usuario sin Token.', async () => {
-
-        const newPublication = {
-            "title": "zapatos malos",
-            "image": "imagen.png",
-            "category": "Servicios",
-            "subcategory": "",
-            "description": "zapatos malandros",
-            "publication_date": "2022/04/10",
-            "item_status": "Nuevo",
-            "exchange_for": "Vehículos"
-        }
-
-        const response = await api.post('/new-post').send(newPublication).expect(403)
-        expect(response.body.postingSuccess).toBe(false)
-        expect(response.body.msg).toBe('El usuario no tiene token.')
     })
 
 })
