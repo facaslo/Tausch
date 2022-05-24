@@ -11,9 +11,9 @@ function Home () {
                     <div className="flex justify-content-center">
                         < Gallery />
                     </div>
-                    <div className="flex justify-content-center">
+                    {/* <div className="flex justify-content-center">
                         < PublicationsAll />
-                    </div>
+                    </div> */}
                 </div>
             </div>            
         </>

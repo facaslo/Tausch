@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
-function PublicationsAll () {
-    const [lastTenPublications, setLastTenPublications] = useState([]);    
-    const [filter, setFilter] = useState(lastTenPublications);
-    const [onLoad, setOnload] = useState(true);   
 
-    const requestLastTenPublicationsToServer = async () => {
-        return await fetch(`http://localhost:3080/getLastTen`,{            
-            method : 'GET',
+function PublicationsAll ({all}) {
+    const [publicationList, setPublicationList] = useState([]);    
+    const [category, setCategory] = useState({all});
+    const [onLoad, setOnload] = useState(true)
+
+    const requestpublicationListToServer = async () => {
+        return await fetch(`http://localhost:3080/publication_list?page=1&limit=12&category=`,{            
+            method : 'GET',            
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -19,67 +20,70 @@ function PublicationsAll () {
     };
 
     useEffect(()=>{                
-        (async () =>{
-          if(onLoad){ setOnload(false);    
+        if(onLoad){
+            setOnload(false); 
+        }})
+    
+        const Loading = () => {
+            return (
+                <>
+                    <div className='col-md-2'>
+                        <Skeleton height={150} />
+                    </div>
+                    <div className='col-md-2'>
+                        <Skeleton height={150} />
+                    </div>
+                    <div className='col-md-2'>
+                        <Skeleton height={150} />
+                    </div>
+                    <div className='col-md-2'>
+                        <Skeleton height={150} />
+                    </div>
+                </>
+            )
+        } 
 
-            let result = await requestLastTenPublicationsToServer().then(data=> data);
-            let imagenes = []
-            let id = 0
-                      
-            for(let publicacion in result){              
-                
-                let imagen = {"id": result[publicacion].id, "itemImageSrc": result[publicacion].imagen, "titulo": result[publicacion].titulo, "descripcion": result[publicacion].descripcion, "categoria": result[publicacion].categoria}
-                imagenes.push(imagen)
-                //imagenes = [...imagenes, imagen]
-            }    
+    const getItemsFromCategory = async (category) => {        
+        
+        let queryCategory = category.replace(' ', '+')
+        let result = await fetch(`http://localhost:3080/publication_list?page=1&limit=12&category=${queryCategory}`,{            
+            method : 'GET',            
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },            
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+        
+        let imagenes = []
+                                 
+        for(let publicacion in result){              
             
-            setLastTenPublications(imagenes)            
-            //itemImageSrc
-          }        
-        })();    
-    })
-
-    const Loading = () => {
-        return (
-            <>
-                <div className='col-md-2'>
-                    <Skeleton height={150} />
-                </div>
-                <div className='col-md-2'>
-                    <Skeleton height={150} />
-                </div>
-                <div className='col-md-2'>
-                    <Skeleton height={150} />
-                </div>
-                <div className='col-md-2'>
-                    <Skeleton height={150} />
-                </div>
-            </>
-        )
-    } 
-
-    const FilterIma = (cat) => { 
-        const updatedList = lastTenPublications.filter((x)=>x.categoria === cat);
-        setFilter(updatedList);
+            let imagen = {"id": result[publicacion].id, "itemImageSrc": result[publicacion].imagen, "titulo": result[publicacion].titulo, "descripcion": result[publicacion].descripcion, "categoria": result[publicacion].categoria}
+            imagenes.push(imagen)            
+        
+        setPublicationList(imagenes)
+        
+        }
     }
     
     const Filters = () => {
         return (
             <>
                 <div className='buttons btn-group-horizontal justify-content-center mb-4 pb-5'>
-                    <button className='btn btn-outline-dark btn-lg' onClick={() => setFilter(lastTenPublications)}>Todas</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Arte")}>Arte</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Deportes")}>Deportes</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Entretenimiento")}>Entretenimiento</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Hogar")}>Hogar</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Libros y revistas")}>Libros y revistas</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Música")}>Música</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Otros")}>Otros</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Ropa y accesorios")}>Ropa y accesorios</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Servicios")}>Servicios</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => FilterIma("Tecnología")}>Tecnología</button>
+                    <button className='btn btn-outline-dark btn-lg' onClick={() => getItemsFromCategory('all')}>Todas</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Arte")}>Arte</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Deportes")}>Deportes</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Entretenimiento")}>Entretenimiento</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Hogar")}>Hogar</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Libros y revistas")}>Libros y revistas</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Música")}>Música</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Otros")}>Otros</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Ropa y accesorios")}>Ropa y accesorios</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Servicios")}>Servicios</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Tecnología")}>Tecnología</button>
                 </div>
-                {filter.map((item) => {
+                {publicationList.map((item) => {
                     return(
                         <>
                             <div className='col-md-3 mb-4'>
