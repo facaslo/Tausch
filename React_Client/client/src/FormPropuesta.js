@@ -22,8 +22,9 @@ function FormProposal (parameters) {
 
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    let direction="/publication/"+parameters.id_publicacion_receptor;
     
-    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessageAccept(false) } /></div>;
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => window.location.replace(direction) } /></div>;
     
     const productOptions = [
         {label: 17, code: 17},

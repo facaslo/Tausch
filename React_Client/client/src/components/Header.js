@@ -58,7 +58,7 @@ const Header = () => {
         <div>
             <div className="header-logo">
                 <div className="imag">
-                    <Image src="images/LogoT2.png" alt="logot2" width="80%"/>
+                    <Image src="\images\LogoT2.png" alt="logot2" width="80%"/>
                 </div>
             </div>
             <header>
