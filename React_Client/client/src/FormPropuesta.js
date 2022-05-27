@@ -62,7 +62,9 @@ function FormProposal (parameters) {
     };
     
     const onSubmit = async (data, form) => { 
-        console.log("Yes");
+        let objectProposal
+        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'id_publicacion_proponente':selectedProduct.label, 'mensaje':data.message}
+    
     };
 
     return (
