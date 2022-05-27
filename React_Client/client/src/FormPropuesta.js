@@ -16,7 +16,9 @@ import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 
 function FormProposal (parameters) {
-    
+
+    let responseFromServer
+    let dataFromApiNewOffer
 
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -64,7 +66,24 @@ function FormProposal (parameters) {
     const onSubmit = async (data, form) => { 
         let objectProposal
         objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'id_publicacion_proponente':selectedProduct.label, 'mensaje':data.message}
+        await sendProposalToServer(objectProposal)
+        form.restart();
+    };
+
+    const sendProposalToServer = async (data) => {
+        await fetch(`http://localhost:3080/new-offer`,{            
+            method : 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => responseFromServer = response.json()).then((data)=> dataFromApiNewOffer=data).catch(error=> console.log(error));
     
+        if (dataFromApiNewOffer.offerSuccess){//verifica si se realiza el registro en la bd correctamente
+            setShowMessageAccept(true);
+        }
     };
 
     return (
