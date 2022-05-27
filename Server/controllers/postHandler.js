@@ -4,6 +4,7 @@ const {check, body, oneOf} = require('express-validator')
 const {validateRegister} = require('../middleware/validateRegister')
 const {validateLogin} = require('../middleware/validateLogin')
 const {validateNewPublication} = require('../middleware/validateNewPublication')
+const {validateNewOffer} = require('../middleware/validateNewOffer')
 
 const postRegister =[
     check('userName')
@@ -113,4 +114,11 @@ const postNewPublication = [
     }
 ]
 
-module.exports = {postRegister, postLogin, postNewPublication}
+const offerState = ["en espera","aceptada","rechazada","concluida"]
+const postNewOffer = [
+    (req, res, next) => {
+        validateNewOffer(req, res, next)
+    }
+]
+
+module.exports = {postRegister, postLogin, postNewPublication, postNewOffer}
