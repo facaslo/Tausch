@@ -15,7 +15,8 @@ import { Dialog } from 'primereact/dialog';
 import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 
-function FormProposal () {
+function FormProposal (parameters) {
+    
 
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -23,9 +24,9 @@ function FormProposal () {
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessageAccept(false) } /></div>;
     
     const productOptions = [
-        {label: 'Zapatos Rojos', code: 'Zapatos Rojos'},
-        {label: 'Televisor plasma', code: 'Televisor plasma'},
-        {label: 'Servicio de mesera', code: 'Servicio de mesera'}
+        {label: 17, code: 17},
+        {label: 20, code: 20},
+        {label: 22, code: 22}
     ];
 
     const onProductExChange = (e) => {        

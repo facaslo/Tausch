@@ -14,12 +14,16 @@ import { Button } from 'primereact/button';
 import { Image } from 'primereact/image';
 import { Galleria } from 'primereact/galleria';
 import { Dialog } from 'primereact/dialog';
+import Modal from "./components/Modal";
+import FormProposal from './FormPropuesta';
 
 function Publication (){
 
     const [datos, setDatos] = useState({});
     const [imagenPublicacion, SetImagenPublicacion] = useState([]);
     const [showDeletedMessage, setShowDeletedMessage] =useState(false);
+    const [stateProposal, setStateProposal]=useState(false);
+    const [userEmail, setUserEmail]=useState(null);
     
     //Estado para saber si el usuario se autentico
     //Este estado solo se cambia si el usuario tiene token valida
@@ -77,6 +81,7 @@ let ima=[]
                 });
 
                 const userDataJson = await userData.json();
+                setUserEmail(userDataJson[0].email);
                 
                 if(emailDueñoPublicacion == userDataJson[0].email){
                     setPropietario(true);
@@ -161,6 +166,10 @@ let ima=[]
     
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => redirectHome() } /></div>;
 
+    const cambiarEstadoProposal = () => {
+        setStateProposal(!stateProposal)
+    }
+
     return (
         
         <div >
@@ -175,6 +184,10 @@ let ima=[]
             <br/>
             <br/>
             <div className="flex align-items-center justify-content-center">
+
+            <Modal className="contenido-modal" estado={stateProposal} cambiarEstado={cambiarEstadoProposal}>
+                            <FormProposal email_receptor={datos.email} email_proponente={userEmail} id_publicacion_receptor={id} />
+            </Modal>
                 
                
                 
@@ -202,7 +215,7 @@ let ima=[]
                     <br/>
                     <div className={isAuthenticated? "":"no-display"}>
                         <div className={propietario? "butup":""}>
-                            <Button label="Hacer propuesta" icon="pi pi-comments" />
+                            <Button label="Hacer propuesta" icon="pi pi-comments" onClick={(cambiarEstadoProposal)} />
                         </div>
                         <div className={propietario? "":"butup"}>
                             <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger" onClick={() => deletePub(id)}/>
