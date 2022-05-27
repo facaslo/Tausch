@@ -32,7 +32,7 @@ ReactDOM.render(
             <Route exact path='/lookfor' element={<Lookfor />}/>
             <Route exact path='/createpublication' element={<CreatePublication />}/>
         </Routes>
-        {/*<Footer />*/}
+        <Footer />
     </BrowserRouter>,
     document.getElementById('root')
 )

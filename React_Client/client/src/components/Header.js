@@ -29,7 +29,7 @@ const Header = () => {
             //Si es true, es que hay una token activa, entonces esta autenticado
             parseRes === true ? setisAuthenticated(true) : setisAuthenticated(false);
             
-            if (parseRes == true){
+            if (parseRes === true){
                 //Si hay alguien autenticado,
                 //entonces buscar su nombre_de_usuario
                 const userData = await fetch("http://localhost:3080/authentication/getUserInfo",
