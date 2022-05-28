@@ -31,7 +31,7 @@ ReactDOM.render(
             <Route exact path='/createpublication' element={<CreatePublication />}/>
             <Route exact path='/publication/:id' element={<Publication />}/>
         </Routes>
-        {/*<Footer />*/}
+        <Footer />
     </BrowserRouter>,
     document.getElementById('root')
 )

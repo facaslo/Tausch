@@ -60,22 +60,23 @@ class NavBar extends Component {
                             <ReactFinalFormDemo />
                         </Modal>
                     </div>*/}
-                    <div className={this.props.isAuthenticated ? "no-display-login":""}>
-                        <button className='btn btn-info btn-lg me-2' onClick={(this.cambiarEstadoModal2)}>Inicia Sesión</button>
-                        <Modal className="contenido-modal" estado={this.state.estadoModal2} cambiarEstado={this.cambiarEstadoModal2}>
-                            <ReactFormLogin />
-                        </Modal>
-                        <button className='btn btn-info btn-lg me-2' onClick={(this.cambiarEstadoModal1)}>Regístrate gratis</button>
-                        <Modal className="contenido-modal" estado={this.state.estadoModal1} cambiarEstado={this.cambiarEstadoModal1}>
-                            <ReactFinalFormDemo />
-                        </Modal>
+                    <div className="botones">
+                        <div className={this.props.isAuthenticated ? "no-display-login":""}>
+                            <button className='btn btn-info btn-lg me-2' onClick={(this.cambiarEstadoModal2)}>Inicia Sesión</button>
+                            <Modal className="contenido-modal" estado={this.state.estadoModal2} cambiarEstado={this.cambiarEstadoModal2}>
+                                <ReactFormLogin />
+                            </Modal>
+                            <button className='btn btn-info btn-lg me-2' onClick={(this.cambiarEstadoModal1)}>Regístrate gratis</button>
+                            <Modal className="contenido-modal" estado={this.state.estadoModal1} cambiarEstado={this.cambiarEstadoModal1}>
+                                <ReactFinalFormDemo />
+                            </Modal>
+                        </div>
+                        <div className={this.props.isAuthenticated ? "":"no-display-login"}>
+                            <h6 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h6>
+                            <button className='btn btn-info btn-lg me-2' onClick={e => this.goToCreatePublication(e)}>Crear Publicación</button>
+                            <button className='btn btn-info btn-lg me-2' onClick={e => this.logout(e)}>Cerrar Sesión</button>
+                        </div>
                     </div>
-                    <div className={this.props.isAuthenticated ? "":"no-display-login"}>
-                        <h6 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h6>
-                        <button className='btn btn-info btn-lg me-2' onClick={e => this.goToCreatePublication(e)}>Crear Publicación</button>
-                        <button className='btn btn-info btn-lg me-2' onClick={e => this.logout(e)}>Cerrar Sesión</button>
-                    </div>
-
                     <div className="menu-icon" onClick={this.handleClick}>
                         <i className={this.state.clicked ? 'pi pi-times' : 'pi pi-bars'}></i>                  
                     </div>

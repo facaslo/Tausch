@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
+    z-index: 2000;
 }
 
 .contenedorModal {
@@ -33,7 +33,7 @@
     border: none;
     cursor: pointer;
     align-self: start;
-    z-index: 3;
+    z-index: 3000;
 }
 
 .pi-plus:hover {
