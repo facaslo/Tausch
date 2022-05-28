@@ -14,6 +14,7 @@ const deletePublicationRoute = require('./routes/deletePublicationRoute')
 const filterRoute = require('./routes/filterRoute')
 const getLast10 = require('./routes/getLast10PubRoute')
 const publicationRouter = require('./routes/publicationRouter')
+const newOfferRouter = require('./routes/newOfferRouter')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -36,6 +37,7 @@ app.use('/delete-post', deletePublicationRoute);
 app.use('/filter', filterRoute);
 app.use('/getLastTen', getLast10);
 app.use('/publication',publicationRouter);
+app.use('/new-offer', newOfferRouter);
 
 // Iniciar servidor solo si no es un test
 if(process.env.NODE_ENV !== 'test'){

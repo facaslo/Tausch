@@ -165,7 +165,7 @@ function FormPublication () {
         setSelectedState(e.value);
     }
 
-    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessageAccept(false) } /></div>;
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => window.location.replace("/") } /></div>;
 
     const validate = (data) => {
         let errors = {};
@@ -258,7 +258,6 @@ function FormPublication () {
         console.log(request)
         await sendRegisterToServer(objectForm);
         form.restart();
-        window.location.replace("/");
     };
 
 
