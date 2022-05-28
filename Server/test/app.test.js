@@ -99,11 +99,11 @@ describe('POST /new-post', () => {
 
 })
 
-describe.skip('DELETE /delete-post', () => {
+describe('DELETE /delete-post', () => {
 
     test('Eliminar publicacion por id.', async () => {
 
-        const idObject = {id:39}// debe ser la ultima publicacion por id, se debe estar atento a la db
+        const idObject = {id:53}// debe ser la ultima publicacion por id, se debe estar atento a la db
 
         const response = await api.delete('/delete-post').send(idObject).expect(200)
         expect(response.body.deleteSuccess).toBe(true)
@@ -112,7 +112,7 @@ describe.skip('DELETE /delete-post', () => {
 
 })
 
-describe('GET /publication_list', () => {
+describe.skip('GET /publication_list', () => {
     
     test('Recibir primera pagina de posts (primeras 12 publicaciones).', async () => {
 
@@ -140,7 +140,7 @@ describe('GET /publication_list', () => {
 
 })
 
-describe('GET /user-posts', () => {
+describe.skip('GET /user-posts', () => {
 
     test('Obtener publicaciones del usuario.', async () => {
 
@@ -161,5 +161,40 @@ describe('GET /user-posts', () => {
         expect(response.body.authSuccess).toBe(false)
         expect(response.body.msg).toBe('El usuario no tiene Token')
         
+    })
+})
+
+describe('POST /new-offer', () => {
+
+    test('Creacion de propuesta exitosa.', async () => {
+
+        const offer = {
+            'email_proponente':'becjulio@gmail.com',
+            'email_receptor':'sarodriguezca@gmail.com',
+            'id_publicacion_receptor':20,
+            'id_publicacion_proponente':33,
+            'mensaje':'mensaje-prueba'
+        }
+
+        const response = await api.post('/new-offer').send(offer).expect(200)
+        expect(response.body.offerSuccess).toBe(true)
+        expect(response.body.msg).toBe('Oferta de trueque creada exitosamente.')
+
+    })
+
+    test('Exceso de caracteres en mensaje.', async () => {
+
+        const offer = {
+            'email_proponente':'becjulio@gmail.com',
+            'email_receptor':'sarodriguezca@gmail.com',
+            'id_publicacion_receptor':20,
+            'id_publicacion_proponente':33,
+            'mensaje':'mensaje-prueba-mayor200char:qwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdf'
+        }
+
+        const response = await api.post('/new-offer').send(offer).expect(403)
+        expect(response.body.errors[0].msg).toBe('Invalid value')
+        expect(response.body.errors[0].param).toBe('mensaje')
+
     })
 })

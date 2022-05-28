@@ -7,7 +7,5 @@ const {postNewOffer} = require('../controllers/postHandler');
 
 // La dirección '/' es relativa a '/new-offer'. Si fuera '/url', la dirección absoluta sería '/new-offer/url'
 router.post('/', postNewOffer);
-//router.post('/', authorization ,(req,res) => {    
-//    res.json({"postingSuccess" : true})});
 
 module.exports = router;

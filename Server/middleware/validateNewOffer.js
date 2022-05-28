@@ -1,8 +1,10 @@
+const {validationResult} = require('express-validator');
 const createOffer = require('../models/createOffer');
 const responseNewOffer = require('./outAPINewOffer');
 
 const validateNewOffer = async (req, res, next) =>{
     try{   
+        validationResult(req).throw()
         // Configurar servidor
         await createOffer(
             req.body.email_proponente,
@@ -16,7 +18,6 @@ const validateNewOffer = async (req, res, next) =>{
         return next()
     }
     catch(err){
-        console.log(err)
         res.status(403).send(err)
     }
 }
