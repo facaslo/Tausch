@@ -13,6 +13,7 @@ const newPublicationRoute = require('./routes/newPublicationRoute')
 const deletePublicationRoute = require('./routes/deletePublicationRoute')
 const getPublicationListRoute = require('./routes/getPublicationListRoute')
 const publicationRouter = require('./routes/publicationRouter')
+const userPostsRoute = require('./routes/userPostsRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -34,6 +35,7 @@ app.use('/new-post', newPublicationRoute);
 app.use('/delete-post', deletePublicationRoute);
 app.use('/publication_list', getPublicationListRoute);
 app.use('/publication',publicationRouter);
+app.use('/user-posts', userPostsRoute)
 
 // Iniciar servidor solo si no es un test
 if(process.env.NODE_ENV !== 'test'){

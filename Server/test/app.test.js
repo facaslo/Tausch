@@ -72,7 +72,7 @@ describe('POST /new-post', () => {
         }
 
         const response = await api.post('/new-post').send(newPublication).expect(403)
-        expect(response.body.authSuccess).toBe(false)// HAY QUE CONFIGURAR LA SALIDA DEL AUTHORIZATION
+        expect(response.body.authSuccess).toBe(false)
         expect(response.body.msg).toBe('El usuario no tiene Token')
     })
 
@@ -99,7 +99,7 @@ describe('POST /new-post', () => {
 
 })
 
-describe('DELETE /delete-post', () => {// puede cambiar segun lo que se quiera probar
+describe.skip('DELETE /delete-post', () => {
 
     test('Eliminar publicacion por id.', async () => {
 
@@ -112,19 +112,54 @@ describe('DELETE /delete-post', () => {// puede cambiar segun lo que se quiera p
 
 })
 
-describe('POST /filter', () => {
+describe('GET /publication_list', () => {
+    
+    test('Recibir primera pagina de posts (primeras 12 publicaciones).', async () => {
 
-    test('Obtener publicaciones por categoria y subcategoria.', async () => {
-
-        const request = {
-            'category': 'Arte',
-            'subcategory': 'Obras'
-        }
-
-        const response = await api.post('/filter').send(request).expect(200)
+        const response = await api
+            .get('/publication_list')
+            .set({'Accept': 'application/json', 'Content-Type': 'application/json'})
+            .query({'page': 1, 'limit': 12, 'category': 'all'})
+            .expect(200)
         expect(response.body.success).toBe(true)
-        expect(response.body.posts[0].categoria).toBe('Arte')
-        expect(response.body.posts[0].subcategoria).toBe('Obras')
+
     })
 
+    test('Recibir primera pagina de posts (primeras 12 publicaciones) de la categoria Arte.', async () => {
+
+        const response = await api
+            .get('/publication_list')
+            .set({'Accept': 'application/json', 'Content-Type': 'application/json'})
+            .query({'page': 1, 'limit': 12, 'category': 'Arte'})
+            .expect(200)
+        expect(response.body.success).toBe(true)
+        expect(response.body.posts[0].categoria).toBe('Arte')
+        expect(response.body.posts[1].categoria).toBe('Arte')
+
+    })
+
+})
+
+describe('GET /user-posts', () => {
+
+    test('Obtener publicaciones del usuario.', async () => {
+
+        const email = 'becjulio@gmail.com'
+
+        const token = jwtGenerator(email)
+
+        const response = await api.get('/user-posts').set('token', token).expect(200)
+        expect(response.body.success).toBe(true)
+        expect(response.body.posts[0].email).toBe('becjulio@gmail.com')
+        expect(response.body.posts[0].activa).toBe(true)
+        
+    })
+
+    test('Solicitud por parte de un usuario sin token.', async () => {
+
+        const response = await api.get('/user-posts').expect(403)
+        expect(response.body.authSuccess).toBe(false)
+        expect(response.body.msg).toBe('El usuario no tiene Token')
+        
+    })
 })
