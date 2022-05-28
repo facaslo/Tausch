@@ -237,7 +237,6 @@ function Gallery () {
                         style={{ maxWidth: '640px' }} className={galleriaClassName} />
                 </div>
             </div>
-            < PublicationsAll all={publicationList}/>
         </div>
     );
 

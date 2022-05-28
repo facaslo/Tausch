@@ -9,11 +9,11 @@ function Home () {
             <div className="general-container">
                 <div className="page-container">
                     <div className="flex justify-content-center">
-                        < Gallery />
+                        {/* < Gallery /> */}
                     </div>
-                    {/* <div className="flex justify-content-center">
+                    <div className="flex justify-content-center">
                         < PublicationsAll />
-                    </div> */}
+                    </div>
                 </div>
             </div>            
         </>

@@ -3,26 +3,19 @@ import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
 
-function PublicationsAll ({all}) {
+function PublicationsAll () {
     const [publicationList, setPublicationList] = useState([]);    
-    const [category, setCategory] = useState({all});
+    const [category, setCategory] = useState('all');
     const [onLoad, setOnload] = useState(true)
 
-    const requestpublicationListToServer = async () => {
-        return await fetch(`http://localhost:3080/publication_list?page=1&limit=12&category=`,{            
-            method : 'GET',            
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },            
-        })
-        .then((response) => response.json()).catch(error=> console.log(error));
-    };
-
-    useEffect(()=>{                
-        if(onLoad){
-            setOnload(false); 
-        }})
+    useEffect(()=>{    
+        (async () => {
+            if(onLoad){            
+                setOnload(false); 
+                await getItemsFromCategory(category);
+            }})();
+        })            
+        
     
         const Loading = () => {
             return (
@@ -72,12 +65,12 @@ function PublicationsAll ({all}) {
             <>
                 <div className='buttons btn-group-horizontal justify-content-center mb-4 pb-5'>
                     <button className='btn btn-outline-dark btn-lg' onClick={() => getItemsFromCategory('all')}>Todas</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Arte")}>Arte</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={async () => await getItemsFromCategory("Arte")}>Arte</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Deportes")}>Deportes</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Entretenimiento")}>Entretenimiento</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Hogar")}>Hogar</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Libros y revistas")}>Libros y revistas</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Música")}>Música</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Música")}>Música</button>                    
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Otros")}>Otros</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Ropa y accesorios")}>Ropa y accesorios</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Servicios")}>Servicios</button>
