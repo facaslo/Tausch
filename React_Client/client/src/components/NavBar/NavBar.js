@@ -72,7 +72,7 @@ class NavBar extends Component {
                             </Modal>
                         </div>
                         <div className={this.props.isAuthenticated ? "":"no-display-login"}>
-                            <h6 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h6>
+                            <h4 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h4>
                             <button className='btn btn-info btn-lg me-2' onClick={e => this.goToCreatePublication(e)}>Crear Publicación</button>
                             <button className='btn btn-info btn-lg me-2' onClick={e => this.logout(e)}>Cerrar Sesión</button>
                         </div>

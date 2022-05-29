@@ -15,11 +15,6 @@ export const MenuItems = [
         cName: "nav-links"
     },
     {
-        tittle: "Buscar",
-        to: "/lookfor",
-        cName: "nav-links"
-    },
-    {
         tittle: "Inicia sesión",
         to: "/",
         cName: "nav-links-mobile"

@@ -102,7 +102,7 @@ function ReactFormLogin(){
             
             <div className="flex justify-content-center">
                 <div className="card">
-                    <h5 className="text-center">Inicio de Sesión</h5>
+                    <h3 className="text-center">Inicio de Sesión</h3>
                     <Form onSubmit={onSubmit} initialValues={{ password: "", email: ""}} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid">
                             <Field name="email" render={({ input, meta }) => (

@@ -37,7 +37,11 @@ const CreatePublication = () => {
 
     return(
         <>
-         <FormPublication/>     
+            <div className="general-container">
+                <div className="flex justify-content-center">
+                    <FormPublication/>  
+                </div>
+            </div> 
         </>
     );
 }

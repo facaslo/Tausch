@@ -324,7 +324,7 @@ function FormPublication () {
 
             <div className="flex justify-content-center">
                 <div className="card">
-                    <h5 className="text-center">Crear publicación</h5>
+                    <h3 className="text-center">Crear publicación</h3>
                     <Form onSubmit={onSubmit} initialValues={{ title: "", category: "", subcategory: "", description: "", item_status: "", exchange_for: "", file:"", accept: false}} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid" >
                             
@@ -403,10 +403,10 @@ function FormPublication () {
                             )} />
 
                             
-                            <FileUpload name="file" accept="image/*" auto customUpload uploadHandler={customBase64Uploader} uploadOptions={uploadOptions} />                            
+                            <FileUpload chooseLabel="Click para subir una imagen" chooseOptions={{ icon: true }} mode="advanced" name="file" accept="image/*" auto customUpload  uploadHandler={customBase64Uploader} uploadOptions={uploadOptions}/>                            
                             
 
-                            <Button type="submit" label="Publicar" className="mt-2" />
+                            <Button type="submit" label="Publicar" className="mt-1" />
 
                            
                         
