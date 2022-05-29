@@ -23,18 +23,33 @@ function FormProposal (parameters) {
 
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [productOptions, setProductOptions]=useState([])
     let direction="/publication/"+parameters.id_publicacion_receptor;
     
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => window.location.replace(direction) } /></div>;
     
+    const requestPublicationsList= async() => {
+        const url = "http://localhost:3080/user-posts";
+        return await fetch(url,{            
+            method : 'GET',
+            headers:{token: localStorage.token}           
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+        
+    };
+    
+    useEffect(() => {
+        (async () => {
+            let respuesta = await requestPublicationsList();
+            let publications=[]
+            for (const pub of respuesta.posts){
+                publications.push({label:pub.titulo, code:pub.id})
+            }
+            setProductOptions(publications)
+            
+        })();
+    },[]);
 
-
-
-    const productOptions = [
-        {label: 17, code: 17},
-        {label: 20, code: 20},
-        {label: 22, code: 22}
-    ];
 
     const onProductExChange = (e) => {        
         setSelectedProduct(e.value);       
@@ -76,7 +91,7 @@ function FormProposal (parameters) {
     
     const onSubmit = async (data, form) => { 
         let objectProposal
-        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'id_publicacion_proponente':selectedProduct.label, 'mensaje':data.message}
+        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'id_publicacion_proponente':selectedProduct.code, 'mensaje':data.message}
         await sendProposalToServer(objectProposal)
         form.restart();
     };
