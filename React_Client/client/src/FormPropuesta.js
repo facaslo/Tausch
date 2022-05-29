@@ -74,7 +74,11 @@ function FormProposal (parameters) {
         }
 
         if (!data.exchange_for) {
-            errors.exchange_for = "Selecciona uno de tus productos que quieras intercambiar";
+            if (productOptions.length===0){
+                errors.exchange_for = "No tienes publicaciones, crea una para poder hacer propuestas"
+            }
+            else{errors.exchange_for = "Selecciona uno de tus productos que quieras intercambiar";}
+
         }
 
         if (!data.accept ) {
@@ -142,7 +146,7 @@ function FormProposal (parameters) {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            
+                            <br/>
                             <Field name="exchange_for" type="dropdown" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -152,14 +156,14 @@ function FormProposal (parameters) {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />    
-
+                            <br/>
                             <Field name="accept" type="checkbox" render={({ input, meta }) => (
                                 <div className="field-checkbox">
                                     <Checkbox inputId="accept" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                     <label htmlFor="accept" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Acepto que mi información de contacto sea compartida si la propuesta es aceptada*</label>
                                 </div>
                             )} />
-
+                            
                             <Button type="submit" label="Publicar" className="mt-2" />
                         
                         </form>

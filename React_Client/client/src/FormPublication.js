@@ -337,6 +337,7 @@ function FormPublication () {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="category" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -347,7 +348,9 @@ function FormPublication () {
                                 </div>
                                 
                             )} />
+                            
                            <div className={showSubcategory ? "":"butup"}>
+                           <br/>
                             <Field name="subcategory" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -358,6 +361,7 @@ function FormPublication () {
                                 </div>
                             )} />
                             </div>
+                            <br/>
                             <Field name="description" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -367,6 +371,7 @@ function FormPublication () {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="item_status" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -376,6 +381,7 @@ function FormPublication () {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="exchange_for" type="dropdown" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -393,7 +399,7 @@ function FormPublication () {
                                 Sube al menos una imagen
                             </div>*/}
                             <br/>
-                            <br/>
+                            
 
                             <Field name="accept" type="checkbox" render={({ input, meta }) => (
                                 <div className="field-checkbox">
