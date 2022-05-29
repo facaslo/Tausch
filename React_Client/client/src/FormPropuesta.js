@@ -14,6 +14,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { Dialog } from 'primereact/dialog';
 import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 function FormProposal (parameters) {
 
@@ -26,6 +27,9 @@ function FormProposal (parameters) {
     
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => window.location.replace(direction) } /></div>;
     
+
+
+
     const productOptions = [
         {label: 17, code: 17},
         {label: 20, code: 20},
@@ -37,11 +41,17 @@ function FormProposal (parameters) {
     }
     
     const validate = (data) => {
-        let errors = {}; 
+        let errors = {};
+        
         
         if (selectedProduct != null){
             data.exchange_for=selectedProduct.label;
-        }     
+        }
+        
+        if (data.message && data.message.length>=201 ){
+            let letters=data.message.length
+            errors.message = "Tu comentario puede contener máximo 200 caracteres, tienes "+letters;
+        }
 
         if (!data.message) {
         errors.message = "Debes incluir un comentario con la propuesta";      
@@ -111,7 +121,7 @@ function FormProposal (parameters) {
                             <Field name="message" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="message" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputTextarea id="message" {...input} rows={5} cols={40} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="message" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Mensaje*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
