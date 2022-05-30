@@ -1,6 +1,5 @@
 import React from "react";
 import { FaFacebook, FaInstagramSquare, FaTwitter, FaUserEdit } from "react-icons/fa";
-import Carousel from "../components/Carousel";
 
 export default function ContentPerfil () {
     return(
@@ -68,7 +67,6 @@ export default function ContentPerfil () {
                                 <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
                                         <strong>Publicaciones que has realizado.</strong>
-                                        
                                     </div>
                                 </div>
                             </div>
