@@ -3,7 +3,7 @@
     margin: 10px;
     color: rgb(0, 0, 0);
     padding: 40px;
-    font-family: Sans-Serif;
+    font-family: 'Mali', cursive;
     text-align: center;
   }
 
@@ -15,4 +15,8 @@
   
   .content-wrap{
     flex: 1;
+  }
+
+  .card-title{
+    font-weight: bold;
   }
