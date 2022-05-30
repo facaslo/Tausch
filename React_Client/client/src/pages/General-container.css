@@ -5,18 +5,39 @@
     padding: 40px;
     font-family: 'Mali', cursive;
     text-align: center;
+}
+.content-wrap{
+  flex: 1;
+}
+.card-title{
+  font-weight: bold;
+}
+.testimonial-card .card-up {
+  height: 190px;
+  overflow: hidden;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
   }
+.testimonial-card .avatar {
+  width: 210px;
+  margin-top: -110px;
+  overflow: hidden;
+  border: 5px solid #fff;
+  border-radius: 50%;
+}
 
-  .page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vw;
-  }
-  
-  .content-wrap{
-    flex: 1;
-  }
-
-  .card-title{
-    font-weight: bold;
-  }
+#one {
+  background-color:  #00B8D4;
+}
+#two {
+  background-color:  #6d5b98;;
+}
+#three {
+  background-color:  #1A237E;
+}
+#four {
+  background-color:  #FF8A65;
+}
+#five {
+  background-color:  #388E3C;
+}
