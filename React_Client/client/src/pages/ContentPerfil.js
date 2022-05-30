@@ -1,15 +1,11 @@
 import React from "react";
+import NavBarPerfil from "../components/NavBar/NavBarPerfil";
 import { FaFacebook, FaInstagramSquare, FaTwitter, FaUserEdit } from "react-icons/fa";
 
 export default function ContentPerfil () {
     return(
         <>
-            <nav className="nav nav-pills nav-justified text-dark bg-white d-flex justify-content-around border border-primary rounded">
-                <h3 className="align-middle p-3 mb-2 font-italic">Bienvenido</h3>
-                <button type="button" class="btn btn-danger">
-                    Notifications <span class="badge badge-light">7</span>
-                </button>
-            </nav>
+            <NavBarPerfil/>
             <div className="general-container">
                 <div className="card">
                     <div className="card-body p-4">
@@ -41,15 +37,15 @@ export default function ContentPerfil () {
                                                 <div className="card-body">
                                                     <h5 className="card-title">Información de contacto</h5>
                                                     <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1"><FaFacebook/></span>
+                                                        <span class="input-group-text" id="basic-addon1"><FaFacebook size={20}/></span>
                                                         <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
                                                     </div>
                                                     <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1"><FaInstagramSquare/></span>
+                                                        <span class="input-group-text" id="basic-addon1"><FaInstagramSquare size={20}/></span>
                                                         <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
                                                     </div>
                                                     <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1"><FaTwitter/></span>
+                                                        <span class="input-group-text" id="basic-addon1"><FaTwitter size={20}/></span>
                                                         <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
                                                     </div>
                                                 </div>

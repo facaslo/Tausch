@@ -1,0 +1,18 @@
+#notification {
+    position: absolute;
+    display: flexbox;
+    top: 160px;
+    font-size: 18px;
+    font-weight: 60;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    color: aliceblue;
+    border-radius: 50%;
+    animation: animate 0.9s ease-out infinite alternate;
+}
+
+@keyframes animate {
+    0%{transform: scale(0.7)}
+    100%{transform: scale(1)}
+}
