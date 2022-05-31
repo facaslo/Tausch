@@ -1,3 +1,7 @@
+.no-display {
+    display:none;
+}
+
 #notification {
     position: sticky;
     display: inline-flex;

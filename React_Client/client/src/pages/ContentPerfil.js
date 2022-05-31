@@ -74,7 +74,7 @@ export default function ContentPerfil () {
 
     return(
         <>
-            <NavBarPerfil/>
+            {/*<NavBarPerfil/>*/}
             <div className="general-container">
                 <div className="card">
                     <div className="card-body p-4">

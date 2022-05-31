@@ -2,6 +2,7 @@ import { Image } from 'primereact/image';
 import React, {useState,useEffect} from "react";
 import NavBar from "./NavBar/NavBar"
 import "./Content.css"
+import NavBarPerfil from "./NavBar/NavBarPerfil"
 
 const Header = () => {
     //Estado para saber si el usuario se autentico
@@ -63,6 +64,8 @@ const Header = () => {
             </div>
             <header>
                 <NavBar isAuthenticated={isAuthenticated} nombreDeUsuario={nombreDeUsuario}/>
+                <NavBarPerfil />
+
             </header>
         </div>
     );
