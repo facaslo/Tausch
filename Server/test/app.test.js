@@ -35,7 +35,7 @@ describe('POST /register', () => {
 
 })
 
-describe('POST /new-post', () => {
+describe.skip('POST /new-post', () => {
 
     test('Publicacion creada exitosamente.', async () => {
 
@@ -99,7 +99,7 @@ describe('POST /new-post', () => {
 
 })
 
-describe('DELETE /delete-post', () => {
+describe.skip('DELETE /delete-post', () => {
 
     test('Eliminar publicacion por id.', async () => {
 
@@ -196,5 +196,29 @@ describe('POST /new-offer', () => {
         expect(response.body.errors[0].msg).toBe('Invalid value')
         expect(response.body.errors[0].param).toBe('mensaje')
 
+    })
+})
+
+describe('GET /offers-to-user', () => {
+
+    test('Obtener propuestas hechas al usuario.', async () => {
+
+        const email = 'yybeltranr@unal.edu.co'
+
+        const token = jwtGenerator(email)
+
+        const response = await api.get('/offers-to-user').set('token', token).expect(200)
+        expect(response.body.success).toBe(true)
+        expect(response.body.offers[0].email_receptor).toBe(email)
+        expect(response.body.offers[0].estado_propuesta).toBe('en espera')
+        
+    })
+
+    test('Solicitud por parte de un usuario sin token.', async () => {
+
+        const response = await api.get('/offers-to-user').expect(403)
+        expect(response.body.authSuccess).toBe(false)
+        expect(response.body.msg).toBe('El usuario no tiene Token')
+        
     })
 })
