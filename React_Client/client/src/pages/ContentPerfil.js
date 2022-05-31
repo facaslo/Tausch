@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from "react";
 import NavBarPerfil from "../components/NavBar/NavBarPerfil";
 import { FaFacebook, FaInstagramSquare, FaTwitter, FaUserEdit, FaPhoneAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function ContentPerfil () {
     //Estado para saber si el usuario se autentico
@@ -8,6 +9,7 @@ export default function ContentPerfil () {
     const [isAuthenticated, setisAuthenticated] = useState(false);
     const [userEmail, setUserEmail]=useState(null);
     const [datos, setDatos] = useState({});
+    const [productOptions, setProductOptions]=useState([{}])
 
     //Verificar si la token esta activa Con la funcion authorization
     //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
@@ -42,9 +44,27 @@ export default function ContentPerfil () {
         }
     }
 
+
+    const requestPublicationsList= async() => {
+        const url = "http://localhost:3080/user-posts";
+        return await fetch(url,{            
+            method : 'GET',
+            headers:{token: localStorage.token}           
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+        
+    };
+
     useEffect(() => {
         (async () => {
             isAuth();
+            let respuesta = await requestPublicationsList();
+            let publications=[]
+            for (const pub of respuesta.posts){
+                publications.push(pub)
+            }
+            setProductOptions(publications)
+            console.log(productOptions)
         })();
     },[]);
 
@@ -116,6 +136,28 @@ export default function ContentPerfil () {
                                 <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
                                         <strong>Publicaciones que has realizado.</strong>
+                                        <div className="card-group">
+                                        {productOptions.map((item) => {
+                                            return(
+                                                <>
+                                                    <div className='card'>
+                                                        <div className='card-body'>
+                                                            <div className="card h-100 text-center shadow rounded" key={item.id}>
+                                                                <img src={item.imagen} className='img-fluid mx-auto d-block rounded' alt={item.titulo} width={400} height={400}/>
+                                                                <div className='card-body'>
+                                                                    <h5 className='car-title mb-2'>{item.titulo}</h5>
+                                                                    <p className='card-text'>{item.descripcion}...</p>
+                                                                    <Link to = {`/publication/${item.id}`} className="btn btn-outline-dark">
+                                                                        Ver publicación
+                                                                    </Link>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )
+                                        })}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

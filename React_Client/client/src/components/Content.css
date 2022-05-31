@@ -54,25 +54,25 @@ footer .wave {
 }
 
 footer .wave#wave1{
-    z-index: 900;
+    z-index: 1.5;
     opacity: 1;
     bottom: 0;
     animation: animateWave 4s linear infinite;
 }
 footer .wave#wave2{
-    z-index: 899;
+    z-index: 1.4;
     opacity: 0.5;
     bottom: 15px;
     animation: animateWave_02 3s linear infinite;
 }
 footer .wave#wave3{
-    z-index: 900;
+    z-index: 1.5;
     opacity: 0.2;
     bottom: 0;
     animation: animateWave 3s linear infinite;
 }
 footer .wave#wave4{
-    z-index: 899;
+    z-index: 1.4;
     opacity: 0.7;
     bottom: 20px;
     animation: animateWave_02 4s linear infinite;
