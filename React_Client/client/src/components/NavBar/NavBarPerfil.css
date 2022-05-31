@@ -1,9 +1,8 @@
 #notification {
-    position: absolute;
-    display: flexbox;
-    top: 160px;
+    position: sticky;
+    display: inline-flex;
     font-size: 18px;
-    font-weight: 60;
+    font-weight: 70;
     background-color: red;
     width: 30px;
     height: 30px;
