@@ -6,6 +6,7 @@ import ReactFinalFormDemo  from '../../FormularioRegistro';
 import ReactFormLogin  from '../../FormularioLogin';
 import { NavLink } from "react-router-dom";
 
+
 import "./NavBar.css"
 
 class NavBar extends Component {
@@ -33,6 +34,10 @@ class NavBar extends Component {
     //Funcion para ir al formulario de crear publicación
     goToCreatePublication = (e) => {
         window.location.replace("/createpublication");
+    }
+
+    goToPerfil = (e) => {
+        window.location.replace("/contentperfil");
     }
 
     render() {
@@ -72,7 +77,8 @@ class NavBar extends Component {
                             </Modal>
                         </div>
                         <div className={this.props.isAuthenticated ? "":"no-display-login"}>
-                            <h6 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h6>
+                            {/*<h4 className="mensaje-bienvenida">Bienvenido {this.props.nombreDeUsuario}</h4>*/}
+                            <button className='btn btn-info btn-lg me-2' onClick={e => this.goToPerfil(e)}>Tu perfil</button>
                             <button className='btn btn-info btn-lg me-2' onClick={e => this.goToCreatePublication(e)}>Crear Publicación</button>
                             <button className='btn btn-info btn-lg me-2' onClick={e => this.logout(e)}>Cerrar Sesión</button>
                         </div>

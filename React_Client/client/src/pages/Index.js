@@ -1,6 +1,5 @@
 import React from "react";
 import './General-container.css'
-import Gallery from "../components/Gallery";
 import PublicationsAll from "../components/PublicationsAll";
 
 function Home () {
