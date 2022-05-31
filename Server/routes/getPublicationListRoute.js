@@ -3,12 +3,13 @@
 // dirección url: /filter
 const express = require('express');
 const router = express.Router();
-const getLast10Publications = require('../models/getLast10Publications')
+const getPublicationList = require('../models/getPublicationList')
 
 // La dirección '/' es relativa a '/filter'. Si fuera '/url', la dirección absoluta sería '/filter/url'
 router.get('/', async (req, res) => {
-    let last10 = await getLast10Publications();
-    res.json(last10)   
+    let query = req.query 
+    let publicationList = await getPublicationList(query.page, query.limit, query.category);
+    res.status(200).json({success: true, posts: publicationList})
 });
 
 module.exports = router;

@@ -11,9 +11,9 @@ const activationRoute = require('./routes/accountActivation');
 const authenticationRoute = require('./routes/authenticationRoute');
 const newPublicationRoute = require('./routes/newPublicationRoute')
 const deletePublicationRoute = require('./routes/deletePublicationRoute')
-const filterRoute = require('./routes/filterRoute')
-const getLast10 = require('./routes/getLast10PubRoute')
+const getPublicationListRoute = require('./routes/getPublicationListRoute')
 const publicationRouter = require('./routes/publicationRouter')
+const userPostsRoute = require('./routes/userPostsRoute')
 const newOfferRouter = require('./routes/newOfferRouter')
 
 // Configuración del servidor, puerto 3080
@@ -34,9 +34,9 @@ app.use('/activate', activationRoute);
 app.use('/authentication',authenticationRoute);
 app.use('/new-post', newPublicationRoute);
 app.use('/delete-post', deletePublicationRoute);
-app.use('/filter', filterRoute);
-app.use('/getLastTen', getLast10);
+app.use('/publication_list', getPublicationListRoute);
 app.use('/publication',publicationRouter);
+app.use('/user-posts', userPostsRoute)
 app.use('/new-offer', newOfferRouter);
 
 // Iniciar servidor solo si no es un test

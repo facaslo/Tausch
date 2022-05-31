@@ -115,6 +115,7 @@ function ReactFormLogin(){
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="password" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">

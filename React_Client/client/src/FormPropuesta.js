@@ -14,6 +14,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { Dialog } from 'primereact/dialog';
 import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 function FormProposal (parameters) {
 
@@ -22,26 +23,50 @@ function FormProposal (parameters) {
 
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [productOptions, setProductOptions]=useState([])
     let direction="/publication/"+parameters.id_publicacion_receptor;
     
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => window.location.replace(direction) } /></div>;
     
-    const productOptions = [
-        {label: 17, code: 17},
-        {label: 20, code: 20},
-        {label: 22, code: 22}
-    ];
+    const requestPublicationsList= async() => {
+        const url = "http://localhost:3080/user-posts";
+        return await fetch(url,{            
+            method : 'GET',
+            headers:{token: localStorage.token}           
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+        
+    };
+    
+    useEffect(() => {
+        (async () => {
+            let respuesta = await requestPublicationsList();
+            let publications=[]
+            for (const pub of respuesta.posts){
+                publications.push({label:pub.titulo, code:pub.id})
+            }
+            setProductOptions(publications)
+            
+        })();
+    },[]);
+
 
     const onProductExChange = (e) => {        
         setSelectedProduct(e.value);       
     }
     
     const validate = (data) => {
-        let errors = {}; 
+        let errors = {};
+        
         
         if (selectedProduct != null){
             data.exchange_for=selectedProduct.label;
-        }     
+        }
+        
+        if (data.message && data.message.length>=201 ){
+            let letters=data.message.length
+            errors.message = "Tu comentario puede contener máximo 200 caracteres, tienes "+letters;
+        }
 
         if (!data.message) {
         errors.message = "Debes incluir un comentario con la propuesta";      
@@ -49,7 +74,11 @@ function FormProposal (parameters) {
         }
 
         if (!data.exchange_for) {
-            errors.exchange_for = "Selecciona uno de tus productos que quieras intercambiar";
+            if (productOptions.length===0){
+                errors.exchange_for = "No tienes publicaciones, crea una para poder hacer propuestas"
+            }
+            else{errors.exchange_for = "Selecciona uno de tus productos que quieras intercambiar";}
+
         }
 
         if (!data.accept ) {
@@ -66,7 +95,7 @@ function FormProposal (parameters) {
     
     const onSubmit = async (data, form) => { 
         let objectProposal
-        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'id_publicacion_proponente':selectedProduct.label, 'mensaje':data.message}
+        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'id_publicacion_proponente':selectedProduct.code, 'mensaje':data.message}
         await sendProposalToServer(objectProposal)
         form.restart();
     };
@@ -111,13 +140,13 @@ function FormProposal (parameters) {
                             <Field name="message" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <InputText id="message" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
+                                        <InputTextarea id="message" {...input} rows={5} cols={40} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="message" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Mensaje*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            
+                            <br/>
                             <Field name="exchange_for" type="dropdown" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -127,14 +156,14 @@ function FormProposal (parameters) {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />    
-
+                            <br/>
                             <Field name="accept" type="checkbox" render={({ input, meta }) => (
                                 <div className="field-checkbox">
                                     <Checkbox inputId="accept" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                     <label htmlFor="accept" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Acepto que mi información de contacto sea compartida si la propuesta es aceptada*</label>
                                 </div>
                             )} />
-
+                            
                             <Button type="submit" label="Publicar" className="mt-2" />
                         
                         </form>

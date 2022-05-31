@@ -108,6 +108,9 @@ const postNewPublication = [
 
 const offerState = ["en espera","aceptada","rechazada","concluida"]
 const postNewOffer = [
+    check('mensaje')
+        .exists()
+        .isLength({min:0, max:200}),
     (req, res, next) => {
         validateNewOffer(req, res, next)
     }
