@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import ReactPaginate from 'react-paginate'
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 
 function PublicationsAll () {
@@ -11,18 +12,20 @@ function PublicationsAll () {
     const [numberOfPages, setNumberOfPages] = useState(0);
     const [pageSize, setPageSize] = useState(12);
     const [selectedPage, setSelectedPage] = useState(1);
+    const [loading, setLoading] = useState(true);    
 
-    useEffect(()=> {}, [onLoad,publicationList,numberOfPages])
+    useEffect(()=> {}, [loading])
 
     // Hook loads on first render only
     useEffect(()=>{    
-        setOnload(false); 
+        setLoading(true);            
         getItemsFromCategory();                
+        setOnload(false);         
         }, [] )            
     
     useEffect(()=> {
         if(!onLoad){            
-            getItemsFromCategory();
+            getItemsFromCategory();            
         }        
         } , 
         [selectedPage, pageSize])
@@ -32,31 +35,28 @@ function PublicationsAll () {
             if(selectedPage!==1)
                 setSelectedPage(1);
             else    
-                getItemsFromCategory();
+                getItemsFromCategory();                
         }
         }, [category])
     
     const Loading = () => {
-        return (
-            <>
-                <div className='col-md-2'>
-                    <Skeleton height={150} />
-                </div>
-                <div className='col-md-2'>
-                    <Skeleton height={150} />
-                </div>
-                <div className='col-md-2'>
-                    <Skeleton height={150} />
-                </div>
-                <div className='col-md-2'>
-                    <Skeleton height={150} />
-                </div>
-            </>
-        )
+        if(loading){
+            console.log("Entra a loading")
+            return (            
+                <>
+                   <ProgressSpinner/>
+                </>
+            )        
+        }
+        else{
+            console.log("Sale de loading")
+            return <Filters />        
+        }
+        
     }     
     
-    const getItemsFromCategory = async () => {       
-        
+    const getItemsFromCategory = async () => {  
+        setLoading(true)                 
         let queryCategory = category.replace(' ', '+')
         let result = await fetch(`http://localhost:3080/publication_list?page=${selectedPage}&limit=${pageSize}&category=${queryCategory}`,{            
             method : 'GET',      
@@ -78,32 +78,21 @@ function PublicationsAll () {
         
         setPublicationList(imagenes)                                
         let howManyPages = Math.floor(result.numberOfRows/pageSize) + 1 
-        setNumberOfPages(howManyPages);
+        setNumberOfPages(howManyPages); 
+        setLoading(false);            
 
         window.scroll({
             top: 0, 
             left: 0, 
             behavior: 'smooth' 
-        });
+        });        
     }
     
     
     const Filters = () => {
         return (
             <>                
-                <div className='buttons btn-group-horizontal justify-content-center mb-4 pb-5'>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory('all')}>Todas</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Arte")}>Arte</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Deportes")}>Deportes</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Entretenimiento")}>Entretenimiento</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Hogar")}>Hogar</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Libros y revistas")}>Libros y revistas</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Música")}>Música</button>                    
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Otros")}>Otros</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Ropa y accesorios")}>Ropa y accesorios</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Servicios")}>Servicios</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Tecnología")}>Tecnología</button>
-                </div>                
+                             
 
                 {publicationList.map((item) => {                    
                     return(
@@ -138,8 +127,23 @@ function PublicationsAll () {
                         <hr />
                     </div>
                 </div>
-                <div className='row justify-content-center'>
-                    {onLoad ? <Loading/> : <Filters/>}
+                <div className='row justify-content-center'>      
+                <div className='buttons btn-group-horizontal justify-content-center mb-4 pb-5'>
+
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory('all')}>Todas</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Arte")}>Arte</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Deportes")}>Deportes</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Entretenimiento")}>Entretenimiento</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Hogar")}>Hogar</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Libros y revistas")}>Libros y revistas</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Música")}>Música</button>                    
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Otros")}>Otros</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Ropa y accesorios")}>Ropa y accesorios</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Servicios")}>Servicios</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Tecnología")}>Tecnología</button>
+                    </div>                 
+                    
+                    <Loading />
 
                     <ReactPaginate pageCount={numberOfPages} pageRangeDisplayed={3}
                     marginPagesDisplayed={2} breakLabel='...' previousLabel='<' nextLabel='>' 
