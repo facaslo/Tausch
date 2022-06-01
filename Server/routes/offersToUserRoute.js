@@ -12,7 +12,6 @@ router.get('/', authorization, async (req, res) => {
     let offersToUser;
     try{
         offersToUser = await getOffersToUser(req.user_email);
-        console.log(offersToUser)
         res.status(200).json({success: true, offers: offersToUser})
     }
     catch(err){
