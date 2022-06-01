@@ -8,7 +8,7 @@ const jwtGenerator = require('../utils/jwtGenerator')
 
 const api = supertest(app)
 
-jest.setTimeout(10000)
+jest.setTimeout(20000)
 
 describe.skip('POST /register', () => {
 
