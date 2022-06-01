@@ -1,46 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import ReactPaginate from 'react-paginate'
 
 
 function PublicationsAll () {
     const [publicationList, setPublicationList] = useState([]);    
     const [category, setCategory] = useState('all');
-    const [onLoad, setOnload] = useState(true)
+    const [onLoad, setOnload] = useState(true);    
+    const [numberOfPages, setNumberOfPages] = useState(0);
+    const [pageSize, setPageSize] = useState(12);
+    const [selectedPage, setSelectedPage] = useState(1);
 
+    useEffect(()=> {}, [onLoad,publicationList,numberOfPages])
+
+    // Hook loads on first load only
     useEffect(()=>{    
-        (async () => {
-            if(onLoad){            
-                setOnload(false); 
-                await getItemsFromCategory(category);
-            }})();
-        })            
-        
+        setOnload(false); 
+        getItemsFromCategory();                
+        }, [] )            
     
-        const Loading = () => {
-            return (
-                <>
-                    <div className='col-md-2'>
-                        <Skeleton height={150} />
-                    </div>
-                    <div className='col-md-2'>
-                        <Skeleton height={150} />
-                    </div>
-                    <div className='col-md-2'>
-                        <Skeleton height={150} />
-                    </div>
-                    <div className='col-md-2'>
-                        <Skeleton height={150} />
-                    </div>
-                </>
-            )
-        } 
-
-    const getItemsFromCategory = async (category) => {        
+    useEffect(()=> {
+        if(!onLoad){
+            console.log("Entra a selectedPage")  
+            getItemsFromCategory();
+        }        
+        } , 
+        [selectedPage, pageSize])
+        
+    useEffect(() =>{
+        if(!onLoad){
+            console.log("Entra a categoria")        
+            if(selectedPage!==1)
+                setSelectedPage(1);
+            else    
+                getItemsFromCategory();
+        }
+        }, [category])
+    
+    const Loading = () => {
+        return (
+            <>
+                <div className='col-md-2'>
+                    <Skeleton height={150} />
+                </div>
+                <div className='col-md-2'>
+                    <Skeleton height={150} />
+                </div>
+                <div className='col-md-2'>
+                    <Skeleton height={150} />
+                </div>
+                <div className='col-md-2'>
+                    <Skeleton height={150} />
+                </div>
+            </>
+        )
+    }     
+    
+    const getItemsFromCategory = async () => {       
         
         let queryCategory = category.replace(' ', '+')
-        let result = await fetch(`http://localhost:3080/publication_list?page=1&limit=12&category=${queryCategory}`,{            
-            method : 'GET',            
+        let result = await fetch(`http://localhost:3080/publication_list?page=${selectedPage}&limit=${pageSize}&category=${queryCategory}`,{            
+            method : 'GET',      
+            mode: 'cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -50,33 +72,56 @@ function PublicationsAll () {
         
         let imagenes = []
                                  
-        for(let publicacion in result){              
+        for(let publicacion in result.posts){              
             
-            let imagen = {"id": result[publicacion].id, "itemImageSrc": result[publicacion].imagen, "titulo": result[publicacion].titulo, "descripcion": result[publicacion].descripcion, "categoria": result[publicacion].categoria}
-            imagenes.push(imagen)            
-        
-        setPublicationList(imagenes)
-        
+            let imagen = {"id": result.posts[publicacion].id, "itemImageSrc": result.posts[publicacion].imagen, "titulo": result.posts[publicacion].titulo, "descripcion": result.posts[publicacion].descripcion, "categoria": result.posts[publicacion].categoria}
+            imagenes.push(imagen)                 
         }
+        
+        setPublicationList(imagenes)                        
+        if(onLoad){
+            
+        }
+        let howManyPages = Math.floor(result.numberOfRows/pageSize) + 1 
+        setNumberOfPages(howManyPages);
     }
+    
     
     const Filters = () => {
         return (
-            <>
+            <>                
                 <div className='buttons btn-group-horizontal justify-content-center mb-4 pb-5'>
-                    <button className='btn btn-outline-dark btn-lg' onClick={() => getItemsFromCategory('all')}>Todas</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={async () => await getItemsFromCategory("Arte")}>Arte</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Deportes")}>Deportes</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Entretenimiento")}>Entretenimiento</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Hogar")}>Hogar</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Libros y revistas")}>Libros y revistas</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Música")}>Música</button>                    
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Otros")}>Otros</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Ropa y accesorios")}>Ropa y accesorios</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Servicios")}>Servicios</button>
-                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => getItemsFromCategory("Tecnología")}>Tecnología</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory('all')}>Todas</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Arte")}>Arte</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Deportes")}>Deportes</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Entretenimiento")}>Entretenimiento</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Hogar")}>Hogar</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Libros y revistas")}>Libros y revistas</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Música")}>Música</button>                    
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Otros")}>Otros</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Ropa y accesorios")}>Ropa y accesorios</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Servicios")}>Servicios</button>
+                    <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Tecnología")}>Tecnología</button>
                 </div>
-                {publicationList.map((item) => {
+
+
+                <ReactPaginate pageCount={numberOfPages} breakLabel='...' previousLabel='<' nextLabel='>' 
+                onPageChange={(event) => {setSelectedPage(event.selected+1)
+                console.log(event.selected)}}
+                breakClassName={'page-item'}
+                breakLinkClassName={'page-link'}
+                containerClassName={'pagination'}
+                pageClassName={'page-item'}
+                pageLinkClassName={'page-link'}
+                previousClassName={'page-item'}
+                previousLinkClassName={'page-link'}
+                nextClassName={'page-item'}
+                nextLinkClassName={'page-link'}
+                activeClassName={'active'}
+                renderOnZeroPageCount={null}
+                />
+
+                {publicationList.map((item) => {                    
                     return(
                         <>
                             <div className='col-md-3 mb-4'>
