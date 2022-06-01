@@ -7,6 +7,7 @@ const authorization = require("../middleware/authorization");
 
 //Modelo encargado de retornar informacion del usuario
 const getUserInfoFromDB =  require("../models/getUserInfo")
+const getProfileInfo = require("../models/getProfileInfo")
 
 
 //Ruta para verificar JWT Token
@@ -42,4 +43,15 @@ router.get("/getUserInfo",authorization,async(req, res) =>{
         res.status(500).json("Server Error");
     }
 });
+
+router.get("/getProfileInfo",authorization,async(req, res) =>{
+    try{
+        const response = await getProfileInfo(req.user_email);
+        res.json(response);
+    } catch(err){
+        console.error(err.message);
+        res.status(500).json("Server Error");
+    }
+});
+
 module.exports = router;

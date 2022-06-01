@@ -5,11 +5,11 @@ const express = require('express');
 const router = express.Router();
 const deletePublication = require('../models/deletePublication')
 
-// La dirección '/' es relativa a '/delete'. Si fuera '/url', la dirección absoluta sería '/delete/url'
+// La dirección '/' es relativa a '/delete-post'. Si fuera '/url', la dirección absoluta sería '/delete-post/url'
 router.delete('/', async (req, res) => {// validacion ?
 
     try{
-        await deletePublication(req.body.id)// req.body.email
+        await deletePublication(req.body.id)
         res.status(200).json({deleteSuccess:true, msg: 'Publicacion borrada exitosamente.'})
     }
     catch(err){

@@ -1,49 +1,14 @@
-// Aquí van las pruebas unitarias
+// Aquí van las pruebas donde se prueba el comportamiento de la base de datos
+// o donde no se interactua con ella
 
+// se puede evitar una prueba poniendo .skip despues de describe o de test
 const supertest = require('supertest')
-const {app, server} = require('../app')
+const app = require('../app')
+const jwtGenerator = require('../utils/jwtGenerator')
 
 const api = supertest(app)
 
 describe('POST /register', () => {
-
-    test('Registro exitoso.', async () => {
-        const newUser = {
-                "userName":"testUser",
-                "password":"O6@NsmXVJmoJ",
-                "email":"testCorreo@gmail.com", 
-                "firstName":"nombre", 
-                "lastName":"apellido", 
-                "age":"40",
-                "phoneNumber":"3131311234",
-                "facebook":"testface",
-                "twitter":"@testtweet",
-                "instagram":"instatest"
-            }
-        
-        const response = await api.post('/register').send(newUser).expect(200) // responseCode = 200 OK
-        expect(response.body.registerSuccess).toBe(true) // registerSuccess = true
-        expect(response.body.email)
-    })
-
-    test('Registro incorrecto, usuario existente.', async () => {
-        const newUser = {
-                "userName":"user-julio",
-                "password":"O6@NsmXVJmoJ",
-                "email":"testCorreo@gmail.com", 
-                "firstName":"nombre", 
-                "lastName":"apellido", 
-                "age":"40",
-                "phoneNumber":"3131311234",
-                "facebook":"testface",
-                "twitter":"@testtweet",
-                "instagram":"instatest"
-            }
-        
-        const response = await api.post('/register').send(newUser).expect(200) // responseCode = 200 OK
-        expect(response.body.registerSuccess).toBe(false) // registerSuccess = false
-        expect(response.body.emailOrUserAvailable).toBe(false) // email o usuario no disponible
-    })
 
     test('Registro invalido, email no valido.', async () => {
         const newUser = {
@@ -59,63 +24,14 @@ describe('POST /register', () => {
                 "instagram":"instatest"
             }
         
-        const response = await api.post('/register').send(newUser).expect(403) // responseCode = 403 forbidden
-        expect((response) => {// mensaje del error igual a Invalid value
-            if(response.body.data.msg === 'Invalid value') return true
-            else return false
-        })
-        expect((response) => {// parametro incorrecto igual a email
-            if(response.body.data.param === 'email') return true
-            else return false
-        })
-    })
-    
-    afterAll(() => {
-        server.close()
+        const response = await api.post('/register').send(newUser).expect(403)
+        expect(response.body.errors[0].msg).toBe('Invalid value')
+        expect(response.body.errors[0].param).toBe('email')
     })
 
-})
-
-describe('POST /login', () => {
-
-    test('Inicio de sesion exitoso.', async () => {
-        const userLogin = {
-            "email": "becjulio@gmail.com",
-            "password": "O6@NsmXVJmoJ"
-          }
-        
-        const response = await api.post('/login').send(userLogin).expect(200) // responseCode = 200 OK
-        expect(response.body.loginSuccess).toBe(true) // loginSuccess = true
-        expect(response.body.credentialsValidated).toBe(true) // credentialsValidated = true
-        expect(response.body.isActivated).toBe(true) // icActivated = true
-    })
-
-    test('Inicio de sesion fallido, cuenta no activada.', async () => {
-        const userLogin = {
-            "email": "jubedoyag@unal.edu.co",
-            "password": "O6@NsmXVJmoJ"
-          }
-        
-        const response = await api.post('/login').send(userLogin).expect(200) // responseCode = 200 OK
-        expect(response.body.loginSuccess).toBe(false) // loginSuccess = false
-        expect(response.body.credentialsValidated).toBe(true) // credentialsValidated = true
-        expect(response.body.isActivated).toBe(false) // icActivated = false
-    })
-
-    test('Inicio de sesion invalido, contraseña incorrecta.', async () => {
-        const userLogin = {
-            "email": "becjulio@gmail.com",
-            "password": "O6@HablamosJmoJ"
-          }
-        
-        const response = await api.post('/login').send(userLogin).expect(200) // responseCode = 200 OK
-        expect(response.body.loginSuccess).toBe(false) // loginSuccess = false
-        expect(response.body.credentialsValidated).toBe(false) // credentialsValidated = false
-    })
-    
-    afterAll(() => {
-        server.close()
-    })
+    // afterAll(() => {
+    //     server.close()
+    // })
 
 })
 
@@ -123,43 +39,62 @@ describe('POST /new-post', () => {
 
     test('Publicacion creada exitosamente.', async () => {
 
+        const email = 'becjulio@gmail.com'
+
         const newPublication = {
-            "title": "zapatos malos",
-            "image": "imagen.png",
-            "category": "Servicios",
-            "subcategory": "",
-            "description": "zapatos malandros",
-            "publication_date": "2022/04/10",
-            "item_status": "Nuevo",
-            "exchange_for": "Vehículos"
+            'title':'prueba-pub',
+            'category':'Arte',
+            'subcategory':'Obras',
+            'description':'prueba-desc',
+            'item_status':'nuevo',
+            'exchange_for':'Arte',
+            'file':'data:image/png'
         }
 
-        const response = await api.post('/new-post').send(newPublication).expect(200)
+        const token = jwtGenerator(email)
+
+        const response = await api.post('/new-post').set('token', token).send(newPublication).expect(200)
         expect(response.body.postingSuccess).toBe(true)
         expect(response.body.title).toBe(newPublication.title)
         expect(response.body.msg).toBe('Publicacion creada exitosamente.')
     })
 
-    test('Error al crear la publicacion.', async () => {
+    test('Usuario sin Token.', async () => {
 
         const newPublication = {
-            "title": "zapatos malos",
-            "image": "imagen.png",
-            "category": "Arte",
-            "subcategory": "Gimnasio",
-            "description": "zapatos malandros",
-            "publication_date": "2022/04/10",
-            "item_status": "Nuevo",
-            "exchange_for": "Vehículos"
+            'title':'prueba-pub',
+            'category':'Arte',
+            'subcategory':'Gimnasio',
+            'description':'prueba-desc',
+            'item_status':'nuevo',
+            'exchange_for':'Arte',
+            'file':'data:image/png'
         }
 
         const response = await api.post('/new-post').send(newPublication).expect(403)
-        expect(response.body.errors[0].msg).toBe('Campo de subcategoria invalido.')// mensaje del error igual a Invalid value
-        expect(response.body.errors[0].location).toBe('body')// parametro incorrecto igual a email
+        expect(response.body.authSuccess).toBe(false)
+        expect(response.body.msg).toBe('El usuario no tiene Token')
     })
 
-    afterAll(() => {
-        server.close()
+    test('Error al crear la publicacion.', async () => {
+
+        const email = 'becjulio@gmail.com'
+
+        const newPublication = {
+            'title':'prueba-pub',
+            'category':'Arte',
+            'subcategory':'Gimnasio',
+            'description':'prueba-desc',
+            'item_status':'nuevo',
+            'exchange_for':'Arte',
+            'file':'data:image/png'
+        }
+
+        const token = jwtGenerator(email)
+
+        const response = await api.post('/new-post').set('token', token).send(newPublication).expect(403)
+        expect(response.body.errors[0].msg).toBe('Campo de subcategoria invalido.')// mensaje del error igual a Invalid value
+        expect(response.body.errors[0].location).toBe('body')// parametro incorrecto igual a email
     })
 
 })
@@ -168,15 +103,98 @@ describe('DELETE /delete-post', () => {
 
     test('Eliminar publicacion por id.', async () => {
 
-        const idObject = {id:5}
+        const idObject = {id:53}// debe ser la ultima publicacion por id, se debe estar atento a la db
 
         const response = await api.delete('/delete-post').send(idObject).expect(200)
         expect(response.body.deleteSuccess).toBe(true)
         expect(response.body.msg).toBe('Publicacion borrada exitosamente.')
     })
 
-    afterAll(() => {
-        server.close()
+})
+
+describe.skip('GET /publication_list', () => {
+    
+    test('Recibir primera pagina de posts (primeras 12 publicaciones).', async () => {
+
+        const response = await api
+            .get('/publication_list')
+            .set({'Accept': 'application/json', 'Content-Type': 'application/json'})
+            .query({'page': 1, 'limit': 12, 'category': 'all'})
+            .expect(200)
+        expect(response.body.success).toBe(true)
+
     })
 
+    test('Recibir primera pagina de posts (primeras 12 publicaciones) de la categoria Arte.', async () => {
+
+        const response = await api
+            .get('/publication_list')
+            .set({'Accept': 'application/json', 'Content-Type': 'application/json'})
+            .query({'page': 1, 'limit': 12, 'category': 'Arte'})
+            .expect(200)
+        expect(response.body.success).toBe(true)
+        expect(response.body.posts[0].categoria).toBe('Arte')
+        expect(response.body.posts[1].categoria).toBe('Arte')
+
+    })
+
+})
+
+describe.skip('GET /user-posts', () => {
+
+    test('Obtener publicaciones del usuario.', async () => {
+
+        const email = 'becjulio@gmail.com'
+
+        const token = jwtGenerator(email)
+
+        const response = await api.get('/user-posts').set('token', token).expect(200)
+        expect(response.body.success).toBe(true)
+        expect(response.body.posts[0].email).toBe('becjulio@gmail.com')
+        expect(response.body.posts[0].activa).toBe(true)
+        
+    })
+
+    test('Solicitud por parte de un usuario sin token.', async () => {
+
+        const response = await api.get('/user-posts').expect(403)
+        expect(response.body.authSuccess).toBe(false)
+        expect(response.body.msg).toBe('El usuario no tiene Token')
+        
+    })
+})
+
+describe('POST /new-offer', () => {
+
+    test('Creacion de propuesta exitosa.', async () => {
+
+        const offer = {
+            'email_proponente':'becjulio@gmail.com',
+            'email_receptor':'sarodriguezca@gmail.com',
+            'id_publicacion_receptor':20,
+            'id_publicacion_proponente':33,
+            'mensaje':'mensaje-prueba'
+        }
+
+        const response = await api.post('/new-offer').send(offer).expect(200)
+        expect(response.body.offerSuccess).toBe(true)
+        expect(response.body.msg).toBe('Oferta de trueque creada exitosamente.')
+
+    })
+
+    test('Exceso de caracteres en mensaje.', async () => {
+
+        const offer = {
+            'email_proponente':'becjulio@gmail.com',
+            'email_receptor':'sarodriguezca@gmail.com',
+            'id_publicacion_receptor':20,
+            'id_publicacion_proponente':33,
+            'mensaje':'mensaje-prueba-mayor200char:qwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdf'
+        }
+
+        const response = await api.post('/new-offer').send(offer).expect(403)
+        expect(response.body.errors[0].msg).toBe('Invalid value')
+        expect(response.body.errors[0].param).toBe('mensaje')
+
+    })
 })

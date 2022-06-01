@@ -19,7 +19,7 @@ module.exports = async(req, res, next) => {
         //Verificar si existe el token
         //Si no existe, decir que no esta autorizado
         if (!jwtToken){
-            return res.status(403).json("El usuario no tiene Token");
+            return res.status(403).json({authSuccess:false, msg:"El usuario no tiene Token"});
         }
 
         //Verificar si la token es valida y no inventada
@@ -34,7 +34,7 @@ module.exports = async(req, res, next) => {
 
     } catch(err){
         console.error(err.message);
-        return res.status(403).json("Error al intentar verificar la token");
+        return res.status(403).json({authSuccess:false, msg:"Error al intentar verificar la token", data:err});
     }
 
 

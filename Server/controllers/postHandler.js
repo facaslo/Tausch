@@ -4,6 +4,7 @@ const {check, body, oneOf} = require('express-validator')
 const {validateRegister} = require('../middleware/validateRegister')
 const {validateLogin} = require('../middleware/validateLogin')
 const {validateNewPublication} = require('../middleware/validateNewPublication')
+const {validateNewOffer} = require('../middleware/validateNewOffer')
 
 const postRegister =[
     check('userName')
@@ -33,14 +34,6 @@ const postRegister =[
 ]
 
 const postLogin = [
-    /* oneOf(// se revisa si alguno de los checks pasa la validacion
-        check('email')
-            .exists()
-            .isEmail(),
-        check('userName')
-            .exists()
-            .notEmpty(),
-    ),*/
     check('email')
             .exists()
             .isEmail(),
@@ -69,7 +62,7 @@ const subcategories = {
 
 const itemState = ["nuevo", "usado"]
 
-const imageExtensions = ['.webp','.svg','.bmp', '.gif', '.jpg','.jpeg', '.tif', '.png']
+//const imageExtensions = ['.webp','.svg','.bmp', '.gif', '.jpg','.jpeg', '.tif', '.png']
 
 const postNewPublication = [
     check('title')
@@ -113,4 +106,14 @@ const postNewPublication = [
     }
 ]
 
-module.exports = {postRegister, postLogin, postNewPublication}
+const offerState = ["en espera","aceptada","rechazada","concluida"]
+const postNewOffer = [
+    check('mensaje')
+        .exists()
+        .isLength({min:0, max:200}),
+    (req, res, next) => {
+        validateNewOffer(req, res, next)
+    }
+]
+
+module.exports = {postRegister, postLogin, postNewPublication, postNewOffer}

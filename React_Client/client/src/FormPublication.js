@@ -165,7 +165,7 @@ function FormPublication () {
         setSelectedState(e.value);
     }
 
-    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowMessageAccept(false) } /></div>;
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => window.location.replace("/") } /></div>;
 
     const validate = (data) => {
         let errors = {};
@@ -258,7 +258,6 @@ function FormPublication () {
         console.log(request)
         await sendRegisterToServer(objectForm);
         form.restart();
-        window.location.replace("/");
     };
 
 
@@ -325,7 +324,7 @@ function FormPublication () {
 
             <div className="flex justify-content-center">
                 <div className="card">
-                    <h5 className="text-center">Crear publicación</h5>
+                    <h3 className="text-center">Crear publicación</h3>
                     <Form onSubmit={onSubmit} initialValues={{ title: "", category: "", subcategory: "", description: "", item_status: "", exchange_for: "", file:"", accept: false}} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid" >
                             
@@ -338,6 +337,7 @@ function FormPublication () {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="category" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -348,7 +348,9 @@ function FormPublication () {
                                 </div>
                                 
                             )} />
+                            
                            <div className={showSubcategory ? "":"butup"}>
+                           <br/>
                             <Field name="subcategory" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -359,6 +361,7 @@ function FormPublication () {
                                 </div>
                             )} />
                             </div>
+                            <br/>
                             <Field name="description" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -368,6 +371,7 @@ function FormPublication () {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="item_status" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -377,6 +381,7 @@ function FormPublication () {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="exchange_for" type="dropdown" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
@@ -394,7 +399,7 @@ function FormPublication () {
                                 Sube al menos una imagen
                             </div>*/}
                             <br/>
-                            <br/>
+                            
 
                             <Field name="accept" type="checkbox" render={({ input, meta }) => (
                                 <div className="field-checkbox">
@@ -404,10 +409,10 @@ function FormPublication () {
                             )} />
 
                             
-                            <FileUpload name="file" accept="image/*" auto customUpload uploadHandler={customBase64Uploader} uploadOptions={uploadOptions} />                            
+                            <FileUpload chooseLabel="Click para subir una imagen" chooseOptions={{ icon: true }} mode="advanced" name="file" accept="image/*" auto customUpload  uploadHandler={customBase64Uploader} uploadOptions={uploadOptions}/>                            
                             
 
-                            <Button type="submit" label="Publicar" className="mt-2" />
+                            <Button type="submit" label="Publicar" className="mt-1" />
 
                            
                         

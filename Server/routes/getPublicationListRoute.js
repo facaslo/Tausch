@@ -9,7 +9,7 @@ const getPublicationList = require('../models/getPublicationList')
 router.get('/', async (req, res) => {
     let query = req.query 
     let publicationList = await getPublicationList(query.page, query.limit, query.category);
-    res.json(publicationList)   
+    res.status(200).json({success: true, posts: publicationList})
 });
 
 module.exports = router;
