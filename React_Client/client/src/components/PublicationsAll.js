@@ -14,23 +14,21 @@ function PublicationsAll () {
 
     useEffect(()=> {}, [onLoad,publicationList,numberOfPages])
 
-    // Hook loads on first load only
+    // Hook loads on first render only
     useEffect(()=>{    
         setOnload(false); 
         getItemsFromCategory();                
         }, [] )            
     
     useEffect(()=> {
-        if(!onLoad){
-            console.log("Entra a selectedPage")  
+        if(!onLoad){            
             getItemsFromCategory();
         }        
         } , 
         [selectedPage, pageSize])
         
     useEffect(() =>{
-        if(!onLoad){
-            console.log("Entra a categoria")        
+        if(!onLoad){            
             if(selectedPage!==1)
                 setSelectedPage(1);
             else    
@@ -78,12 +76,15 @@ function PublicationsAll () {
             imagenes.push(imagen)                 
         }
         
-        setPublicationList(imagenes)                        
-        if(onLoad){
-            
-        }
+        setPublicationList(imagenes)                                
         let howManyPages = Math.floor(result.numberOfRows/pageSize) + 1 
         setNumberOfPages(howManyPages);
+
+        window.scroll({
+            top: 0, 
+            left: 0, 
+            behavior: 'smooth' 
+        });
     }
     
     
@@ -102,24 +103,7 @@ function PublicationsAll () {
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Ropa y accesorios")}>Ropa y accesorios</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Servicios")}>Servicios</button>
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Tecnología")}>Tecnología</button>
-                </div>
-
-
-                <ReactPaginate pageCount={numberOfPages} breakLabel='...' previousLabel='<' nextLabel='>' 
-                onPageChange={(event) => {setSelectedPage(event.selected+1)
-                console.log(event.selected)}}
-                breakClassName={'page-item'}
-                breakLinkClassName={'page-link'}
-                containerClassName={'pagination'}
-                pageClassName={'page-item'}
-                pageLinkClassName={'page-link'}
-                previousClassName={'page-item'}
-                previousLinkClassName={'page-link'}
-                nextClassName={'page-item'}
-                nextLinkClassName={'page-link'}
-                activeClassName={'active'}
-                renderOnZeroPageCount={null}
-                />
+                </div>                
 
                 {publicationList.map((item) => {                    
                     return(
@@ -156,6 +140,23 @@ function PublicationsAll () {
                 </div>
                 <div className='row justify-content-center'>
                     {onLoad ? <Loading/> : <Filters/>}
+
+                    <ReactPaginate pageCount={numberOfPages} pageRangeDisplayed={3}
+                    marginPagesDisplayed={2} breakLabel='...' previousLabel='<' nextLabel='>' 
+                    onPageChange={(event) => { setSelectedPage(event.selected+1)}}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    containerClassName={'pagination'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    activeClassName={'active'}
+                    renderOnZeroPageCount={null}
+                    />
+
                 </div>
             </div>
         </>
