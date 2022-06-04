@@ -16,6 +16,8 @@ import { Galleria } from 'primereact/galleria';
 import { Dialog } from 'primereact/dialog';
 import Modal from "./components/Modal";
 import FormProposal from './FormPropuesta';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { ConfirmDialog ,  confirmDialog } from 'primereact/confirmdialog';
 
 function Publication (){
 
@@ -24,7 +26,8 @@ function Publication (){
     const [showDeletedMessage, setShowDeletedMessage] =useState(false);
     const [stateProposal, setStateProposal]=useState(false);
     const [userEmail, setUserEmail]=useState(null);
-    
+    const [loading, setLoading] = useState(true);  
+        
     //Estado para saber si el usuario se autentico
     //Este estado solo se cambia si el usuario tiene token valida
     const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -40,7 +43,7 @@ function Publication (){
     let dataFromApiDeletePublication;
 
     
-    const requestPublicationInfo= async (id) => {
+    const requestPublicationInfo= async (id) => {        
         const url = "http://localhost:3080/publication/" + id;
         return await fetch(url,{            
             method : 'GET',
@@ -92,8 +95,67 @@ let ima=[]
         }
     }
 
+    const confirm = () => {
+        confirmDialog({
+            message: '¿Estás seguro de que deseas borrar esta publicación?',
+            header: 'Confirmar borrado de publicacion',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => deletePub(id),
+            reject: () => document.location.reload(),
+            acceptLabel :"Aceptar" ,
+            rejectLabel: 'Cancelar'
+        });
+    }
+
+    const Loading = () => {
+        if(loading === false){
+            return(
+            <>
+            <Galleria value={imagenPublicacion} responsiveOptions={responsiveOptions} numVisible={5} style={{  maxWidth:'600px' }}
+                showThumbnails={false} showIndicators item={itemTemplate} circular autoPlay transitionInterval={3000}/>
+            
+           
+
+
+                <Divider layout="vertical" />
+                
+
+                <Card title={datos.titulo} subTitle={datos.categoria+subcategoryText}>
+                    <p className="flex justify-content-start text-primary" >{datos.estado_item}</p>
+                    <span className="flex justify-content-start" ><b>Publicado: </b>&nbsp;{String (datos.fecha_publicacion).slice(0,10) +" por "+ datos.nombres + " " + datos.apellidos}</span>
+                    <br/>
+                    <br/>
+                    <span className="flex justify-content-start">{datos.descripcion}</span>
+                    <br/>
+                    <br/>
+                    <span className="flex justify-content-start"><b>Intercambio por:</b>&nbsp;{datos.intercambio_por}</span>
+                    <span className="flex justify-content-start"><b>{datos.numero_propuestas}</b>&nbsp;Propuestas actualmente</span>
+                    <br/>
+                    <br/>
+                    <div className={isAuthenticated? "":"no-display"}>
+                        <div className={propietario? "butup":""}>
+                            <Button label="Hacer propuesta" icon="pi pi-comments" onClick={(cambiarEstadoProposal)} />
+                        </div>
+                        <div className={propietario? "":"butup"}>
+                            <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger" onClick={confirm}/>
+                        </div>
+                    </div>
+                    <div className={isAuthenticated? "no-display":""}>
+                        <p className="flex justify-content-start text-primary" >Para hacer una propuesta de trueque, primero Inicia Sesión</p>
+                    </div>
+                </Card>      
+            </>
+            )
+        }
+        else{            
+            return <ProgressSpinner/>  
+        }
+        
+    }   
+
     useEffect(() => {
         (async () => {
+            setLoading(true)
             let respuesta = await requestPublicationInfo(id);
             let objetoImagen = {"itemImageSrc":respuesta.imagen, "alt":"No salio la imagen", "title":"Titulo de la imagen"};
             ima.push(objetoImagen);
@@ -103,6 +165,7 @@ let ima=[]
                 setSubcategoryText(", "+respuesta.subcategoria)
             }
             let respuestaAutenticacion = await isAuth(respuesta.email);
+            setLoading(false)
         })();
     },[]);
     
@@ -172,7 +235,8 @@ let ima=[]
 
     return (
         
-        <div >
+        <div >       
+            <ConfirmDialog  /> 
             <Dialog visible={showDeletedMessage} onHide={() => setShowDeletedMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
                 <div className="flex align-items-center flex-column pt-6 px-3">
                     <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
@@ -187,44 +251,10 @@ let ima=[]
 
             <Modal className="contenido-modal" estado={stateProposal} cambiarEstado={cambiarEstadoProposal}>
                             <FormProposal email_receptor={datos.email} email_proponente={userEmail} id_publicacion_receptor={id} />
-            </Modal>
-                
+            </Modal>        
                
+            <Loading/>        
                 
-            
-                <Galleria value={imagenPublicacion} responsiveOptions={responsiveOptions} numVisible={5} style={{  maxWidth:'600px' }}
-                showThumbnails={false} showIndicators item={itemTemplate} circular autoPlay transitionInterval={3000}/>
-            
-           
-
-
-                <Divider layout="vertical" />
-                
-
-                <Card title={datos.titulo} subTitle={datos.categoria+subcategoryText}>
-                    <p className="flex justify-content-start text-primary" >{datos.estado_item}</p>
-                    <span className="flex justify-content-start" ><b>Publicado: </b>&nbsp;{String (datos.fecha_publicacion).slice(0,10) +" por "+ datos.nombres + " " + datos.apellidos}</span>
-                    <br/>
-                    <br/>
-                    <span className="flex justify-content-start">{datos.descripcion}</span>
-                    <br/>
-                    <br/>
-                    <span className="flex justify-content-start"><b>Intercambio por:</b>&nbsp;{datos.intercambio_por}</span>
-                    <span className="flex justify-content-start"><b>{datos.numero_propuestas}</b>&nbsp;Propuestas actualmente</span>
-                    <br/>
-                    <br/>
-                    <div className={isAuthenticated? "":"no-display"}>
-                        <div className={propietario? "butup":""}>
-                            <Button label="Hacer propuesta" icon="pi pi-comments" onClick={(cambiarEstadoProposal)} />
-                        </div>
-                        <div className={propietario? "":"butup"}>
-                            <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger" onClick={() => deletePub(id)}/>
-                        </div>
-                    </div>
-                    <div className={isAuthenticated? "no-display":""}>
-                        <p className="flex justify-content-start text-primary" >Para hacer una propuesta de trueque, primero Inicia Sesión</p>
-                    </div>
-                </Card>
 
             </div>
         </div>
