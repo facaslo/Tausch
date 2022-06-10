@@ -10,6 +10,8 @@ export default function ContentPerfil () {
     const [userEmail, setUserEmail]=useState(null);
     const [datos, setDatos] = useState({});
     const [productOptions, setProductOptions]=useState([{}])
+    //Estado para saber si el usuario actual es el propietario del perfil o no
+    const [propietario, setPropietario] = useState(false);
 
     //Verificar si la token esta activa Con la funcion authorization
     //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
@@ -38,6 +40,7 @@ export default function ContentPerfil () {
 
                 const userDataJson = await userData.json();
                 setDatos(userDataJson[0]);
+                
             }
         } catch(err){
             console.error(err.message);
@@ -64,7 +67,7 @@ export default function ContentPerfil () {
                 publications.push(pub)
             }
             setProductOptions(publications)
-            console.log(productOptions)
+            
         })();
     },[]);
 
@@ -103,6 +106,7 @@ export default function ContentPerfil () {
                                                 </div>
                                             </div>
                                             <div className="card border-light d-block my-auto">
+                                            
                                                 <div className="card-body">
                                                     <h5 className="card-title">Información de contacto</h5>
                                                     <div class="input-group mb-3">
@@ -122,6 +126,7 @@ export default function ContentPerfil () {
                                                         <input type="text" class="form-control" placeholder={datos.twitter} aria-label="Username" aria-describedby="basic-addon1" />
                                                     </div>
                                                 </div>
+                                            
                                             </div>
                                         </div> 
                                     </div>
