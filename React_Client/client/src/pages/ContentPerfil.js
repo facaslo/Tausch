@@ -40,7 +40,9 @@ export default function ContentPerfil () {
 
                 const userDataJson = await userData.json();
                 setDatos(userDataJson[0]);
-                
+                if(emailDueñoPublicacion == userDataJson[0].email){
+                    setPropietario(true);
+                }
             }
         } catch(err){
             console.error(err.message);
@@ -106,7 +108,7 @@ export default function ContentPerfil () {
                                                 </div>
                                             </div>
                                             <div className="card border-light d-block my-auto">
-                                            
+                                            <div className={!propietario? "":"butup"}>
                                                 <div className="card-body">
                                                     <h5 className="card-title">Información de contacto</h5>
                                                     <div class="input-group mb-3">
@@ -126,7 +128,7 @@ export default function ContentPerfil () {
                                                         <input type="text" class="form-control" placeholder={datos.twitter} aria-label="Username" aria-describedby="basic-addon1" />
                                                     </div>
                                                 </div>
-                                            
+                                            </div>
                                             </div>
                                         </div> 
                                     </div>
