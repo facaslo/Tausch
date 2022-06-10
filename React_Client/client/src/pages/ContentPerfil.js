@@ -102,9 +102,10 @@ export default function ContentPerfil () {
                                             <div className="card border-light d-block my-auto">
                                                 <div className="card-body">
                                                     <h5 className="pt-3"><strong>{datos.nombres} {datos.apellidos}</strong></h5>
+                                                    <div className={!propietario? "":"butup"}>
                                                     <h6>{datos.email}</h6>
-                                                    <h6>{String(datos.fecha_de_registro).slice(0,10)}</h6>
-                                                    <h6>Puntuación</h6>
+                                                    </div>
+                                                    <h6>Fecha de registro: {String(datos.fecha_de_registro).slice(0,10)}</h6>
                                                 </div>
                                             </div>
                                             <div className="card border-light d-block my-auto">
