@@ -17,7 +17,7 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
 import Publication from './Publication';
 import ContentPerfil from './pages/ContentPerfil';
-
+import Offer from './pages/Offer'
 
 ReactDOM.render(
     <BrowserRouter>   
@@ -34,6 +34,8 @@ ReactDOM.render(
             <Route exact path='/createpublication' element={<CreatePublication />}/>
             <Route exact path='/publication/:id' element={<Publication />}/>
             <Route exact path='/contentperfil' element={<ContentPerfil />}/>
+            <Route exact path='/offer' element={<Offer />}/>
+
         </Routes>
         <Footer />
     </BrowserRouter>,
