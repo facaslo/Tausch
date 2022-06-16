@@ -15,6 +15,7 @@ import { Dialog } from 'primereact/dialog';
 import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { PickList } from 'primereact/picklist';
 
 function FormProposal (parameters) {
 
@@ -24,6 +25,8 @@ function FormProposal (parameters) {
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [productOptions, setProductOptions]=useState([])
+    const [source, setSource] = useState([]);
+    const [target, setTarget] = useState([]);
     let direction="/publication/"+parameters.id_publicacion_receptor;
     
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => window.location.replace(direction) } /></div>;
@@ -43,9 +46,10 @@ function FormProposal (parameters) {
             let respuesta = await requestPublicationsList();
             let publications=[]
             for (const pub of respuesta.posts){
-                publications.push({label:pub.titulo, code:pub.id})
+                publications.push(pub)
             }
             setProductOptions(publications)
+            setSource(publications)
             
         })();
     },[]);
@@ -116,6 +120,27 @@ function FormProposal (parameters) {
         }
     };
 
+    const onChange = (event) => {
+        setSource(event.source);
+        setTarget(event.target);
+    }
+
+    const itemTemplate = (item) => {
+        console.log(item)
+        return (
+            
+            <div className="product-item">
+                <div className="image-container">
+                    <img src={item.imagen} style={{  maxWidth:'100px' }} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}  />
+                </div>
+                <div className="product-list-detail">
+                    <h6 className="mb-2">{item.titulo}</h6>
+                   
+                    <span className="product-category">{item.categoria}</span>
+                </div>                
+            </div>
+        );
+    }
     return (
         
         <div className="form-demo">
@@ -150,8 +175,9 @@ function FormProposal (parameters) {
                             <Field name="exchange_for" type="dropdown" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Dropdown id="exchange_for" {...input} value={selectedProduct} options={productOptions} onChange={onProductExChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>
-                                        <label htmlFor="exchange_for" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Intercambio por</label>
+                                        {/*<Dropdown id="exchange_for" {...input} value={selectedProduct} options={productOptions} onChange={onProductExChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>*/}
+                                        <PickList {...input}id="exchange_for" source={source} target={target} itemTemplate={itemTemplate} sourceHeader="Mis publicaciones" targetHeader="Artículos ofertados" sourceStyle={{ height: '342px' }} targetStyle={{ height: '342px' }} onChange={onChange} showSourceControls={false} showTargetControls={false}></PickList>
+                                        <label htmlFor="exchange_for" className={classNames({ 'p-error': isFormFieldValid(meta) })}></label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
