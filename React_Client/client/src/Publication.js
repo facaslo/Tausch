@@ -133,11 +133,13 @@ let ima=[]
                     <br/>
                     <br/>
                     <div className={isAuthenticated? "":"no-display"}>
+                        <div className={datos.activa? "":"no-display"}>
                         <div className={propietario? "butup":""}>
                             <Button label="Hacer propuesta" icon="pi pi-comments" onClick={(cambiarEstadoProposal)} />
                         </div>
                         <div className={propietario? "":"butup"}>
                             <Button label="Eliminar publicación" icon="pi pi-times-circle" className="p-button-danger" onClick={confirm}/>
+                        </div>
                         </div>
                     </div>
                     <div className={isAuthenticated? "no-display":""}>

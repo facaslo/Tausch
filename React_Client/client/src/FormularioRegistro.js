@@ -85,17 +85,10 @@ function ReactFinalFormDemo () {
         errors.age = "La edad solo puede contener dígitos.";
         }
 
-        if (!data.phoneNumber) {
-        errors.phoneNumber = "Tu número de celular es requerido.";
-        }else if (
-        !/^\d{10}$/i.test(data.phoneNumber) // 10 digitos.
-        ){
-        errors.phoneNumber = "El celular solo puede contener 10 dígitos.";
-        }
-
-        if (!data.accept) {
-        errors.accept = "Es necesario estar de acuerdo con los términos y condiciones.";
-        }
+        if (
+        !/^\d{0,10}$/i.test(data.phoneNumber)         ){
+        errors.phoneNumber = "El número de teléfono o celular solo puede contener numeros y tener una longitud máxima de 10";
+        }        
 
         return errors;
     };

@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from "react";
 import NavBarPerfil from "../components/NavBar/NavBarPerfil";
-import { FaFacebook, FaInstagramSquare, FaTwitter, FaUserEdit, FaPhoneAlt } from "react-icons/fa";
+import { FaFacebook, FaInstagramSquare, FaTwitter, FaUserEdit, FaEdit, FaPhoneAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function ContentPerfil () {
@@ -10,6 +10,8 @@ export default function ContentPerfil () {
     const [userEmail, setUserEmail]=useState(null);
     const [datos, setDatos] = useState({});
     const [productOptions, setProductOptions]=useState([{}])
+    //Estado para saber si el usuario actual es el propietario del perfil o no
+    const [propietario, setPropietario] = useState(false);
 
     //Verificar si la token esta activa Con la funcion authorization
     //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
@@ -38,6 +40,9 @@ export default function ContentPerfil () {
 
                 const userDataJson = await userData.json();
                 setDatos(userDataJson[0]);
+                if(emailDueñoPublicacion == userDataJson[0].email){
+                    setPropietario(true);
+                }
             }
         } catch(err){
             console.error(err.message);
@@ -64,11 +69,13 @@ export default function ContentPerfil () {
                 publications.push(pub)
             }
             setProductOptions(publications)
-            console.log(productOptions)
+            
         })();
     },[]);
 
-
+    {/*const activarcaja = () => {
+        document.getElementById('basic-addon1').disabled=true
+    }*/}
 
 
 
@@ -97,31 +104,38 @@ export default function ContentPerfil () {
                                             <div className="card border-light d-block my-auto">
                                                 <div className="card-body">
                                                     <h5 className="pt-3"><strong>{datos.nombres} {datos.apellidos}</strong></h5>
+                                                    <div className={!propietario? "":"butup"}>
                                                     <h6>{datos.email}</h6>
-                                                    <h6>{String(datos.fecha_de_registro).slice(0,10)}</h6>
-                                                    <h6>Puntuación</h6>
+                                                    </div>
+                                                    <h6>Fecha de registro: {String(datos.fecha_de_registro).slice(0,10)}</h6>
                                                 </div>
                                             </div>
                                             <div className="card border-light d-block my-auto">
+                                            <div className={!propietario? "":"butup"}>
                                                 <div className="card-body">
                                                     <h5 className="card-title">Información de contacto</h5>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1"><FaPhoneAlt size={20}/></span>
-                                                        <input type="text" class="form-control" placeholder={datos.celular} aria-label="Username" aria-describedby="basic-addon1" />
+                                                    <div className="input-group mb-3">
+                                                        <span className="input-group-text" id="basic-addon1"><FaPhoneAlt size={20}/></span>
+                                                        <input type="text" className="form-control" placeholder={datos.celular} aria-label="Celular" aria-describedby="basic-addon1" keyfilter={/^\d{0,10}$/} disabled=""/>
+                                                        <button  type="input-group-text" onClick="" ><FaEdit /></button>
                                                     </div>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1"><FaFacebook size={20}/></span>
-                                                        <input type="text" class="form-control" placeholder={datos.facebook} aria-label="Username" aria-describedby="basic-addon1" />
+                                                    <div className="input-group mb-3">
+                                                        <span className="input-group-text" id="basic-addon2"><FaFacebook size={20}/></span>
+                                                        <input type="text" className="form-control" placeholder={datos.facebook} aria-label="Facebook" aria-describedby="basic-addon2" disabled=""/>
+                                                        <button  type="input-group-text" onClick="" ><FaEdit /></button>
                                                     </div>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1"><FaInstagramSquare size={20}/></span>
-                                                        <input type="text" class="form-control" placeholder={datos.instagram} aria-label="Username" aria-describedby="basic-addon1" />
+                                                    <div className="input-group mb-3">
+                                                        <span className="input-group-text" id="basic-addon3"><FaInstagramSquare size={20}/></span>
+                                                        <input type="text" className="form-control" placeholder={datos.instagram} aria-label="Instagram" aria-describedby="basic-addon3" disabled=""/>
+                                                        <button  type="input-group-text" onClick="" ><FaEdit /></button>
                                                     </div>
-                                                    <div class="input-group mb-3">
-                                                        <span class="input-group-text" id="basic-addon1"><FaTwitter size={20}/></span>
-                                                        <input type="text" class="form-control" placeholder={datos.twitter} aria-label="Username" aria-describedby="basic-addon1" />
+                                                    <div className="input-group mb-3">
+                                                        <span className="input-group-text" id="basic-addon4"><FaTwitter size={20}/></span>
+                                                        <input type="text" className="form-control" placeholder={datos.twitter} aria-label="Twitter" aria-describedby="basic-addon4" disabled=""/>
+                                                        <button  type="input-group-text" onClick="" ><FaEdit /></button>
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
                                         </div> 
                                     </div>
@@ -161,6 +175,30 @@ export default function ContentPerfil () {
                                     </div>
                                 </div>
                             </div>
+                            <div className="accordion-item">
+                                <h2 className="accordion-header" id="panelsStayOpen-headingThree">
+                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                        <h4 className="font-bold text-primary">Tus trueques en curso</h4>
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                                    <div class="accordion-body">
+                                        <strong>Acepta o rechaza trueques en curso.</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="accordion-item">
+                                <h2 className="accordion-header" id="panelsStayOpen-headingFour">
+                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                                        <h4>Tus trueques concretados</h4>
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseFour" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                                    <div class="accordion-body">
+                                        <strong>Revisa el historial de los trueques que has concretado.</strong>
+                                    </div>
+                                </div>
+                            </div>                  
                         </div>
                     </div>
                 </div>
