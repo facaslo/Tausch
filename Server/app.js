@@ -16,6 +16,8 @@ const publicationRouter = require('./routes/publicationRouter')
 const userPostsRoute = require('./routes/userPostsRoute')
 const newOfferRouter = require('./routes/newOfferRouter')
 const offersToUserRoute = require('./routes/offersToUserRoute')
+const editProfileRoute = require('./routes/editProfileRoute')
+const getUserBartersRoute = require('./routes/getUserBartersRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -40,6 +42,8 @@ app.use('/publication',publicationRouter);
 app.use('/user-posts', userPostsRoute)
 app.use('/new-offer', newOfferRouter);
 app.use('/offers-to-user', offersToUserRoute)
+app.use('/edit-profile', editProfileRoute)
+app.use('/user-barters', getUserBartersRoute)
 
 // Iniciar servidor solo si no es un test
 if(process.env.NODE_ENV !== 'test'){

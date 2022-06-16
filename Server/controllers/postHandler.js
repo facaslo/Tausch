@@ -5,6 +5,7 @@ const {validateRegister} = require('../middleware/validateRegister')
 const {validateLogin} = require('../middleware/validateLogin')
 const {validateNewPublication} = require('../middleware/validateNewPublication')
 const {validateNewOffer} = require('../middleware/validateNewOffer')
+const {validateEditProfile} = require('../middleware/validateEditProfile')
 
 const postRegister =[
     check('userName')
@@ -34,9 +35,22 @@ const postRegister =[
 ]
 
 const postLogin = [
-    check('email')
-            .exists()
-            .isEmail(),
+    body().custom((value) => {
+        if(value.email){
+            if(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value.email)){
+                return true
+            }
+        }
+        if(value.userName){
+            if(value.userName !== ''){
+                return true
+            }
+        }
+        throw new Error('Campo de email o usuario invalido.')
+    }),
+    // check('email')
+    //     .exists()
+    //     .isEmail(),
     check('password')
         .exists()
         .isStrongPassword(),
@@ -106,7 +120,8 @@ const postNewPublication = [
     }
 ]
 
-const offerState = ["en espera","aceptada","rechazada","concluida"]
+// const offerState = ["en espera","aceptada","rechazada","concluida"]
+
 const postNewOffer = [
     check('mensaje')
         .exists()
@@ -116,4 +131,22 @@ const postNewOffer = [
     }
 ]
 
-module.exports = {postRegister, postLogin, postNewPublication, postNewOffer}
+const postEditProfile = [
+    check('phoneNumber')
+        .exists()
+        .isNumeric(),
+    check('facebook')
+        .exists()
+        .notEmpty(),
+    check('instagram')
+        .exists()
+        .notEmpty(),
+    check('twitter')
+        .exists()
+        .notEmpty(),
+    (req, res, next) => {
+        validateEditProfile(req, res, next)
+    }
+]
+
+module.exports = {postRegister, postLogin, postNewPublication, postNewOffer, postEditProfile}
