@@ -63,10 +63,6 @@ function FormProposal (parameters) {
         let errors = {};
         
         
-        if (selectedProduct != null){
-            data.exchange_for=selectedProduct.label;
-        }
-        
         if (data.message && data.message.length>=201 ){
             let letters=data.message.length
             errors.message = "Tu comentario puede contener máximo 200 caracteres, tienes "+letters;
@@ -77,11 +73,11 @@ function FormProposal (parameters) {
                
         }
 
-        if (!data.exchange_for) {
-            if (productOptions.length===0){
+        if (target.length===0) {
+            if (source.length===0){
                 errors.exchange_for = "No tienes publicaciones, crea una para poder hacer propuestas"
             }
-            else{errors.exchange_for = "Selecciona uno de tus productos que quieras intercambiar";}
+            else{errors.exchange_for = "Selecciona al menos uno de tus productos que quieras intercambiar";}
 
         }
 
@@ -99,7 +95,12 @@ function FormProposal (parameters) {
     
     const onSubmit = async (data, form) => { 
         let objectProposal
-        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'id_publicacion_proponente':selectedProduct.code, 'mensaje':data.message}
+        let idList=[]
+        for (const publ of target){
+            idList.push(publ.id)
+        }
+
+        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'mensaje':data.message,'lista_publicaciones':idList}
         await sendProposalToServer(objectProposal)
         form.restart();
     };
@@ -126,7 +127,6 @@ function FormProposal (parameters) {
     }
 
     const itemTemplate = (item) => {
-        console.log(item)
         return (
             
             <div className="product-item">

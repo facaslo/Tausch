@@ -10,8 +10,8 @@ const validateNewOffer = async (req, res, next) =>{
             req.body.email_proponente,
             req.body.email_receptor,
             req.body.id_publicacion_receptor,
-            req.body.id_publicacion_proponente,
-            req.body.mensaje
+            req.body.mensaje,
+            req.body.lista_publicaciones
         )
 
         responseNewOffer(req,res)
