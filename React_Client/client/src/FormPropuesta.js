@@ -176,6 +176,7 @@ function FormProposal (parameters) {
                                 <div className="field">
                                     <span className="p-float-label">
                                         {/*<Dropdown id="exchange_for" {...input} value={selectedProduct} options={productOptions} onChange={onProductExChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>*/}
+                                        <h7><b>Selecciona al menos una de tus publicaciones para el trueque</b></h7>
                                         <PickList {...input}id="exchange_for" source={source} target={target} itemTemplate={itemTemplate} sourceHeader="Mis publicaciones" targetHeader="Artículos ofertados" sourceStyle={{ height: '342px' }} targetStyle={{ height: '342px' }} onChange={onChange} showSourceControls={false} showTargetControls={false}></PickList>
                                         <label htmlFor="exchange_for" className={classNames({ 'p-error': isFormFieldValid(meta) })}></label>
                                     </span>
