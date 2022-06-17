@@ -15,6 +15,7 @@ import { Dialog } from 'primereact/dialog';
 import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { PickList } from 'primereact/picklist';
 
 function FormProposal (parameters) {
 
@@ -24,6 +25,8 @@ function FormProposal (parameters) {
     const [showMessageAccept, setShowMessageAccept] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [productOptions, setProductOptions]=useState([])
+    const [source, setSource] = useState([]);
+    const [target, setTarget] = useState([]);
     let direction="/publication/"+parameters.id_publicacion_receptor;
     
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => window.location.replace(direction) } /></div>;
@@ -43,9 +46,10 @@ function FormProposal (parameters) {
             let respuesta = await requestPublicationsList();
             let publications=[]
             for (const pub of respuesta.posts){
-                publications.push({label:pub.titulo, code:pub.id})
+                publications.push(pub)
             }
             setProductOptions(publications)
+            setSource(publications)
             
         })();
     },[]);
@@ -59,10 +63,6 @@ function FormProposal (parameters) {
         let errors = {};
         
         
-        if (selectedProduct != null){
-            data.exchange_for=selectedProduct.label;
-        }
-        
         if (data.message && data.message.length>=201 ){
             let letters=data.message.length
             errors.message = "Tu comentario puede contener máximo 200 caracteres, tienes "+letters;
@@ -73,11 +73,11 @@ function FormProposal (parameters) {
                
         }
 
-        if (!data.exchange_for) {
-            if (productOptions.length===0){
+        if (target.length===0) {
+            if (source.length===0){
                 errors.exchange_for = "No tienes publicaciones, crea una para poder hacer propuestas"
             }
-            else{errors.exchange_for = "Selecciona uno de tus productos que quieras intercambiar";}
+            else{errors.exchange_for = "Selecciona al menos uno de tus productos que quieras intercambiar";}
 
         }
 
@@ -95,7 +95,12 @@ function FormProposal (parameters) {
     
     const onSubmit = async (data, form) => { 
         let objectProposal
-        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'id_publicacion_proponente':selectedProduct.code, 'mensaje':data.message}
+        let idList=[]
+        for (const publ of target){
+            idList.push(publ.id)
+        }
+
+        objectProposal={'email_receptor':parameters.email_receptor, 'email_proponente':parameters.email_proponente, 'id_publicacion_receptor':parameters.id_publicacion_receptor, 'mensaje':data.message,'lista_publicaciones':idList}
         await sendProposalToServer(objectProposal)
         form.restart();
     };
@@ -116,6 +121,26 @@ function FormProposal (parameters) {
         }
     };
 
+    const onChange = (event) => {
+        setSource(event.source);
+        setTarget(event.target);
+    }
+
+    const itemTemplate = (item) => {
+        return (
+            
+            <div className="product-item">
+                <div className="image-container">
+                    <img src={item.imagen} style={{  maxWidth:'100px' }} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}  />
+                </div>
+                <div className="product-list-detail">
+                    <h6 className="mb-2">{item.titulo}</h6>
+                   
+                    <span className="product-category">{item.categoria}</span>
+                </div>                
+            </div>
+        );
+    }
     return (
         
         <div className="form-demo">
@@ -150,8 +175,10 @@ function FormProposal (parameters) {
                             <Field name="exchange_for" type="dropdown" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
-                                        <Dropdown id="exchange_for" {...input} value={selectedProduct} options={productOptions} onChange={onProductExChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>
-                                        <label htmlFor="exchange_for" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Intercambio por</label>
+                                        {/*<Dropdown id="exchange_for" {...input} value={selectedProduct} options={productOptions} onChange={onProductExChange}  optionLabel="label" className={classNames({ 'p-invalid': isFormFieldValid(meta) })}/>*/}
+                                        <h7><b>Selecciona al menos una de tus publicaciones para el trueque</b></h7>
+                                        <PickList {...input}id="exchange_for" source={source} target={target} itemTemplate={itemTemplate} sourceHeader="Mis publicaciones" targetHeader="Artículos ofertados" sourceStyle={{ height: '342px' }} targetStyle={{ height: '342px' }} onChange={onChange} showSourceControls={false} showTargetControls={false}></PickList>
+                                        <label htmlFor="exchange_for" className={classNames({ 'p-error': isFormFieldValid(meta) })}></label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>

@@ -1,5 +1,6 @@
 .form-demo .card {
     min-width: 450px;
+    border:0
 }
 .form-demo .card form {
     margin-top: 1.5rem;
@@ -7,6 +8,10 @@
 .form-demo .card .field {
     margin-bottom: 0.05rem;    
 }
+.form-demo .card2 {
+    min-width: 650px;
+}
+
 .butup{
     display: none;
 }
