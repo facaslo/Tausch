@@ -30,39 +30,39 @@ function ReactFinalFormDemo () {
         let errors = {};
 
         if (!data.userName) {
-        errors.userName = "El nombre de usuario con el que te identificarán es requerido.";
+        errors.userName = " El nombre de usuario es requerido.";
         }
     
         if (!data.password) {
-        errors.password = "La contraseña es requerida.";
+        errors.password = " La contraseña es requerida.";
         } else if (
         !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i.test(data.password) // Letras, numeros, caracteres excepto @#$%^& y mínimo 8 caracteres
         ) {
-        errors.password = "Debe tener más de 8 caracteres, al menos un número y al menos un caracter especial.";
+        errors.password = " Debe tener más de 8 caracteres, al menos un número y al menos un caracter especial.";
         }
 
         if (!data.email) {
-        errors.email = "Tu correo de contacto es requerido.";
+        errors.email = " Tu correo es requerido.";
         } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)//855
         ) {
-        errors.email = "Direción de correo inválida. Ej.: example@email.com";
+        errors.email = " Direción de correo inválida. Ej.: example@email.com";
         }
 
         if (!data.firstName) {
-        errors.firstName = "Tu nombre es requerido.";
+        errors.firstName = " Tu nombre es requerido.";
         } else if (
         !/^[a-zA-ZÀ-ÿ\s]{1,40}$/i.test(data.firstName) // Letras y espacios, pueden llevar acentos.
         ){
-        errors.firstName = "Los nombres solo pueden contener letras, espacios y acentos.";
+        errors.firstName = " Los nombres solo pueden contener letras, espacios y acentos.";
         }
 
         if (!data.lastName) {
-        errors.lastName = "Tu apellido es requerido.";
+        errors.lastName = " Tu apellido es requerido.";
         } else if (
         !/^[a-zA-ZÀ-ÿ\s]{1,40}$/i.test(data.lastName) // Letras y espacios, pueden llevar acentos.
         ){
-        errors.lastName = "Los apellidos solo pueden contener letras, espacios y acentos.";
+        errors.lastName = " Los apellidos solo pueden contener letras, espacios y acentos.";
         }
         
         //if (!data.date) {
@@ -78,16 +78,16 @@ function ReactFinalFormDemo () {
                             )} /> */
         
         if (!data.age) {
-        errors.age = "Tu edad es requerida.";
+        errors.age = " Tu edad es requerida.";
         }else if (
         !/^\d{1,2}$/i.test(data.age) // 1 a 2 digitos.
         ){
-        errors.age = "La edad solo puede contener dígitos.";
+        errors.age = " La edad solo puede contener dígitos.";
         }
 
         if (
         !/^\d{0,10}$/i.test(data.phoneNumber)         ){
-        errors.phoneNumber = "El número de teléfono o celular solo puede contener numeros y tener una longitud máxima de 10";
+        errors.phoneNumber = " El número de teléfono o celular solo puede contener numeros y tener una longitud máxima de 10";
         }        
 
         return errors;
@@ -165,100 +165,109 @@ function ReactFinalFormDemo () {
             <div className="flex justify-content-center">
                 <div className="card">
                     <h3 className="text-center">Registro</h3>
-                    <Form onSubmit={onSubmit} initialValues={{ userName: "", password: "", email: "", firstName: "", lastName: "", phoneNumber: "", facebook: "", twitter: "", instagram: "", accept: false}} validate={validate} render={({ handleSubmit }) => (
-                        <form onSubmit={handleSubmit} className="p-fluid">
-                            
+                    <Form  onSubmit={onSubmit} initialValues={{ userName: "", password: "", email: "", firstName: "", lastName: "", phoneNumber: "", facebook: "", twitter: "", instagram: "", accept: false}} validate={validate} render={({ handleSubmit }) => (
+                        <form id="formRegistro" onSubmit={handleSubmit} className="p-fluid">
+                            <br/>
                             <Field name="userName" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only">
+                                    <span className="p-float-label">
                                         <InputText id="userName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="userName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Usuario*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="password" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only">
+                                    <span className="p-float-label">
                                         <Password id="password" {...input} toggleMask className={classNames({ 'p-invalid': isFormFieldValid(meta) })} header={passwordHeader} footer={passwordFooter} />
                                         <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Password*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="email" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only p-input-icon-right">
-                                        <i className="pi pi-envelope" />
+                                    <span className="p-float-label">
                                         <InputText id="email" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="email" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Email*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="firstName" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only">
+                                    <span className="p-float-label">
                                         <InputText id="firstName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="firstName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Nombres*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="lastName" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-onlyl">
+                                    <span className="p-float-label">
                                         <InputText id="lastName" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="lastName" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Apellidos*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="age" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only">
+                                    <span className="p-float-label">
                                         <InputText id="age" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="age" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Edad*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
+                            <br/>
                             <Field name="phoneNumber" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only">
+                                    <span className="p-float-label">
                                         <InputText id="phoneNumber" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="phoneNumber" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Celular*</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
-                            )} />     
+                            )} />
+                            <br/>     
                             <Field name="facebook" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only">
+                                    <span className="p-float-label">
                                         <InputText id="facebook" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="facebook" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Facebook</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
-                            )} /> 
+                            )} />
+                            <br/> 
                             <Field name="twitter" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only">
+                                    <span className="p-float-label">
                                         <InputText id="twitter" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="twitter" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Twitter</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
-                            )} />     
+                            )} />
+                            <br/>     
                             <Field name="instagram" render={({ input, meta }) => (
                                 <div className="field">
-                                    <span className="ui-sr-only">
+                                    <span className="p-float-label">
                                         <InputText id="instagram" {...input}  className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />
                                         <label htmlFor="instagram" className={classNames({ 'p-error': isFormFieldValid(meta) })}>Instagram</label>
                                     </span>
                                     {getFormErrorMessage(meta)}
                                 </div>
-                            )} />                     
+                            )} />
+                            <br/>                     
                             <Field name="accept" type="checkbox" render={({ input, meta }) => (
                                 <div className="field-checkbox">
                                     <Checkbox inputId="accept" {...input} className={classNames({ 'p-invalid': isFormFieldValid(meta) })} />

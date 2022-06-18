@@ -1,15 +1,23 @@
 .form-demo .card {
     min-width: 450px;
-    border:0
+    border:0;
+    
 }
 .form-demo .card form {
     margin-top: 1.5rem;
+    
 }
 .form-demo .card .field {
     margin-bottom: 0.05rem;    
 }
-.form-demo .card2 {
-    min-width: 650px;
+
+#formRegistro {
+    margin-top: 1.5rem;
+    max-height: 700px;
+    overflow-y:scroll;
+    width: 98%;
+    align-self: center;
+    
 }
 
 .butup{
