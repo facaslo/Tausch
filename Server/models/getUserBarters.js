@@ -7,7 +7,7 @@ const getUserBarters = async (req) => {
     let result;
     try{
 
-        result = client_pool.query(`SELECT * FROM propuesta WHERE email_receptor='${req.user_email}' AND estado_propuesta == 'aceptados'`).then(res => res.rows).catch(e => console.log(e))
+        result = client_pool.query(`SELECT * FROM propuesta WHERE email_receptor='${req.user_email}' AND estado_propuesta == 'aceptada'`).then(res => res.rows).catch(e => console.log(e))
     }
     finally{
         client_pool.release()
