@@ -15,9 +15,10 @@ const getPublicationListRoute = require('./routes/getPublicationListRoute')
 const publicationRouter = require('./routes/publicationRouter')
 const userPostsRoute = require('./routes/userPostsRoute')
 const newOfferRouter = require('./routes/newOfferRouter')
-const offersToUserRoute = require('./routes/offersToUserRoute')
+const offersToUserRoute = require('./routes/offersToUserRoute')// son las ofertas que salen en la campana, ahora devuelven el id_propuesta
 const editProfileRoute = require('./routes/editProfileRoute')
 const getUserBartersRoute = require('./routes/getUserBartersRoute')
+const getOffersRoute = require('./routes/getOffersRoute')// son las ofertas en detalle que van a /offers en el front (tal vez sea bueno cambiar los nombres)
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -44,6 +45,7 @@ app.use('/new-offer', newOfferRouter);
 app.use('/offers-to-user', offersToUserRoute)
 app.use('/edit-profile', editProfileRoute)
 app.use('/user-barters', getUserBartersRoute)
+app.use('/all-offers', getOffersRoute)
 
 // Iniciar servidor solo si no es un test
 if(process.env.NODE_ENV !== 'test'){
