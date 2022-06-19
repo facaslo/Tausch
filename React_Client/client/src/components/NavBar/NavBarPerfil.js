@@ -86,7 +86,7 @@ export default function NavBarPerfil () {
             <div className={isAuthenticated ? "":"no-display"}>
                 <nav className="nav nav-pills nav-justified text-dark bg-white d-flex justify-content-around border border-primary rounded">
                     <h3 className="align-middle p-3 mb-2 font-italic">Bienvenido {nombreDeUsuario}</h3>
-                    <a href="contentperfil#panelsStayOpen-headingThree" title="Dirígete a la sección de tus trueques en curso">
+                    <a href="http://localhost:3000/contentperfil#panelsStayOpen-headingThree" title="Dirígete a la sección de tus trueques en curso">
                         <h4 className="align-middle p-3 mb-2 font-italic">Tus trueques en curso</h4>
                     </a>
                     <div class="dropdown">

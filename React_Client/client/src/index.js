@@ -34,7 +34,7 @@ ReactDOM.render(
             <Route exact path='/createpublication' element={<CreatePublication />}/>
             <Route exact path='/publication/:id' element={<Publication />}/>
             <Route exact path='/contentperfil' element={<ContentPerfil />}/>
-            <Route exact path='/offer' element={<Offer />}/>
+            <Route exact path='/offer/:id' element={<Offer />}/>
 
         </Routes>
         <Footer />

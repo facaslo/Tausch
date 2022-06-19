@@ -8,7 +8,7 @@ const getOffers = require('../models/getOffers')
 const getPublicationInfo = require('../models/getPublicationInfo')
 
 // La dirección '/' es relativa a '/all-offers'. Si fuera '/url', la dirección absoluta sería '/all-offers/url'
-router.get('/', authorization, async (req, res) => {
+router.post('/', authorization, async (req, res) => {
 
     try{
         
