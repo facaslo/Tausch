@@ -6,6 +6,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { Galleria } from 'primereact/galleria';
 import { Divider } from 'primereact/divider';
 import { Card } from 'primereact/card';
+import "./General-container.css"
 
 function Offer () {
     
@@ -30,29 +31,31 @@ function Offer () {
     let ima=[]
 
     //Intentos
-    const categories = [{name: 'Accounting', key: 'A'}, {name: 'Marketing', key: 'M'}, {name: 'Production', key: 'P'}, {name: 'Research', key: 'R'}];
-    const [selectedCategories, setSelectedCategories] = useState(categories);
+    //const categories = [{name: 'Accounting', key: 'A'}, {name: 'Marketing', key: 'M'}, {name: 'Production', key: 'P'}, {name: 'Research', key: 'R'}];
+    const [offers, setOffers] = useState([]);
+    const [selectedOffers, setSelectedOffers] = useState([]);
 
-    const onCategoryChange = (e) => {
-        let _selectedCategories = [...selectedCategories];
+    const onOfferChange = (e) => {
+        let _selectedOffers = [...selectedOffers];
 
         if (e.checked) {
-            _selectedCategories.push(e.value);
+            _selectedOffers.push(e.value);
         }
         else {
-            for (let i = 0; i < _selectedCategories.length; i++) {
-                const selectedCategory = _selectedCategories[i];
+            for (let i = 0; i < _selectedOffers.length; i++) {
+                const selectedOffer = _selectedOffers[i];
 
-                if (selectedCategory.key === e.value.key) {
-                    _selectedCategories.splice(i, 1);
+                if (selectedOffer.key === e.value.key) {
+                    _selectedOffers.splice(i, 1);
                     break;
                 }
             }
         
         }
 
-        setSelectedCategories(_selectedCategories);
+        setSelectedOffers(_selectedOffers);
     }
+
 
     const requestOfferInfo= async (id) => {        
         const url = "http://localhost:3080/all-offers/";
@@ -120,12 +123,13 @@ function Offer () {
                             <>
                                     <div flex justify-content-center>
                                         <div className="flex align-items-center justify-content-center">
+
                                             <Galleria value={imagenPublicacion} responsiveOptions={responsiveOptions} numVisible={1} style={{  maxWidth:'200px' }}
                                                     showThumbnails={false} showIndicators item={itemTemplate} circular autoPlay transitionInterval={3000} />
                                                 
 
-                                            <Divider layout="vertical" />
-                                            
+                                            {/*<Divider layout="horizontal" />*/}
+
 
                                             <Card title={datos.titulo} subTitle={datos.categoria+subcategoryText}>
                                                 <p className="flex justify-content-start text-primary" >{datos.estado_item}</p>
@@ -137,6 +141,7 @@ function Offer () {
                                                 <span className="flex justify-content-start"><b>{datos.numero_propuestas}</b>&nbsp;Propuestas actualmente</span>
                                                 
                                             </Card>
+
                                         </div>
                                     </div>
                                     
@@ -159,11 +164,27 @@ function Offer () {
                             </div>
                             <div className="card-body">
                                 {
-                                    categories.map((category) => {
+                                    offers.map((offer) => {
                                         return (
-                                            <div key={category.key} className="field-checkbox">
-                                                <Checkbox inputId={category.key} name="category" value={category} onChange={onCategoryChange} checked={selectedCategories.some((item) => item.key === category.key)}  />
-                                                <label htmlFor={category.key}>{category.name}</label>
+                                            <div key={offer.id} className="field-checkbox">
+                                                <Checkbox inputId={offer.id} name="category" value={offer} onChange={onOfferChange} checked={selectedOffers.some((item) => item.titulo === offer.titulo)}  />
+                                                <div className="card-group">
+                                              
+                                                        <div className="card-img-flex">
+                                                            <img src={offer.imagen} width="100px"/ >
+                                                        </div>
+                                                        <div className="card border-light">
+                                                            <h5 htmlFor={offer.titulo}>{offer.titulo}</h5>
+                                                            <br/>
+                                                            <p>
+                                                                {offer.categoria}<br/>
+                                                                {offer.estado_item}<br/>
+                                                                {offer.descripcion}<br/>
+                                                            </p>
+
+                                                        </div>
+                                                 
+                                                </div>
                                             </div>
                                         )
                                     })
@@ -220,7 +241,8 @@ function Offer () {
             if (respuesta.subcategoria != null){
                 setSubcategoryText(", "+respuesta.subcategoria)
             }
-            //setId_pub_receptor(respuesta.myPost.id);
+            setOffers(resultado.exchanges);
+            setSelectedOffers(resultado.exchanges);
             setLoading(false)
         })();
     },[]);
