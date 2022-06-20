@@ -52,7 +52,7 @@ function Offer () {
             for (let i = 0; i < _selectedOffers.length; i++) {
                 const selectedOffer = _selectedOffers[i];
 
-                if (selectedOffer.key === e.value.key) {
+                if (selectedOffer.id === e.value.id) {
                     _selectedOffers.splice(i, 1);
                     break;
                 }
@@ -263,7 +263,7 @@ function Offer () {
                                             <div key={offer.id} className="field-checkbox">
 
                                                 <div className={datosOferta.estadoOferta === "en espera" && isReceptor ? "":"no-display"}>
-                                                    <Checkbox inputId={offer.id} name="category" value={offer} onChange={onOfferChange} checked={selectedOffers.some((item) => item.titulo === offer.titulo)}  />
+                                                    <Checkbox inputId={offer.id} name="category" value={offer} onChange={onOfferChange} checked={selectedOffers.some((item) => item.id === offer.id)}  />
                                                 </div>
 
                                                 <div className="card-group">
