@@ -164,7 +164,7 @@ function Offer () {
                                 <h4>Información de la Oferta</h4>
                             </div>
                             <div className="card-body">
-                                <h5 className="card-title">Mensaje del proponente:</h5>
+                                <h5 className="card-title">Mensaje del oferente:</h5>
                                 <p className="card-text">{datosOferta.mensaje}</p>
                                 <p className="card-text">Oferta {datosOferta.estadoOferta}</p>
                                 <p className="card-text"><small className="text-muted">Fecha de la oferta: {String (datosOferta.fechaOferta).slice(0,10)}</small></p>
