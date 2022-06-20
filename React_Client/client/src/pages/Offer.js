@@ -6,17 +6,21 @@ import { Checkbox } from 'primereact/checkbox';
 import { Galleria } from 'primereact/galleria';
 import { Divider } from 'primereact/divider';
 import { Card } from 'primereact/card';
+import { Button } from 'primereact/button';
 import "./General-container.css"
+import '../Publication.css'; //Aqui esta el no-display
 
 function Offer () {
     
-    const [userEmail, setUserEmail]=useState(null);
     //Estado para saber si el usuario se autentico
     //Este estado solo se cambia si el usuario tiene token valida
     const [isAuthenticated, setisAuthenticated] = useState(false);
 
-    //Estado para saber si el usuario actual es el propietario de la publicacion o no
-    const [propietario, setPropietario] = useState(false);
+    //Estado para saber si el usuario actual es el que realizo la oferta
+    const [isOferente, setIsOferente] = useState(false);
+
+    //Estado para saber si el usuario actual es el que recibio la oferta
+    const [isReceptor, setIsReceptor] = useState(false);
 
     //Recibir el id de la oferta
     const {id} = useParams();
@@ -75,7 +79,7 @@ function Offer () {
 
     //Verificar si la token esta activa Con la funcion authorization
     //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
-    {/*async function isAuth(emailDueñoPublicacion){
+    async function isAuth(correoReceptor, correoOferente){
         try{
             const response = await fetch("http://localhost:3080/authentication/is-verify",
             {
@@ -99,16 +103,21 @@ function Offer () {
                 });
 
                 const userDataJson = await userData.json();
-                setUserEmail(userDataJson[0].email);
-                
-                if(emailDueñoPublicacion == userDataJson[0].email){
-                    setPropietario(true);
+
+                //Verificar si el receptor de la oferta
+                if(correoReceptor === userDataJson[0].email){
+                    setIsReceptor(true);
+                }
+
+                //Verificar si fue la persona que hizo la oferta
+                if(correoOferente === userDataJson[0].email){
+                    setIsOferente(true);
                 }
             }
         } catch(err){
             console.error(err.message);
         }
-    }*/}
+    }
 
     const Loading = () => {
         if(loading === false){
@@ -155,9 +164,22 @@ function Offer () {
                                 <h4>Información de la Oferta</h4>
                             </div>
                             <div className="card-body">
-                            <h5 className="card-title">Mensaje del proponente:</h5>
-                            <p className="card-text">{datosOferta.mensaje}</p>
-                            <p className="card-text"><small className="text-muted">Fecha de la oferta: {String (datosOferta.fechaOferta).slice(0,10)}</small></p>
+                                <h5 className="card-title">Mensaje del proponente:</h5>
+                                <p className="card-text">{datosOferta.mensaje}</p>
+                                <p className="card-text"><small className="text-muted">Fecha de la oferta: {String (datosOferta.fechaOferta).slice(0,10)}</small></p>
+                                
+                                <div className={isReceptor ? "":"no-display"}>
+                                    <div class="row">
+                                        <div class="col-6 d-flex justify-content-center">
+                                            <Button label="Aceptar oferta" icon="pi pi-check" className="p-button-success" onClick={console.log("p")} />
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-center">
+                                            <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={console.log("n")}/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
 
@@ -175,7 +197,7 @@ function Offer () {
                                                 <div className="card-group">
                                               
                                                         <div className="card-img-flex">
-                                                            <img src={offer.imagen} width="100px"/ >
+                                                            <img src={offer.imagen} width="100px" />
                                                         </div>
                                                         <div className="card border-light">
                                                             <h5 htmlFor={offer.titulo}>{offer.titulo}</h5>
@@ -239,11 +261,15 @@ function Offer () {
             let resultado = await requestOfferInfo(id);
             let respuesta = resultado.myPost
             let objetoImagen = {"itemImageSrc":respuesta.imagen, "alt":"No salio la imagen", "title":"Titulo de la imagen"};
-            let dataOffer = {"mensaje":resultado.offerMsg, "nombreOferente":resultado.nameOfferOwner, "fechaOferta":resultado.exchanges[0].fecha_propuesta};
+            let dataOffer = {"mensaje":resultado.offerMsg, "nombreOferente":resultado.nameOfferOwner, "fechaOferta":resultado.exchanges[0].fecha_propuesta, "emailOferente":resultado.exchanges[0].email_proponente};
             ima.push(objetoImagen);
             SetImagenPublicacion(ima);
             setDatos(respuesta);
             setDatosOferta(dataOffer);
+            
+            //Verificar si usuario actual es receptor o oferente
+            await isAuth(respuesta.email, dataOffer.emailOferente);
+
             if (respuesta.subcategoria != null){
                 setSubcategoryText(", "+respuesta.subcategoria)
             }

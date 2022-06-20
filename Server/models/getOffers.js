@@ -13,7 +13,7 @@ const getOffers = async (req) => {
         // el id de la publicacion del receptor y la informacion importante de las
         // publicaciones para intercambio, incluido sus IDs
 
-        result = await client_pool.query(`SELECT id_publicacion_receptor, fecha_propuesta, nombres, apellidos, mensaje, titulo, id, categoria, descripcion, estado_item, imagen
+        result = await client_pool.query(`SELECT id_publicacion_receptor, email_proponente, fecha_propuesta, nombres, apellidos, mensaje, titulo, id, categoria, descripcion, estado_item, imagen
         FROM ((propuesta JOIN propuesta_tiene_publicacion
         ON propuesta_tiene_publicacion.id_propuesta = propuesta.id_propuesta)
         JOIN perfil ON propuesta.email_proponente = perfil.email)

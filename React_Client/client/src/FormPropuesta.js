@@ -157,7 +157,6 @@ function FormProposal (parameters) {
 
             <div className="flex justify-content-center">
                 <div className="card">
-                    <br/>
                     <h5 className="text-center">Crear propuesta</h5>
                     <Form onSubmit={onSubmit} initialValues={{ message: "", exchange_for: "", accept: false}} validate={validate} render={({ handleSubmit }) => (
                         <form onSubmit={handleSubmit} className="p-fluid" >
@@ -171,7 +170,6 @@ function FormProposal (parameters) {
                                     {getFormErrorMessage(meta)}
                                 </div>
                             )} />
-                            <br/>
                             <Field name="exchange_for" type="dropdown" render={({ input, meta }) => (
                                 <div className="field">
                                     <span className="p-float-label">
