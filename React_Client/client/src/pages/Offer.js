@@ -35,6 +35,9 @@ function Offer () {
     const [offers, setOffers] = useState([]);
     const [selectedOffers, setSelectedOffers] = useState([]);
 
+    //Datos de la oferta
+    const [datosOferta, setDatosOferta] = useState({});
+
     const onOfferChange = (e) => {
         let _selectedOffers = [...selectedOffers];
 
@@ -65,8 +68,7 @@ function Offer () {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body:JSON.stringify({ idOffer: id })
-            //{ idOffer: id }          
+            body:JSON.stringify({ idOffer: id })         
         })
         .then((response) => response.json()).catch(error=> console.log(error));
     };
@@ -116,7 +118,7 @@ function Offer () {
                     <div className="card-group">
                         <div className="card border-primary mb-3 mt-3">
                             <div className="card-header text-center text-dark bg-transparent">
-                                <h4>Tu publicación</h4>
+                                <h4>Publicación de {datos.nombres} {datos.apellidos}</h4>
                             </div>
                             <div className="card-body">
                             {/*<PublicationInOffer argumento_id = {id_pub_receptor}/>*/}
@@ -150,17 +152,19 @@ function Offer () {
                         </div>
                         <div className="card border-primary mb-3 mt-3">
                             <div className="card-header text-center text-dark bg-transparent">
-                                <h4>Oferta recibida</h4>
+                                <h4>Información de la Oferta</h4>
                             </div>
                             <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                            <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+                            <h5 className="card-title">Mensaje del proponente:</h5>
+                            <p className="card-text">{datosOferta.mensaje}</p>
+                            <p className="card-text"><small className="text-muted">Fecha de la oferta: {String (datosOferta.fechaOferta).slice(0,10)}</small></p>
                             </div>
                         </div>
+
+
                         <div className="card border-primary mb-3 mt-3">
                             <div className="card-header text-center text-dark bg-transparent">
-                                <h4>Intercambios propuestos</h4>
+                                <h4>Productos ofrecidos por {datosOferta.nombreOferente}</h4>
                             </div>
                             <div className="card-body">
                                 {
@@ -235,9 +239,11 @@ function Offer () {
             let resultado = await requestOfferInfo(id);
             let respuesta = resultado.myPost
             let objetoImagen = {"itemImageSrc":respuesta.imagen, "alt":"No salio la imagen", "title":"Titulo de la imagen"};
+            let dataOffer = {"mensaje":resultado.offerMsg, "nombreOferente":resultado.nameOfferOwner, "fechaOferta":resultado.exchanges[0].fecha_propuesta};
             ima.push(objetoImagen);
             SetImagenPublicacion(ima);
             setDatos(respuesta);
+            setDatosOferta(dataOffer);
             if (respuesta.subcategoria != null){
                 setSubcategoryText(", "+respuesta.subcategoria)
             }
