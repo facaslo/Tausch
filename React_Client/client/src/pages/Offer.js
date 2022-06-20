@@ -166,17 +166,85 @@ function Offer () {
                             <div className="card-body">
                                 <h5 className="card-title">Mensaje del proponente:</h5>
                                 <p className="card-text">{datosOferta.mensaje}</p>
+                                <p className="card-text">Oferta {datosOferta.estadoOferta}</p>
                                 <p className="card-text"><small className="text-muted">Fecha de la oferta: {String (datosOferta.fechaOferta).slice(0,10)}</small></p>
                                 
+                                {/*BOTONES DEL RECEPTOR PARA ACEPTAR/RECHZAR OFERTA, CONFIRMAR TRUEQUE Y VER DATOS DE CONTACTO*/}
                                 <div className={isReceptor ? "":"no-display"}>
-                                    <div class="row">
-                                        <div class="col-6 d-flex justify-content-center">
-                                            <Button label="Aceptar oferta" icon="pi pi-check" className="p-button-success" onClick={console.log("p")} />
-                                        </div>
-                                        <div class="col-6 d-flex justify-content-center">
-                                            <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={console.log("n")}/>
+                                    
+                                    {/*OFERTA EN ESPERA, BOTONES ACEPTAR/RECHAZAR PARA EL RECEPTOR*/}
+                                    <div className={datosOferta.estadoOferta === "en espera" ? "":"no-display"}>
+                                        <div class="row">
+                                            <div class="col-6 d-flex justify-content-center">
+                                                <Button label="Aceptar oferta" icon="pi pi-check" className="p-button-success" onClick={console.log("p")} />
+                                            </div>
+                                            <div class="col-6 d-flex justify-content-center">
+                                                <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={console.log("n")}/>
+                                            </div>
                                         </div>
                                     </div>
+                                    
+                                    {/*OFERTA EN ESTADO aceptada*/}
+                                    <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
+                                        <div class="d-flex justify-content-center">
+                                            <Button label="Ver datos del oferente" icon="pi pi-search" className="p-button" onClick={console.log("p")} />
+                                        </div>
+                                    
+                                        {/*SI AUN NO CONFIRMO*/}
+                                        <div className={ !datosOferta.confirmacionReceptor ? "":"no-display"}>
+                                        <div class="row">
+                                            <div class="col-6 d-flex justify-content-center">
+                                                <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={console.log("p")} />
+                                            </div>
+                                            <div class="col-6 d-flex justify-content-center">
+                                                <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={console.log("n")}/>
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                        {/*SI YA CONFIRME EL TRUEQUE PERO EL OTRO NO*/}
+                                        <div className={datosOferta.confirmacionReceptor ? "":"no-display"}>
+                                            <br/>
+                                            <span className="text-danger"><p>Gracias por confirmar. Espera a que la otra persona también confirme que se realizo el trueque.</p></span>
+                                        </div>
+                                    </div>
+                                    {/*SI LA OFERTA YA FUE CONCLUIDA o RECHAZADA NO TOCA HACER NADA*/}
+                                </div>
+
+                                {/*BOTONES DEL OFERENTE PARA CONFIRMAR TRUEQUE Y VER DATOS DE CONTACTO*/}
+                                <div className={isOferente ? "":"no-display"}>
+                                    
+                                    {/*OFERTA EN ESPERA*/}
+                                    <div className={datosOferta.estadoOferta === "en espera" ? "":"no-display"}>
+                                        <br/>
+                                        <span className="text-danger"><p>Espera a que {datos.nombres} {datos.apellidos} acepte tu oferta</p></span>
+                                    </div>
+                                    
+                                    {/*OFERTA EN ESTADO aceptada BOTONES PARA CONFIRMAR/CANCELAR/VER DATOS*/}
+                                    <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
+                                        <div class="d-flex justify-content-center">
+                                            <Button label="Ver datos del oferente" icon="pi pi-search" className="p-button" onClick={console.log("p")} />
+                                        </div>
+                                    
+                                        {/*SI AUN NO CONFIRMO*/}
+                                        <div className={ !datosOferta.confirmacionOferente ? "":"no-display"}>
+                                        <div class="row">
+                                            <div class="col-6 d-flex justify-content-center">
+                                                <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={console.log("p")} />
+                                            </div>
+                                            <div class="col-6 d-flex justify-content-center">
+                                                <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={console.log("n")}/>
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                        {/*SI YA CONFIRME EL TRUEQUE PERO EL OTRO NO*/}
+                                        <div className={datosOferta.confirmacionOferente ? "":"no-display"}>
+                                            <br/>
+                                            <span className="text-danger"><p>Gracias por confirmar. Espera a que la otra persona también confirme que se realizo el trueque.</p></span>
+                                        </div>
+                                    </div>
+                                    {/*SI LA OFERTA YA FUE CONCLUIDA O RECHAZADA NO TOCA HACER NADA*/}
                                 </div>
 
 
@@ -193,7 +261,11 @@ function Offer () {
                                     offers.map((offer) => {
                                         return (
                                             <div key={offer.id} className="field-checkbox">
-                                                <Checkbox inputId={offer.id} name="category" value={offer} onChange={onOfferChange} checked={selectedOffers.some((item) => item.titulo === offer.titulo)}  />
+
+                                                <div className={datosOferta.estadoOferta === "en espera" && isReceptor ? "":"no-display"}>
+                                                    <Checkbox inputId={offer.id} name="category" value={offer} onChange={onOfferChange} checked={selectedOffers.some((item) => item.titulo === offer.titulo)}  />
+                                                </div>
+
                                                 <div className="card-group">
                                               
                                                         <div className="card-img-flex">
@@ -201,10 +273,9 @@ function Offer () {
                                                         </div>
                                                         <div className="card border-light">
                                                             <h5 htmlFor={offer.titulo}>{offer.titulo}</h5>
-                                                            <br/>
                                                             <p>
                                                                 {offer.categoria}<br/>
-                                                                {offer.estado_item}<br/>
+                                                                <span className="text-primary">{offer.estado_item}</span><br/>
                                                                 {offer.descripcion}<br/>
                                                             </p>
 
@@ -259,9 +330,20 @@ function Offer () {
         (async () => {
             setLoading(true)
             let resultado = await requestOfferInfo(id);
+            console.log(resultado);
             let respuesta = resultado.myPost
             let objetoImagen = {"itemImageSrc":respuesta.imagen, "alt":"No salio la imagen", "title":"Titulo de la imagen"};
-            let dataOffer = {"mensaje":resultado.offerMsg, "nombreOferente":resultado.nameOfferOwner, "fechaOferta":resultado.exchanges[0].fecha_propuesta, "emailOferente":resultado.exchanges[0].email_proponente};
+            
+            let dataOffer = {
+                "mensaje":resultado.offerMsg, 
+                "nombreOferente":resultado.nameOfferOwner, 
+                "fechaOferta":resultado.exchanges[0].fecha_propuesta, 
+                "emailOferente":resultado.exchanges[0].email_proponente,
+                "estadoOferta":resultado.exchanges[0].estado_propuesta,
+                "confirmacionOferente":resultado.exchanges[0].confirmacion_proponente,
+                "confirmacionReceptor":resultado.exchanges[0].confirmacion_receptor
+            };
+
             ima.push(objetoImagen);
             SetImagenPublicacion(ima);
             setDatos(respuesta);
