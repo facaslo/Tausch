@@ -19,6 +19,11 @@ const offersToUserRoute = require('./routes/offersToUserRoute')// son las oferta
 const editProfileRoute = require('./routes/editProfileRoute')
 const getUserBartersRoute = require('./routes/getUserBartersRoute')
 const getOffersRoute = require('./routes/getOffersRoute')// son las ofertas en detalle que van a /offers en el front (tal vez sea bueno cambiar los nombres)
+const declineOfferRoute = require('./routes/declineOfferRoute')
+const acceptOfferRoute = require('./routes/acceptOfferRoute')
+const inactivatePostRoute = require('./routes/inactivatePostRoute')
+const confAsProponentRoute = require('./routes/confAsProponentRoute')
+const confAsReceptorRoute = require('./routes/confAsReceptorRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -46,6 +51,11 @@ app.use('/offers-to-user', offersToUserRoute)
 app.use('/edit-profile', editProfileRoute)
 app.use('/user-barters', getUserBartersRoute)
 app.use('/all-offers', getOffersRoute)
+app.use('/decline-offer', declineOfferRoute)
+app.use('/accept-offer', acceptOfferRoute)
+app.use('/inactivate-post', inactivatePostRoute)
+app.use('/conf-proponent', confAsProponentRoute)
+app.use('/conf-receptor', confAsReceptorRoute)
 
 // Iniciar servidor solo si no es un test
 if(process.env.NODE_ENV !== 'test'){
