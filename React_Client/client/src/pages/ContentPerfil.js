@@ -12,6 +12,8 @@ export default function ContentPerfil () {
     const [productOptions, setProductOptions]=useState([{}])
     //Estado para saber si el usuario actual es el propietario del perfil o no
     const [propietario, setPropietario] = useState(false);
+    //Datos ofertas del perfil
+    const[offerData, setOfferData]=useState([])
 
     //Verificar si la token esta activa Con la funcion authorization
     //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
@@ -60,6 +62,15 @@ export default function ContentPerfil () {
         
     };
 
+    const getProfileOffers= async()=>{
+        const url="http://localhost:3080/get-profile-offers";
+        return await fetch(url, {
+            method : 'GET',
+            headers:{token: localStorage.token}
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+    }
+
     useEffect(() => {
         (async () => {
             isAuth();
@@ -69,6 +80,8 @@ export default function ContentPerfil () {
                 publications.push(pub)
             }
             setProductOptions(publications)
+            let publicationOffers= await getProfileOffers();
+            setOfferData(publicationOffers.offers)
             
         })();
     },[]);
@@ -144,7 +157,7 @@ export default function ContentPerfil () {
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                        <h4>Tus publicaciones</h4>
+                                        <h4 className="font-bold text-primary">Tus publicaciones</h4>
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
@@ -178,27 +191,83 @@ export default function ContentPerfil () {
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="panelsStayOpen-headingThree">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                        <h4 className="font-bold text-primary">Tus trueques en curso</h4>
+                                        <h4 >Propuestas recibidas</h4>
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                                     <div class="accordion-body">
-                                        <strong>Acepta o rechaza trueques en curso.</strong>
+                                            {offerData.map((item)=>{
+                                                if (item.estado_propuesta==='en espera' && item.email_receptor===datos.email){
+                                                    return(
+                                                        <div className="flex justify-content-start">
+                                                            <h5> Tienes una propuesta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo} <a href={`/offer/${item.id_propuesta}`} >    Ver oferta </a></h5>
+                                                        </div>
+                                                    )
+                                                }
+                                            })}
                                     </div>
                                 </div>
                             </div>
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="panelsStayOpen-headingFour">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                                        <h4>Tus trueques concretados</h4>
+                                        <h4>Tus propuestas en espera</h4>
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-collapseFour" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
                                     <div class="accordion-body">
-                                        <strong>Revisa el historial de los trueques que has concretado.</strong>
+                                            {offerData.map((item)=>{
+                                                if (item.estado_propuesta==='en espera' && item.email_proponente===datos.email){
+                                                    return(
+                                                        <div className="flex justify-content-start">
+                                                            <h5> Tienes una propuesta en espera de respuesta al usuario <i>{item.nombre}</i> por su producto: {item.titulo} <a href={`/offer/${item.id_propuesta}`} >    Ver oferta </a></h5>
+                                                        </div>
+                                                    )
+                                                }
+                                            })}
                                     </div>
                                 </div>
-                            </div>                  
+                            </div> 
+                            <div className="accordion-item">
+                                <h2 className="accordion-header" id="panelsStayOpen-headingFive">
+                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                                        <h4>Tus trueques en curso</h4>
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseFive" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+                                    <div class="accordion-body">
+                                            {offerData.map((item)=>{
+                                                if (item.estado_propuesta==='aceptada'){
+                                                    return(
+                                                        <div className="flex justify-content-start">
+                                                            <h5> Tienes un trueque en curso con el usuario <i>{item.nombre}</i> por el producto: {item.titulo} <a href={`/offer/${item.id_propuesta}`} >    Ver detalles y datos de contacto </a></h5>
+                                                        </div>
+                                                    )
+                                                }
+                                            })}
+                                    </div>
+                                </div>
+                            </div> 
+                            <div className="accordion-item">
+                                <h2 className="accordion-header" id="panelsStayOpen-headingSix">
+                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                                        <h4>Historial de trueques concluidos</h4>
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseSix" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSix">
+                                    <div class="accordion-body">
+                                            {offerData.map((item)=>{
+                                                if (item.estado_propuesta==='concluida'){
+                                                    return(
+                                                        <div className="flex justify-content-start">
+                                                            <h5> Realizaste un trueque con el usuario <i>{item.nombre}</i> por el producto: {item.titulo} <a href={`/offer/${item.id_propuesta}`} >    Ver detalles </a></h5>
+                                                        </div>
+                                                    )
+                                                }
+                                            })}
+                                    </div>
+                                </div>
+                            </div>                
                         </div>
                     </div>
                 </div>

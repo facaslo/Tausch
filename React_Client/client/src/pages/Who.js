@@ -24,7 +24,7 @@ function Who () {
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="one" ></div>
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp" className="rounded-circle img-fluid" />
+                                        <img src="\images\Fabian.jpeg" className="rounded-circle img-fluid" style={{maxWidth:'200px', maxHeight:'200px'}}/>
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Fabian Castro</h4>

@@ -324,6 +324,9 @@ function Offer () {
                                     
                                     {/*OFERTA EN ESTADO aceptada*/}
                                     <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
+                                        <div className={ !datosOferta.confirmacionReceptor ? "":"no-display"}>
+                                            <p>Comunícate con la otra persona para acordar el lugar y fecha del trueque</p>
+                                        </div>
                                         <div class="d-flex justify-content-center">
                                             <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={(cambiarEstadoContactInfo)} />
                                             <Modal className="contenido-modal" estado={stateContactInfo} cambiarEstado={cambiarEstadoContactInfo}><ContactInformation email={datosOferta.emailOferente}/></Modal>
@@ -331,6 +334,8 @@ function Offer () {
                                     
                                         {/*SI AUN NO CONFIRMO*/}
                                         <div className={ !datosOferta.confirmacionReceptor ? "":"no-display"}>
+                                            <br/>
+                                        <p>Una vez que hallan realizado el trueque da click en Confirmar Trueque para concluirlo, si no se llegó a un acuerdo da click a Cancelar Trueque</p>
                                         <div class="row">
                                             <div class="col-6 d-flex justify-content-center">
                                                 <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={()=>{confirm(id, 'receptor')}} />
@@ -361,6 +366,9 @@ function Offer () {
                                     
                                     {/*OFERTA EN ESTADO aceptada BOTONES PARA CONFIRMAR/CANCELAR/VER DATOS*/}
                                     <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
+                                        <div className={ !datosOferta.confirmacionOferente ? "":"no-display"}>
+                                            <p>Comunícate con la otra persona para acordar el lugar y fecha del trueque</p>
+                                        </div>
                                         <div class="d-flex justify-content-center">
                                             <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={(cambiarEstadoContactInfo)} />
                                             <Modal className="contenido-modal" estado={stateContactInfo} cambiarEstado={cambiarEstadoContactInfo}><ContactInformation email={datos.email}/></Modal>
@@ -368,6 +376,8 @@ function Offer () {
                                     
                                         {/*SI AUN NO CONFIRMO*/}
                                         <div className={ !datosOferta.confirmacionOferente ? "":"no-display"}>
+                                        <br/>
+                                        <p>Una vez que hallan realizado el trueque da click en Confirmar Trueque para concluirlo, si no se llegó a un acuerdo da click a Cancelar Trueque</p>
                                         <div class="row">
                                             <div class="col-6 d-flex justify-content-center">
                                                 <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={()=>{confirm(id, 'proponente')}} />

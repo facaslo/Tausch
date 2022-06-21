@@ -26,6 +26,7 @@ const confAsProponentRoute = require('./routes/confAsProponentRoute')
 const confAsReceptorRoute = require('./routes/confAsReceptorRoute')
 const getProfile=require('./routes/getProfile')
 const cancelOfferRoute= require('./routes/cancelOfferRoute')
+const getProfileOffersRoute= require('./routes/getProfileOffersRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -60,6 +61,7 @@ app.use('/conf-proponent', confAsProponentRoute)
 app.use('/conf-receptor', confAsReceptorRoute)
 app.use('/get-profile',getProfile)
 app.use('/cancel-offer',cancelOfferRoute)
+app.use('/get-profile-offers', getProfileOffersRoute)
 
 // Iniciar servidor solo si no es un test
 if(process.env.NODE_ENV !== 'test'){
