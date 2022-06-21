@@ -84,8 +84,8 @@ function Offer () {
     const acceptOffer = async(id) => {
         let notSelectedOffers = offers.filter(element => {return selectedOffers.indexOf(element) ===-1 });
         notSelectedOffers = notSelectedOffers.map(offer => offer.id);
-        selectedOffers = selectedOffers.map(offer => offer.id);
-
+         
+        let idsPublications=([...selectedOffers.map(offer => offer.id),datos.id])
         setShowAcceptedMessage(true);
         const url = "http://localhost:3080/accept-offer";
         return await fetch(url,{
@@ -95,7 +95,7 @@ function Offer () {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body:JSON.stringify({idOffer: id, notSelectedOffers:notSelectedOffers, selectedOffers:selectedOffers})
+            body:JSON.stringify({idOffer: id, notSelectedOffers:notSelectedOffers, idsPublications:idsPublications})
         })
         .then((response) => response.json()).catch(error=> console.log(error));
     };
