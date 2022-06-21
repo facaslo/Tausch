@@ -7,6 +7,7 @@ import { Galleria } from 'primereact/galleria';
 import { Divider } from 'primereact/divider';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import "./General-container.css"
 import '../Publication.css'; //Aqui esta el no-display
 
@@ -42,6 +43,9 @@ function Offer () {
     //Datos de la oferta
     const [datosOferta, setDatosOferta] = useState({});
 
+    //Hook para mensaje de confirmacion de aceptado
+    const [showAcceptedMessage, setShowAcceptedMessage] =useState(false);
+
     const onOfferChange = (e) => {
         let _selectedOffers = [...selectedOffers];
 
@@ -63,7 +67,6 @@ function Offer () {
         setSelectedOffers(_selectedOffers);
     }
 
-
     const requestOfferInfo= async (id) => {        
         const url = "http://localhost:3080/all-offers/";
         return await fetch(url,{            
@@ -73,6 +76,26 @@ function Offer () {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({ idOffer: id })         
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+    };
+
+
+    const acceptOffer = async(id) => {
+        let notSelectedOffers = offers.filter(element => {return selectedOffers.indexOf(element) ===-1 });
+        notSelectedOffers = notSelectedOffers.map(offer => offer.id);
+        selectedOffers = selectedOffers.map(offer => offer.id);
+
+        setShowAcceptedMessage(true);
+        const url = "http://localhost:3080/accept-offer";
+        return await fetch(url,{
+            method : 'PUT',
+            headers:{
+                token: localStorage.token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({idOffer: id, notSelectedOffers:notSelectedOffers, selectedOffers:selectedOffers})
         })
         .then((response) => response.json()).catch(error=> console.log(error));
     };
@@ -119,10 +142,25 @@ function Offer () {
         }
     }
 
+    const redirect= () =>{
+        window.location.replace(window.location.href);
+        setShowAcceptedMessage(false)
+    }
+
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => redirect() } /></div>;
+
     const Loading = () => {
         if(loading === false){
             return(
             <>
+                    <Dialog visible={showAcceptedMessage} onHide={() => setShowAcceptedMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                        <div className="flex align-items-center flex-column pt-6 px-3">
+                        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
+                        <br/>
+                        <br/>
+                        <h5>Has aceptado la oferta, ya puedes ver los datos del oferente para planear el trueque.</h5>
+                        </div>
+                    </Dialog>
 
                     <div className="card-group">
                         <div className="card border-primary mb-3 mt-3">
@@ -176,10 +214,10 @@ function Offer () {
                                     <div className={datosOferta.estadoOferta === "en espera" ? "":"no-display"}>
                                         <div class="row">
                                             <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Aceptar oferta" icon="pi pi-check" className="p-button-success" onClick={console.log("p")} />
+                                                <Button label="Aceptar oferta" icon="pi pi-check" className="p-button-success" onClick={() => {acceptOffer(id)} } />
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={console.log("n")}/>
+                                                <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={() => {console.log(selectedOffers)}}/>
                                             </div>
                                         </div>
                                     </div>
@@ -187,7 +225,7 @@ function Offer () {
                                     {/*OFERTA EN ESTADO aceptada*/}
                                     <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
                                         <div class="d-flex justify-content-center">
-                                            <Button label="Ver datos del oferente" icon="pi pi-search" className="p-button" onClick={console.log("p")} />
+                                            <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={console.log("p")} />
                                         </div>
                                     
                                         {/*SI AUN NO CONFIRMO*/}
@@ -223,7 +261,7 @@ function Offer () {
                                     {/*OFERTA EN ESTADO aceptada BOTONES PARA CONFIRMAR/CANCELAR/VER DATOS*/}
                                     <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
                                         <div class="d-flex justify-content-center">
-                                            <Button label="Ver datos del oferente" icon="pi pi-search" className="p-button" onClick={console.log("p")} />
+                                            <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={console.log("p")} />
                                         </div>
                                     
                                         {/*SI AUN NO CONFIRMO*/}
