@@ -10,6 +10,8 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import "./General-container.css"
 import '../Publication.css'; //Aqui esta el no-display
+import ContactInformation from '../components/ContactInformation';
+import Modal from '../components/Modal';
 
 function Offer () {
     
@@ -33,6 +35,8 @@ function Offer () {
     const [imagenPublicacion, SetImagenPublicacion] = useState([]);
     const [subcategoryText,setSubcategoryText]=useState("");
 
+    const[stateContactInfo, setStateContactInfo]=useState(false)
+
     let ima=[]
 
     //Intentos
@@ -45,6 +49,12 @@ function Offer () {
 
     //Hook para mensaje de confirmacion de aceptado
     const [showAcceptedMessage, setShowAcceptedMessage] =useState(false);
+    //Hook para mensaje de confirmacion de rechazado
+    const [showDeclineMessage, setShowDeclineMessage] =useState(false);
+    //Hook para mensaje de confirmacion de cancelado
+     const [showCancelMessage, setShowCancelMessage] =useState(false);
+    //Hook para mensaje de confirmacion de confirmado
+    const [showConfirmMessage, setShowConfirmMessage] =useState(false);
 
     const onOfferChange = (e) => {
         let _selectedOffers = [...selectedOffers];
@@ -100,6 +110,64 @@ function Offer () {
         .then((response) => response.json()).catch(error=> console.log(error));
     };
 
+    const declineOffer=async(id)=>{
+
+        setShowDeclineMessage(true);
+        const url = "http://localhost:3080/decline-offer";
+        return await fetch(url,{
+            method : 'PUT',
+            headers:{
+                token: localStorage.token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({idOffer: id})
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+
+    }
+    const cancelOffer=async(id)=>{
+
+        let idsPublications=([...selectedOffers.map(offer => offer.id),datos.id])
+        setShowCancelMessage(true);
+        const url = "http://localhost:3080/cancel-offer";
+        return await fetch(url,{
+            method : 'POST',
+            headers:{
+                token: localStorage.token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({idOffer: id, idsPublications:idsPublications})
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+
+    }
+
+    const confirm=async(id, user)=>{
+        let url
+
+        setShowConfirmMessage(true);
+        if (user==='proponente'){
+            url = "http://localhost:3080/conf-proponent";
+        }
+        else if(user='receptor'){
+            url = "http://localhost:3080/conf-receptor";     
+        }
+
+        return await fetch(url,{
+            method : 'PUT',
+            headers:{
+                token: localStorage.token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({idOffer: id})
+        })
+        .then((response) => response.json()).catch(error=> console.log(error));
+
+    }
+
     //Verificar si la token esta activa Con la funcion authorization
     //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
     async function isAuth(correoReceptor, correoOferente){
@@ -146,6 +214,9 @@ function Offer () {
         window.location.replace(window.location.href);
         setShowAcceptedMessage(false)
     }
+    const cambiarEstadoContactInfo = () => {
+        setStateContactInfo(!stateContactInfo)
+    }
 
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => redirect() } /></div>;
 
@@ -159,6 +230,31 @@ function Offer () {
                         <br/>
                         <br/>
                         <h5>Has aceptado la oferta, ya puedes ver los datos del oferente para planear el trueque.</h5>
+                        </div>
+                    </Dialog>
+
+                    <Dialog visible={showDeclineMessage} onHide={() => setShowDeclineMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                        <div className="flex align-items-center flex-column pt-6 px-3">
+                        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                        <br/>
+                        <br/>
+                        <h5>Has rechazado la oferta.</h5>
+                        </div>
+                    </Dialog>
+                    <Dialog visible={showCancelMessage} onHide={() => setShowCancelMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                        <div className="flex align-items-center flex-column pt-6 px-3">
+                        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                        <br/>
+                        <br/>
+                        <h5>Has cancelado el trueque.</h5>
+                        </div>
+                    </Dialog>
+                    <Dialog visible={showConfirmMessage} onHide={() => setShowConfirmMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                        <div className="flex align-items-center flex-column pt-6 px-3">
+                        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
+                        <br/>
+                        <br/>
+                        <h5>Has confirmado el trueque.</h5>
                         </div>
                     </Dialog>
 
@@ -204,9 +300,13 @@ function Offer () {
                             <div className="card-body">
                                 <h5 className="card-title">Mensaje del oferente:</h5>
                                 <p className="card-text">{datosOferta.mensaje}</p>
-                                <p className="card-text">Oferta {datosOferta.estadoOferta}</p>
+                                <h5 className="card-text text-primary">Oferta {datosOferta.estadoOferta}</h5>
                                 <p className="card-text"><small className="text-muted">Fecha de la oferta: {String (datosOferta.fechaOferta).slice(0,10)}</small></p>
                                 
+                                <div className={datosOferta.estadoOferta==='concluida'? "":"no-display"}>
+                                    <p className="card-text"><small className="text-muted">Fecha de finalización del trueque: {String (datosOferta.fechaTrueque).slice(0,10)}</small></p>
+                                </div>
+
                                 {/*BOTONES DEL RECEPTOR PARA ACEPTAR/RECHZAR OFERTA, CONFIRMAR TRUEQUE Y VER DATOS DE CONTACTO*/}
                                 <div className={isReceptor ? "":"no-display"}>
                                     
@@ -217,7 +317,7 @@ function Offer () {
                                                 <Button label="Aceptar oferta" icon="pi pi-check" className="p-button-success" onClick={() => {acceptOffer(id)} } />
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={() => {console.log(selectedOffers)}}/>
+                                                <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={() => {declineOffer(id)}}/>
                                             </div>
                                         </div>
                                     </div>
@@ -225,17 +325,18 @@ function Offer () {
                                     {/*OFERTA EN ESTADO aceptada*/}
                                     <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
                                         <div class="d-flex justify-content-center">
-                                            <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={console.log("p")} />
+                                            <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={(cambiarEstadoContactInfo)} />
+                                            <Modal className="contenido-modal" estado={stateContactInfo} cambiarEstado={cambiarEstadoContactInfo}><ContactInformation email={datosOferta.emailOferente}/></Modal>
                                         </div>
                                     
                                         {/*SI AUN NO CONFIRMO*/}
                                         <div className={ !datosOferta.confirmacionReceptor ? "":"no-display"}>
                                         <div class="row">
                                             <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={console.log("p")} />
+                                                <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={()=>{confirm(id, 'receptor')}} />
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={console.log("n")}/>
+                                                <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={()=>{cancelOffer(id)}}/>
                                             </div>
                                         </div>
                                         </div>
@@ -261,17 +362,18 @@ function Offer () {
                                     {/*OFERTA EN ESTADO aceptada BOTONES PARA CONFIRMAR/CANCELAR/VER DATOS*/}
                                     <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
                                         <div class="d-flex justify-content-center">
-                                            <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={console.log("p")} />
+                                            <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={(cambiarEstadoContactInfo)} />
+                                            <Modal className="contenido-modal" estado={stateContactInfo} cambiarEstado={cambiarEstadoContactInfo}><ContactInformation email={datos.email}/></Modal>
                                         </div>
                                     
                                         {/*SI AUN NO CONFIRMO*/}
                                         <div className={ !datosOferta.confirmacionOferente ? "":"no-display"}>
                                         <div class="row">
                                             <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={console.log("p")} />
+                                                <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={()=>{confirm(id, 'proponente')}} />
                                             </div>
                                             <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={console.log("n")}/>
+                                                <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={()=>{cancelOffer(id)}}/>
                                             </div>
                                         </div>
                                         </div>
@@ -379,7 +481,8 @@ function Offer () {
                 "emailOferente":resultado.exchanges[0].email_proponente,
                 "estadoOferta":resultado.exchanges[0].estado_propuesta,
                 "confirmacionOferente":resultado.exchanges[0].confirmacion_proponente,
-                "confirmacionReceptor":resultado.exchanges[0].confirmacion_receptor
+                "confirmacionReceptor":resultado.exchanges[0].confirmacion_receptor,
+                "fechaTrueque":resultado.exchanges[0].fecha_trueque
             };
 
             ima.push(objetoImagen);

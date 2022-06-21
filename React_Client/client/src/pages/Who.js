@@ -39,7 +39,7 @@ function Who () {
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="two" ></div>
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp" className="rounded-circle img-fluid" />
+                                        <img src="\images\Yuli.jpeg" className="rounded-circle img-fluid" style={{maxWidth:'200px', maxHeight:'200px'}} />
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Yuli Beltrán</h4>
@@ -58,7 +58,7 @@ function Who () {
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="three" ></div> 
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp" className="rounded-circle img-fluid" />
+                                        <img src="\images\Scass.jpeg" className="rounded-circle img-fluid" />
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Santiago Cassiano</h4>
@@ -73,7 +73,7 @@ function Who () {
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="four" ></div> 
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp" className="rounded-circle img-fluid" />
+                                        <img src="\images\julio.jpg" className="rounded-circle img-fluid" />
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Julio Bedoya</h4>
@@ -88,7 +88,7 @@ function Who () {
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="five" ></div> 
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp" className="rounded-circle img-fluid" />
+                                        <img src="\images\SRC.jpeg" className="rounded-circle img-fluid" style={{maxWidth:'200px', maxHeight:'200px'}} />
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Santiago Rodríguez</h4>

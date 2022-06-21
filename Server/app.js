@@ -24,6 +24,8 @@ const acceptOfferRoute = require('./routes/acceptOfferRoute')
 const inactivatePostRoute = require('./routes/inactivatePostRoute')
 const confAsProponentRoute = require('./routes/confAsProponentRoute')
 const confAsReceptorRoute = require('./routes/confAsReceptorRoute')
+const getProfile=require('./routes/getProfile')
+const cancelOfferRoute= require('./routes/cancelOfferRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -56,6 +58,8 @@ app.use('/accept-offer', acceptOfferRoute)
 app.use('/inactivate-post', inactivatePostRoute)
 app.use('/conf-proponent', confAsProponentRoute)
 app.use('/conf-receptor', confAsReceptorRoute)
+app.use('/get-profile',getProfile)
+app.use('/cancel-offer',cancelOfferRoute)
 
 // Iniciar servidor solo si no es un test
 if(process.env.NODE_ENV !== 'test'){
