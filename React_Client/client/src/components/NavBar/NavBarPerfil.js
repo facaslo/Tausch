@@ -56,10 +56,18 @@ export default function NavBarPerfil () {
                     headers:{token: localStorage.token}
                 });
 
-                const proposalDataJson = await proposalData.json();
+                const proposalDataJson = await proposalData.json();                
                 
                 //Almacena la cantidad de propuestas recibidas
-                setCantidadPropuestas(proposalDataJson.offers.length);
+                const numeroNotificacionesActivas = proposalDataJson.offers.reduce((acc, row) => {                    
+                    if (!row.notificacion_abierta){
+                        return acc + 1;
+                    }
+                    return acc;
+                }, 0);
+                
+                setCantidadPropuestas(numeroNotificacionesActivas);               
+                //setPropuestas(proposalDataJson.offers);
 
                 //Almacenar las propuestas recibidas en una lista temporal para luego
                 //asignarselas al estado para que puedan ser dibujadas en el dropdown
@@ -95,16 +103,104 @@ export default function NavBarPerfil () {
                         <span id="notification" className="badge badge-light">{cantidadPropuestas}</span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            {cantidadPropuestas ?  
+                            {cantidadPropuestas ?                                  
                                 //Si la cantidad de propuestas es diferente de cero, las imprime
-                                propuestas.map((item) => {
-                                return(
-                                    <li class="dropdown-item">Tienes una propuesta de <i>{item.nombre_de_usuario}</i> por tu producto: {item.titulo}</li>
-                                )})
+                                propuestas.map((item) => {                                 
+                                    
+                                    if(item.estado_propuesta === 'en espera'){
+                                        console.log(item.notificacion_email);
+                                        console.log(item.email_proponente);
+                                        if(item.notificacion_email.localeCompare(item.email_receptor) === 0){                                            
+                                            return(                              
+                                                <li class="dropdown-item"> 
+                                                <a href={`/offer/${item.id_propuesta}`} >
+                                                Tienes una propuesta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
+                                                </a>
+                                                </li>                                       
+                                            )
+                                        }
+                                        else if(item.notificacion_email.localeCompare(item.email_proponente) === 0 ) {
+                                            return(                                                                                             
+                                            <li class="dropdown-item">
+                                                <a href={`/offer/${item.id_propuesta}`} >
+                                                Haz hecho una propuesta al usuario <i>{item.nombre}</i> por el producto: {item.titulo}
+                                                </a>    
+                                            </li>                                       
+                                            
+                                            )
+                                        }
+                                    }                                    
+                                    
+                                    else if(item.estado_propuesta === 'aceptada'){
+                                        if(item.notificacion_email.localeCompare(item.email_receptor) === 0 ){
+                                            return(                              
+                                                <li class="dropdown-item"> 
+                                                <a href={`/offer/${item.id_propuesta}`} >
+                                                Haz aceptado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
+                                                </a>
+                                                </li>                                       
+                                            )
+                                        }
+                                        else if(item.notificacion_email.localeCompare(item.email_proponente) === 0) {
+                                            return(                              
+                                            <li class="dropdown-item"> 
+                                            <a href={`/offer/${item.id_propuesta}`} >
+                                            El usuario <i>{item.nombre}</i> ha aceptado la oferta por el producto: {item.titulo}
+                                            </a>
+                                            </li>                                       
+                                            )
+                                        }
+                                    }
+
+                                    else if(item.estado_propuesta === 'rechazada'){
+                                        if(item.notificacion_email.localeCompare(item.email_receptor) === 0){
+                                            return(                              
+                                                <li class="dropdown-item"> 
+                                                <a href={`/offer/${item.id_propuesta}`} >
+                                                Haz rechazado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
+                                                </a>
+                                                </li>                                       
+                                            )
+                                        }
+                                        else if(item.notificacion_email.localeCompare(item.email_proponente) === 0) {
+                                        return(                              
+                                            <li class="dropdown-item"> 
+                                            <a href={`/offer/${item.id_propuesta}`} >
+                                            El usuario <i>{item.nombre}</i> ha rechazado la oferta por el producto: {item.titulo}
+                                            </a>
+                                            </li>                                       
+                                            )
+                                        }
+                                    }
+
+                                    else if(item.estado_propuesta === 'concluida'){
+                                        return(                              
+                                            <li class="dropdown-item"> 
+                                            <a href={`/offer/${item.id_propuesta}`} >
+                                            El trueque del producto: {item.titulo} ha finalizado
+                                            </a>
+                                            </li>                                       
+                                        )                                        
+                                    }
+                                    
+                                    else if(item.estado_propuesta === 'cancelada'){
+                                        return(                              
+                                            <li class="dropdown-item"> 
+                                            <a href={`/offer/${item.id_propuesta}`} >
+                                            El trueque del producto: {item.titulo} se ha cancelado
+                                            </a>
+                                            </li>                                       
+                                        )                                        
+                                    }
+
+                                })
                                 :
                                 //Si la cantidad de propuestas es igual a cero imprime este mensaje
                                 <li class="dropdown-item">No has recibido ninguna propuesta de trueque</li>
                             }
+                            <li class="dropdown-item"> 
+                            <button type="button"> Borrar mensajes </button>
+                            </li>
                             
                         </ul>
                     </div>
