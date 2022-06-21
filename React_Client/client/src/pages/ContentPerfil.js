@@ -162,9 +162,10 @@ export default function ContentPerfil () {
                                 </h2>
                                 <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
-                                        <strong>Publicaciones que has realizado.</strong>
-                                        <div className="card-group">
+                                        <strong>Publicaciones activas.</strong>
+                                        <div className="card-group" >
                                         {productOptions.map((item) => {
+                                            if (item.activa){
                                             return(
                                                 <>
                                                     <div className='card'>
@@ -182,7 +183,31 @@ export default function ContentPerfil () {
                                                         </div>
                                                     </div>
                                                 </>
-                                            )
+                                            )}
+                                        })}
+                                        </div>
+                                        <strong>Publicaciones inactivas.</strong>
+                                        <div className="card-group">
+                                        {productOptions.map((item) => {
+                                            if (!item.activa){
+                                            return(
+                                                <>
+                                                    <div className='card'>
+                                                        <div className='card-body'>
+                                                            <div className="card h-100 text-center shadow rounded" key={item.id}>
+                                                                <img src={item.imagen} className='img-fluid mx-auto d-block rounded' alt={item.titulo} width={400} height={400}/>
+                                                                <div className='card-body'>
+                                                                    <h5 className='car-title mb-2'>{item.titulo}</h5>
+                                                                    <p className='card-text'>{item.descripcion}...</p>
+                                                                    <Link to = {`/publication/${item.id}`} className="btn btn-outline-dark">
+                                                                        Ver publicación
+                                                                    </Link>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )}
                                         })}
                                         </div>
                                     </div>

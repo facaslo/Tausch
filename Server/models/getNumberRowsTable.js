@@ -6,10 +6,10 @@ const getNumberOfRows = async (category) => {
     try{       
         if(category==="all")
         {
-            result = await client_pool.query(`SELECT COUNT(*) FROM publicacion`).then(res=> res.rows).catch(e=> console.log(e));    
+            result = await client_pool.query(`SELECT COUNT(*) FROM publicacion WHERE activa=true`).then(res=> res.rows).catch(e=> console.log(e));    
         }
         else {
-            result = await client_pool.query(`SELECT COUNT(*) FROM publicacion WHERE categoria='${category}'`).then(res=> res.rows).catch(e=> console.log(e));    
+            result = await client_pool.query(`SELECT COUNT(*) FROM publicacion WHERE categoria='${category}' and activa=true`).then(res=> res.rows).catch(e=> console.log(e));    
         }
                 
     }    
