@@ -48,9 +48,14 @@ export default function NavBarPerfil () {
                 const userDataJson = await userData.json();
                 
                 //Almacena el nombre de usuario
-                setnombreDeUsuario(userDataJson[0].nombre_de_usuario);            
+                setnombreDeUsuario(userDataJson[0].nombre_de_usuario);
+
+                //EN ESTE CASO ESPECIAL SI RETORNA UN DATO LA FUNCION ISAUTH
+                return true      
 
             }
+            // SI NO HAY NADIE LOGGEADO EN ESTE CASO SI RETORNA LA FUNCION EL DATO
+            return false
         } catch(err){
             console.error(err.message);
         }
@@ -109,8 +114,10 @@ export default function NavBarPerfil () {
 
     useEffect(() => {
         (async () => {
-            isAuth();
-            retrieveNotifications();
+            //Solo si esta Loggeado entonces si reciba sus notificaciones
+            if (await isAuth()){
+                await retrieveNotifications();
+            }
         })();
     }, []);
 

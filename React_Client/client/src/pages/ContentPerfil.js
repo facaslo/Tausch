@@ -134,7 +134,7 @@ export default function ContentPerfil () {
     }
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => redirect() } /></div>;
     const redirect= () =>{
-        //window.location.replace(window.location.href);
+        window.location.replace('http://localhost:3000/contentperfil');
     }
 
     return(
