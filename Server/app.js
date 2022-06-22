@@ -27,6 +27,8 @@ const confAsReceptorRoute = require('./routes/confAsReceptorRoute')
 const getProfile=require('./routes/getProfile')
 const cancelOfferRoute= require('./routes/cancelOfferRoute')
 const getProfileOffersRoute= require('./routes/getProfileOffersRoute')
+const deleteUserNotificationsRoute = require('./routes/deleteUserNotificationsRoute')
+const updateNotificationRoute = require('./routes/updateNotificationRoute')
 
 // Configuración del servidor, puerto 3080
 app.set('port', process.env.PORT || 3080); 
@@ -62,6 +64,8 @@ app.use('/conf-receptor', confAsReceptorRoute)
 app.use('/get-profile',getProfile)
 app.use('/cancel-offer',cancelOfferRoute)
 app.use('/get-profile-offers', getProfileOffersRoute)
+app.use('/delete_notifications', deleteUserNotificationsRoute)
+app.use('/update_notification', updateNotificationRoute)
 
 // Iniciar servidor solo si no es un test
 if(process.env.NODE_ENV !== 'test'){

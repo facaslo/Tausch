@@ -2,6 +2,8 @@ import React, {useState,useEffect} from "react";
 import { FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./NavBarPerfil.css"
+import "./notificationBell"
+import NotificationBell from "./notificationBell";
 
 export default function NavBarPerfil () {
 
@@ -46,36 +48,7 @@ export default function NavBarPerfil () {
                 const userDataJson = await userData.json();
                 
                 //Almacena el nombre de usuario
-                setnombreDeUsuario(userDataJson[0].nombre_de_usuario);
-
-                //Recuperar los datos de las propuestas que ha recibido
-                //El usuario actualmente loggeado
-                const proposalData = await fetch("http://localhost:3080/offers-to-user",
-                {
-                    method:"GET",
-                    headers:{token: localStorage.token}
-                });
-
-                const proposalDataJson = await proposalData.json();                
-                
-                //Almacena la cantidad de propuestas recibidas
-                const numeroNotificacionesActivas = proposalDataJson.offers.reduce((acc, row) => {                    
-                    if (!row.notificacion_abierta){
-                        return acc + 1;
-                    }
-                    return acc;
-                }, 0);
-                
-                setCantidadPropuestas(numeroNotificacionesActivas);               
-                //setPropuestas(proposalDataJson.offers);
-
-                //Almacenar las propuestas recibidas en una lista temporal para luego
-                //asignarselas al estado para que puedan ser dibujadas en el dropdown
-                let listaTemporal = [];
-                for(const prop of proposalDataJson.offers){
-                    listaTemporal.push(prop);
-                }
-                setPropuestas(listaTemporal);
+                setnombreDeUsuario(userDataJson[0].nombre_de_usuario);            
 
             }
         } catch(err){
@@ -83,12 +56,65 @@ export default function NavBarPerfil () {
         }
     }
 
+    async function retrieveNotifications(){
+        //Recuperar los datos de las propuestas que ha recibido        
+        const proposalData = await fetch("http://localhost:3080/offers-to-user",
+        {
+            method:"GET",
+            headers:{token: localStorage.token}
+        });
+
+        const proposalDataJson = await proposalData.json();                
+        
+        //Almacena la cantidad de propuestas recibidas
+        const numeroNotificacionesActivas = proposalDataJson.offers.reduce((acc, row) => {                    
+            if (!row.notificacion_abierta){
+                return acc + 1;
+            }
+            return acc;
+        }, 0);
+        
+        setCantidadPropuestas(numeroNotificacionesActivas);               
+        //setPropuestas(proposalDataJson.offers);
+
+        //Almacenar las propuestas recibidas en una lista temporal para luego
+        //asignarselas al estado para que puedan ser dibujadas en el dropdown
+        let listaTemporal = [];
+        for(const prop of proposalDataJson.offers){
+            listaTemporal.push(prop);
+        }
+        setPropuestas(listaTemporal);
+    }
+
+    const sendDeleteMessagesRequest = async () => {
+        const response = await fetch("http://localhost:3080/delete_notifications",
+            {
+                method:"DELETE",
+                headers: {token: localStorage.token}
+            });     
+        await retrieveNotifications();   
+    }
+
+    const openNotification = async (id_propuesta) => {
+        const response = await fetch("http://localhost:3080/update_notification",
+            {
+                method:"PUT",
+                headers: {token: localStorage.token, 'Accept': 'application/json',
+                'Content-Type': 'application/json'},
+                body: JSON.stringify({'id_propuesta': id_propuesta})
+            });                
+        
+        window.location.href=`/offer/${id_propuesta}`
+    }
+
     useEffect(() => {
         (async () => {
             isAuth();
+            retrieveNotifications();
         })();
-    },[]);
+    }, []);
 
+    
     return(
         <>
             <div className={isAuthenticated ? "":"no-display"}>
@@ -97,113 +123,9 @@ export default function NavBarPerfil () {
                     <a href="http://localhost:3000/contentperfil#panelsStayOpen-headingThree" title="Dirígete a la sección de tus trueques en curso" className="text-decoration-none">
                         <h4 className="align-middle p-3 mb-2 font-italic  fs-3">Tus trueques en curso</h4>
                     </a>
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <FaBell size={25}/> 
-                        <span id="notification" className="badge badge-light">{cantidadPropuestas}</span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            {cantidadPropuestas ?                                  
-                                //Si la cantidad de propuestas es diferente de cero, las imprime
-                                propuestas.map((item) => {                                 
-                                    
-                                    if(item.estado_propuesta === 'en espera'){
-                                        console.log(item.notificacion_email);
-                                        console.log(item.email_proponente);
-                                        if(item.notificacion_email.localeCompare(item.email_receptor) === 0){                                            
-                                            return(                              
-                                                <li class="dropdown-item"> 
-                                                <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
-                                                Tienes una propuesta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
-                                                </a>
-                                                </li>                                       
-                                            )
-                                        }
-                                        else if(item.notificacion_email.localeCompare(item.email_proponente) === 0 ) {
-                                            return(                                                                                             
-                                            <li class="dropdown-item">
-                                                <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
-                                                Haz hecho una propuesta al usuario <i>{item.nombre}</i> por el producto: {item.titulo}
-                                                </a>    
-                                            </li>                                       
-                                            
-                                            )
-                                        }
-                                    }                                    
-                                    
-                                    else if(item.estado_propuesta === 'aceptada'){
-                                        if(item.notificacion_email.localeCompare(item.email_receptor) === 0 ){
-                                            return(                              
-                                                <li class="dropdown-item"> 
-                                                <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
-                                                Haz aceptado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
-                                                </a>
-                                                </li>                                       
-                                            )
-                                        }
-                                        else if(item.notificacion_email.localeCompare(item.email_proponente) === 0) {
-                                            return(                              
-                                            <li class="dropdown-item"> 
-                                            <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
-                                            El usuario <i>{item.nombre}</i> ha aceptado la oferta por el producto: {item.titulo}
-                                            </a>
-                                            </li>                                       
-                                            )
-                                        }
-                                    }
 
-                                    else if(item.estado_propuesta === 'rechazada'){
-                                        if(item.notificacion_email.localeCompare(item.email_receptor) === 0){
-                                            return(                              
-                                                <li class="dropdown-item"> 
-                                                <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
-                                                Haz rechazado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
-                                                </a>
-                                                </li>                                       
-                                            )
-                                        }
-                                        else if(item.notificacion_email.localeCompare(item.email_proponente) === 0) {
-                                        return(                              
-                                            <li class="dropdown-item"> 
-                                            <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
-                                            El usuario <i>{item.nombre}</i> ha rechazado la oferta por el producto: {item.titulo}
-                                            </a>
-                                            </li>                                       
-                                            )
-                                        }
-                                    }
 
-                                    else if(item.estado_propuesta === 'concluida'){
-                                        return(                              
-                                            <li class="dropdown-item"> 
-                                            <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
-                                            El trueque del producto: {item.titulo} ha finalizado
-                                            </a>
-                                            </li>                                       
-                                        )                                        
-                                    }
-                                    
-                                    else if(item.estado_propuesta === 'cancelada'){
-                                        return(                              
-                                            <li class="dropdown-item"> 
-                                            <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
-                                            El trueque del producto: {item.titulo} se ha cancelado
-                                            </a>
-                                            </li>                                       
-                                        )                                        
-                                    }
-
-                                })
-                                :
-                                //Si la cantidad de propuestas es igual a cero imprime este mensaje
-                                <li class="dropdown-item">No has recibido ninguna propuesta de trueque</li>
-                            }
-                            <li class="dropdown-item"> 
-                            <button type="button" className="btn btn-dark"> Borrar mensajes </button>
-                            </li>
-                            
-                        </ul>
-                    </div>
+                    <NotificationBell notifications={propuestas} activeNotifications={cantidadPropuestas} sendDeleteMessagesRequest={sendDeleteMessagesRequest} openNotification={openNotification}/>
                     {/*<button type="button" class="btn btn-primary">
                         <FaBell size={25}/> <span id="notification" className="badge badge-light">7</span>
                     </button>*/}
