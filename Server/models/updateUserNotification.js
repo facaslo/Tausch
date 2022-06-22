@@ -8,7 +8,7 @@ const updateUserNotification = async (req) => {
     try{
         
         result = await client_pool.query(`UPDATE notificacion SET notificacion_abierta = true
-        WHERE email='${req.user_email}';`).then(res => res.rows).catch(e => console.log(e))
+        WHERE email='${req.user_email}' AND id_propuesta='${req.body.id_propuesta}';`).then(res => res.rows).catch(e => console.log(e))
 
     }
     finally{

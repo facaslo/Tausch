@@ -134,7 +134,7 @@ export default function ContentPerfil () {
     }
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => redirect() } /></div>;
     const redirect= () =>{
-        //window.location.replace(window.location.href);
+        window.location.replace('http://localhost:3000/contentperfil');
     }
 
     return(
@@ -165,7 +165,7 @@ export default function ContentPerfil () {
                                         <div className="row row-cols-1 row-cols-sm-1 row-cols-lg-3">  
                                             <div className="card border-light d-block my-auto">
                                                 <div className="card-body">
-                                                    <img className="rounded-circle shadow img-fluid rounded-start" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"  />
+                                                    <img className="rounded-circle shadow img-fluid rounded-start" src="https://cdn.shopify.com/s/files/1/1162/8078/t/7/assets/user.png?v=6842667122654247564" />
                                                 </div>
                                             </div>
                                             <div className="card border-light d-block my-auto">
