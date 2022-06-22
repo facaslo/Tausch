@@ -55,6 +55,8 @@ function Offer () {
      const [showCancelMessage, setShowCancelMessage] =useState(false);
     //Hook para mensaje de confirmacion de confirmado
     const [showConfirmMessage, setShowConfirmMessage] =useState(false);
+    //Hook para mensaje de confirmacion de confirmado
+    const [showNotSelectedMessage, setShowNotSelectedMessage] =useState(false);
 
     const onOfferChange = (e) => {
         let _selectedOffers = [...selectedOffers];
@@ -96,18 +98,26 @@ function Offer () {
         notSelectedOffers = notSelectedOffers.map(offer => offer.id);
          
         let idsPublications=([...selectedOffers.map(offer => offer.id),datos.id])
-        setShowAcceptedMessage(true);
-        const url = "http://localhost:3080/accept-offer";
-        return await fetch(url,{
-            method : 'PUT',
-            headers:{
-                token: localStorage.token,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({idOffer: id, notSelectedOffers:notSelectedOffers, idsPublications:idsPublications})
-        })
-        .then((response) => response.json()).catch(error=> console.log(error));
+
+        if(selectedOffers.length > 0){
+            //Si se selecciono al menos una publicacion de la oferta
+            setShowAcceptedMessage(true);
+            const url = "http://localhost:3080/accept-offer";
+            return await fetch(url,{
+                method : 'PUT',
+                headers:{
+                    token: localStorage.token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify({idOffer: id, notSelectedOffers:notSelectedOffers, idsPublications:idsPublications})
+            })
+            .then((response) => response.json()).catch(error=> console.log(error));
+        } else {
+
+            //Si no se selecciono ninguna publicacion
+            setShowNotSelectedMessage(true);
+        }
     };
 
     const declineOffer=async(id)=>{
@@ -219,6 +229,7 @@ function Offer () {
     }
 
     const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => redirect() } /></div>;
+    const dialogFooterNotSelected = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => setShowNotSelectedMessage(false)} /></div>;
 
     const Loading = () => {
         if(loading === false){
@@ -255,6 +266,15 @@ function Offer () {
                         <br/>
                         <br/>
                         <h5>Has confirmado el trueque.</h5>
+                        </div>
+                    </Dialog>
+
+                    <Dialog visible={showNotSelectedMessage} onHide={() => setShowNotSelectedMessage(false)} position="top" footer={dialogFooterNotSelected} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                        <div className="flex align-items-center flex-column pt-6 px-3">
+                        <i className="pi pi-times-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                        <br/>
+                        <br/>
+                        <h5>Debes seleccionar por lo menos un producto ofertado para poder aceptar la oferta.</h5>
                         </div>
                     </Dialog>
 

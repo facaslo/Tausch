@@ -44,6 +44,7 @@ function FormProposal (parameters) {
     useEffect(() => {
         (async () => {
             let respuesta = await requestPublicationsList();
+            respuesta.posts = respuesta.posts.filter((item) => {if(item.activa) return item});
             let publications=[]
             for (const pub of respuesta.posts){
                 publications.push(pub)
