@@ -7,7 +7,7 @@ const editProfile = async (req) => {
 
     try{
         
-        result = client_pool.query(`UPDATE perfil SET celular='${req.body.phoneNumber}', facebook='${req.body.facebook}', twitter='${req.body.twitter}', instagram='${req.body.instagram}'
+        result = await client_pool.query(`UPDATE perfil SET celular='${req.body.phoneNumber}', facebook='${req.body.facebook}', twitter='${req.body.twitter}', instagram='${req.body.instagram}'
         WHERE email='${req.user_email}';`).then(res => res.rows).catch(e => console.log(e))
 
     }

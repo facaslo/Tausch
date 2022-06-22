@@ -2,6 +2,8 @@ import React, {useState,useEffect} from "react";
 import NavBarPerfil from "../components/NavBar/NavBarPerfil";
 import { FaFacebook, FaInstagramSquare, FaTwitter, FaUserEdit, FaEdit, FaPhoneAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 
 export default function ContentPerfil () {
     //Estado para saber si el usuario se autentico
@@ -14,6 +16,7 @@ export default function ContentPerfil () {
     const [propietario, setPropietario] = useState(false);
     //Datos ofertas del perfil
     const[offerData, setOfferData]=useState([])
+    const[editedData, setEditedData]=useState(false)
 
     //Verificar si la token esta activa Con la funcion authorization
     //Y asi saber si hay alguien loggeado y extraer el correo de esa persona
@@ -90,13 +93,64 @@ export default function ContentPerfil () {
         document.getElementById('basic-addon1').disabled=true
     }*/}
 
+    const updateData=async()=>{
+        let datosContacto={}
 
+        if (document.getElementById("twitter").value===""){
+            datosContacto.twitter=document.getElementById("twitter").placeholder
+        }
+        else{
+            datosContacto.twitter=document.getElementById("twitter").value
+        }
+        if (document.getElementById("phone").value===""){
+            datosContacto.phone=document.getElementById("phone").placeholder
+        }
+        else{
+            datosContacto.phone=document.getElementById("phone").value
+        }
+        if (document.getElementById("facebook").value===""){
+            datosContacto.facebook=document.getElementById("facebook").placeholder
+        }
+        else{
+            datosContacto.facebook=document.getElementById("facebook").value
+        }
+        if (document.getElementById("instagram").value===""){
+            datosContacto.instagram=document.getElementById("instagram").placeholder
+        }
+        else{
+            datosContacto.instagram=document.getElementById("instagram").value
+        }
+    
+        setEditedData(true)
+        const url="http://localhost:3080/edit-profile"
+        return await fetch(url, {
+            method : 'PUT',
+            headers:{token: localStorage.token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'},
+            body:JSON.stringify({phoneNumber:datosContacto.phone,facebook:datosContacto.facebook, instagram:datosContacto.instagram, twitter:datosContacto.twitter})
+        })
+        .then((response) =>{response.json(); console.log(response)} ).catch(error=> console.log(error));
+    }
+    const dialogFooterAccept = <div className="flex justify-content-center"><Button label="OK" className="p-button-text"  onClick={() => redirect() } /></div>;
+    const redirect= () =>{
+        //window.location.replace(window.location.href);
+    }
 
     return(
-        <>
+        <><Dialog visible={editedData} onHide={() => setEditedData(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+        <div className="flex align-items-center flex-column pt-6 px-3">
+        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--purple-500)' }}></i>
+        <br/>
+        <br/>
+        <h5>¡Se han actualizado tu datos de contacto!</h5>
+        </div>
+        </Dialog>
+
+
             {/*<NavBarPerfil/>*/}
             <div className="general-container">
-                <div className="card">
+                <div className="card border-light">
                     <div className="card-body p-4">
                         <h1 className="card-title">Tu perfil</h1><hr />
                         <div className="accordion" id="accordionPanelsStayOpenExample">
@@ -108,7 +162,7 @@ export default function ContentPerfil () {
                                 </h2>
                                 <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                     <div className="accordion-body">
-                                        <div className="card-group">  
+                                        <div className="row row-cols-1 row-cols-sm-1 row-cols-lg-3">  
                                             <div className="card border-light d-block my-auto">
                                                 <div className="card-body">
                                                     <img className="rounded-circle shadow img-fluid rounded-start" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"  />
@@ -129,24 +183,25 @@ export default function ContentPerfil () {
                                                     <h5 className="card-title">Información de contacto</h5>
                                                     <div className="input-group mb-3">
                                                         <span className="input-group-text" id="basic-addon1"><FaPhoneAlt size={20}/></span>
-                                                        <input type="text" className="form-control" placeholder={datos.celular} aria-label="Celular" aria-describedby="basic-addon1" keyfilter={/^\d{0,10}$/} disabled=""/>
-                                                        <button  type="input-group-text" onClick="" ><FaEdit /></button>
+                                                        <input id="phone" type="text" className="form-control" placeholder={datos.celular} aria-label="Celular" aria-describedby="basic-addon1" keyfilter={/^\d{0,10}$/} disabled=""/>
+                                                        
                                                     </div>
                                                     <div className="input-group mb-3">
                                                         <span className="input-group-text" id="basic-addon2"><FaFacebook size={20}/></span>
-                                                        <input type="text" className="form-control" placeholder={datos.facebook} aria-label="Facebook" aria-describedby="basic-addon2" disabled=""/>
-                                                        <button  type="input-group-text" onClick="" ><FaEdit /></button>
+                                                        <input id="facebook" type="text" className="form-control" placeholder={datos.facebook} aria-label="Facebook" aria-describedby="basic-addon2" disabled=""/>
+                                                       
                                                     </div>
                                                     <div className="input-group mb-3">
                                                         <span className="input-group-text" id="basic-addon3"><FaInstagramSquare size={20}/></span>
-                                                        <input type="text" className="form-control" placeholder={datos.instagram} aria-label="Instagram" aria-describedby="basic-addon3" disabled=""/>
-                                                        <button  type="input-group-text" onClick="" ><FaEdit /></button>
+                                                        <input id="instagram" type="text" className="form-control" placeholder={datos.instagram} aria-label="Instagram" aria-describedby="basic-addon3" />
+                                                        
                                                     </div>
                                                     <div className="input-group mb-3">
                                                         <span className="input-group-text" id="basic-addon4"><FaTwitter size={20}/></span>
-                                                        <input type="text" className="form-control" placeholder={datos.twitter} aria-label="Twitter" aria-describedby="basic-addon4" disabled=""/>
-                                                        <button  type="input-group-text" onClick="" ><FaEdit /></button>
+                                                        <input id="twitter" type="text" className="form-control" placeholder={datos.twitter} aria-label="Twitter" aria-describedby="basic-addon4" disabled=""/>
+                                                        {/*<button  type="input-group-text" onClick="" ><FaEdit /></button>*/}
                                                     </div>
+                                                    <Button label="Guardar datos actualizados" icon="pi pi-pencil" className="p-button" onClick={()=>{updateData()}}/>
                                                 </div>
                                             </div>
                                             </div>
@@ -160,17 +215,18 @@ export default function ContentPerfil () {
                                         <h4 className="font-bold text-primary">Tus publicaciones</h4>
                                     </button>
                                 </h2>
+                                
                                 <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
-                                        <strong>Publicaciones activas.</strong>
-                                        <div className="card-group" >
+                                        <h4><strong>Publicaciones activas.</strong></h4>
+                                        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                                        
                                         {productOptions.map((item) => {
                                             if (item.activa){
                                             return(
                                                 <>
-                                                    <div className='card'>
-                                                        <div className='card-body'>
-                                                            <div className="card h-100 text-center shadow rounded" key={item.id}>
+                                                    <div className='col p-1'>
+                                                    <div className="card h-100 p-2 text-center shadow rounded" key={item.id}>
                                                                 <img src={item.imagen} className='img-fluid mx-auto d-block rounded' alt={item.titulo} width={400} height={400}/>
                                                                 <div className='card-body'>
                                                                     <h5 className='car-title mb-2'>{item.titulo}</h5>
@@ -181,20 +237,20 @@ export default function ContentPerfil () {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    
                                                 </>
                                             )}
                                         })}
+                                        
                                         </div>
-                                        <strong>Publicaciones inactivas.</strong>
-                                        <div className="card-group">
+                                        <h4><strong>Publicaciones inactivas.</strong></h4>
+                                        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                                         {productOptions.map((item) => {
                                             if (!item.activa){
                                             return(
                                                 <>
-                                                    <div className='card'>
-                                                        <div className='card-body'>
-                                                            <div className="card h-100 text-center shadow rounded" key={item.id}>
+                                                    <div className='col p-1'>
+                                                        <div className="card h-100 p-2 text-center shadow rounded" key={item.id}>
                                                                 <img src={item.imagen} className='img-fluid mx-auto d-block rounded' alt={item.titulo} width={400} height={400}/>
                                                                 <div className='card-body'>
                                                                     <h5 className='car-title mb-2'>{item.titulo}</h5>
@@ -205,7 +261,7 @@ export default function ContentPerfil () {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    
                                                 </>
                                             )}
                                         })}

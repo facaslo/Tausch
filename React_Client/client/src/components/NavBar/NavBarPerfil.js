@@ -94,8 +94,8 @@ export default function NavBarPerfil () {
             <div className={isAuthenticated ? "":"no-display"}>
                 <nav className="nav nav-pills nav-justified text-dark bg-white d-flex justify-content-around border border-primary rounded">
                     <h3 className="align-middle p-3 mb-2 font-italic">Bienvenido {nombreDeUsuario}</h3>
-                    <a href="http://localhost:3000/contentperfil#panelsStayOpen-headingThree" title="Dirígete a la sección de tus trueques en curso">
-                        <h4 className="align-middle p-3 mb-2 font-italic">Tus trueques en curso</h4>
+                    <a href="http://localhost:3000/contentperfil#panelsStayOpen-headingThree" title="Dirígete a la sección de tus trueques en curso" className="text-decoration-none">
+                        <h4 className="align-middle p-3 mb-2 font-italic  fs-3">Tus trueques en curso</h4>
                     </a>
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -113,7 +113,7 @@ export default function NavBarPerfil () {
                                         if(item.notificacion_email.localeCompare(item.email_receptor) === 0){                                            
                                             return(                              
                                                 <li class="dropdown-item"> 
-                                                <a href={`/offer/${item.id_propuesta}`} >
+                                                <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
                                                 Tienes una propuesta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
                                                 </a>
                                                 </li>                                       
@@ -122,7 +122,7 @@ export default function NavBarPerfil () {
                                         else if(item.notificacion_email.localeCompare(item.email_proponente) === 0 ) {
                                             return(                                                                                             
                                             <li class="dropdown-item">
-                                                <a href={`/offer/${item.id_propuesta}`} >
+                                                <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
                                                 Haz hecho una propuesta al usuario <i>{item.nombre}</i> por el producto: {item.titulo}
                                                 </a>    
                                             </li>                                       
@@ -135,7 +135,7 @@ export default function NavBarPerfil () {
                                         if(item.notificacion_email.localeCompare(item.email_receptor) === 0 ){
                                             return(                              
                                                 <li class="dropdown-item"> 
-                                                <a href={`/offer/${item.id_propuesta}`} >
+                                                <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
                                                 Haz aceptado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
                                                 </a>
                                                 </li>                                       
@@ -144,7 +144,7 @@ export default function NavBarPerfil () {
                                         else if(item.notificacion_email.localeCompare(item.email_proponente) === 0) {
                                             return(                              
                                             <li class="dropdown-item"> 
-                                            <a href={`/offer/${item.id_propuesta}`} >
+                                            <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
                                             El usuario <i>{item.nombre}</i> ha aceptado la oferta por el producto: {item.titulo}
                                             </a>
                                             </li>                                       
@@ -156,7 +156,7 @@ export default function NavBarPerfil () {
                                         if(item.notificacion_email.localeCompare(item.email_receptor) === 0){
                                             return(                              
                                                 <li class="dropdown-item"> 
-                                                <a href={`/offer/${item.id_propuesta}`} >
+                                                <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
                                                 Haz rechazado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
                                                 </a>
                                                 </li>                                       
@@ -165,7 +165,7 @@ export default function NavBarPerfil () {
                                         else if(item.notificacion_email.localeCompare(item.email_proponente) === 0) {
                                         return(                              
                                             <li class="dropdown-item"> 
-                                            <a href={`/offer/${item.id_propuesta}`} >
+                                            <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
                                             El usuario <i>{item.nombre}</i> ha rechazado la oferta por el producto: {item.titulo}
                                             </a>
                                             </li>                                       
@@ -176,7 +176,7 @@ export default function NavBarPerfil () {
                                     else if(item.estado_propuesta === 'concluida'){
                                         return(                              
                                             <li class="dropdown-item"> 
-                                            <a href={`/offer/${item.id_propuesta}`} >
+                                            <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
                                             El trueque del producto: {item.titulo} ha finalizado
                                             </a>
                                             </li>                                       
@@ -186,7 +186,7 @@ export default function NavBarPerfil () {
                                     else if(item.estado_propuesta === 'cancelada'){
                                         return(                              
                                             <li class="dropdown-item"> 
-                                            <a href={`/offer/${item.id_propuesta}`} >
+                                            <a href={`/offer/${item.id_propuesta}`} className="text-reset text-decoration-none fst-italic fs-5">
                                             El trueque del producto: {item.titulo} se ha cancelado
                                             </a>
                                             </li>                                       
@@ -199,7 +199,7 @@ export default function NavBarPerfil () {
                                 <li class="dropdown-item">No has recibido ninguna propuesta de trueque</li>
                             }
                             <li class="dropdown-item"> 
-                            <button type="button"> Borrar mensajes </button>
+                            <button type="button" className="btn btn-dark"> Borrar mensajes </button>
                             </li>
                             
                         </ul>

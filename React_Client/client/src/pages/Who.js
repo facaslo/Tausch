@@ -18,13 +18,13 @@ function Who () {
                     </div>
                 </div>
                 <section>
-                    <div className="card">
+                    <div className="card border-light">
                         <div className="row justify-content-md-center">
                             <div className="col-md-4 mb-5 mb-md-0">
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="one" ></div>
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="\images\Fabian.jpeg" className="rounded-circle img-fluid" style={{maxWidth:'200px', maxHeight:'200px'}}/>
+                                        <img src="\images\Fabian.jpeg" className="rounded-circle img-fluid" style={{width:'210px', height:'220px'}}/>
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Fabian Castro</h4>
@@ -39,7 +39,7 @@ function Who () {
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="two" ></div>
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="\images\Yuli.jpeg" className="rounded-circle img-fluid" style={{maxWidth:'200px', maxHeight:'200px'}} />
+                                        <img src="\images\Yuli.jpeg" className="rounded-circle img-fluid" style={{width:'210px', height:'220px'}} />
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Yuli Beltrán</h4>
@@ -52,13 +52,13 @@ function Who () {
                             </div>
                         </div>
                     </div>
-                    <div className="card">
+                    <div className="card border-light">
                         <div className="row text-center">
                             <div className="col-md-4 mb-0">
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="three" ></div> 
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="\images\Scass.jpeg" className="rounded-circle img-fluid" />
+                                        <img src="\images\Scass.jpeg" className="rounded-circle img-fluid" style={{width:'210px', height:'220px'}}/>
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Santiago Cassiano</h4>
@@ -73,7 +73,7 @@ function Who () {
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="four" ></div> 
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="\images\julio.jpg" className="rounded-circle img-fluid" />
+                                        <img src="\images\julio.jpg" className="rounded-circle img-fluid" style={{width:'210px', height:'220px'}}/>
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Julio Bedoya</h4>
@@ -88,7 +88,7 @@ function Who () {
                                 <div className="card testimonial-card">
                                     <div className="card-up" id="five" ></div> 
                                     <div className="avatar mx-auto bg-white">
-                                        <img src="\images\SRC.jpeg" className="rounded-circle img-fluid" style={{maxWidth:'200px', maxHeight:'200px'}} />
+                                        <img src="\images\SRC.jpeg" className="rounded-circle img-fluid" style={{width:'210px', height:'220px'}} />
                                     </div>
                                     <div className="card-body">
                                         <h4 className="card-title mb-4">Santiago Rodríguez</h4>

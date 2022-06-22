@@ -9,4 +9,5 @@ const authorization = require('../middleware/authorization')
 
 router.put('/', authorization, postEditProfile)
 
+
 module.exports = router

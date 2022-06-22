@@ -6,7 +6,7 @@ const validateEditProfile = async (req, res, next) => {
 
     try{
         validationResult(req).throw()
-
+        
         await editProfile(req)
         res.status(200).json({editionSuccess:true, msg:'Datos del perfil editados exitosamente.'}) 
         return next()

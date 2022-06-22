@@ -97,7 +97,7 @@ function PublicationsAll () {
                 {publicationList.map((item) => {                    
                     return(
                         <>
-                            <div className='col-md-3 mb-4'>
+                            <div className='col p-2'>
                                 <div className="card h-100 text-center shadow p-2 rounded" key={item.id}>
                                     <img src={item.itemImageSrc} className='img-fluid mx-auto d-block rounded' alt={item.titulo} width={400} height={400}/>
                                     <div className='card-body'>
@@ -143,7 +143,9 @@ function PublicationsAll () {
                     <button className='btn btn-outline-dark btn-lg me-2' onClick={() => setCategory("Tecnología")}>Tecnología</button>
                     </div>                 
                     
-                    <Loading />
+                    <div className='row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4'>
+                        <Loading />
+                    </div>
 
                     <ReactPaginate pageCount={numberOfPages} pageRangeDisplayed={3}
                     marginPagesDisplayed={2} breakLabel='...' previousLabel='<' nextLabel='>' 
