@@ -10,7 +10,7 @@ const api = supertest(app)
 
 jest.setTimeout(20000)
 
-describe.skip('POST /register', () => {
+describe('POST /register', () => {
 
     test('Registro invalido, email no valido.', async () => {
         const newUser = {
@@ -37,9 +37,9 @@ describe.skip('POST /register', () => {
 
 })
 
-describe.skip('POST /new-post', () => {
+describe('POST /new-post', () => {
 
-    test('Publicacion creada exitosamente.', async () => {
+    test.skip('Publicacion creada exitosamente.', async () => {
 
         const email = 'becjulio@gmail.com'
 
@@ -101,19 +101,6 @@ describe.skip('POST /new-post', () => {
 
 })
 
-describe.skip('DELETE /delete-post', () => {
-
-    test('Eliminar publicacion por id.', async () => {
-
-        const idObject = {id:53}// debe ser la ultima publicacion por id, se debe estar atento a la db
-
-        const response = await api.delete('/delete-post').send(idObject).expect(200)
-        expect(response.body.deleteSuccess).toBe(true)
-        expect(response.body.msg).toBe('Publicacion borrada exitosamente.')
-    })
-
-})
-
 describe('GET /publication_list', () => {
     
     test('Recibir primera pagina de posts (primeras 12 publicaciones).', async () => {
@@ -143,7 +130,7 @@ describe('GET /publication_list', () => {
 
 })
 
-describe.skip('GET /user-posts', () => {
+describe('GET /user-posts', () => {
 
     test('Obtener publicaciones del usuario.', async () => {
 
@@ -167,42 +154,7 @@ describe.skip('GET /user-posts', () => {
     })
 })
 
-describe.skip('POST /new-offer', () => {
-
-    test('Creacion de propuesta exitosa.', async () => {
-
-        const offer = {
-            'email_proponente':'becjulio@gmail.com',
-            'email_receptor':'sarodriguezca@gmail.com',
-            'id_publicacion_receptor':20,
-            'id_publicacion_proponente':33,
-            'mensaje':'mensaje-prueba'
-        }
-
-        const response = await api.post('/new-offer').send(offer).expect(200)
-        expect(response.body.offerSuccess).toBe(true)
-        expect(response.body.msg).toBe('Oferta de trueque creada exitosamente.')
-
-    })
-
-    test('Exceso de caracteres en mensaje.', async () => {
-
-        const offer = {
-            'email_proponente':'becjulio@gmail.com',
-            'email_receptor':'sarodriguezca@gmail.com',
-            'id_publicacion_receptor':20,
-            'id_publicacion_proponente':33,
-            'mensaje':'mensaje-prueba-mayor200char:qwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdfqwertyasdf'
-        }
-
-        const response = await api.post('/new-offer').send(offer).expect(403)
-        expect(response.body.errors[0].msg).toBe('Invalid value')
-        expect(response.body.errors[0].param).toBe('mensaje')
-
-    })
-})
-
-describe.skip('GET /offers-to-user', () => {
+describe('GET /offers-to-user', () => {
 
     test('Obtener propuestas hechas al usuario.', async () => {
 
@@ -213,7 +165,7 @@ describe.skip('GET /offers-to-user', () => {
         const response = await api.get('/offers-to-user').set('token', token).expect(200)
         expect(response.body.success).toBe(true)
         expect(response.body.offers[0].titulo)
-        expect(response.body.offers[0].nombre_de_usuario)
+        expect(response.body.offers[0].notificacion_email).toBe(email)
         
     })
 
@@ -225,3 +177,61 @@ describe.skip('GET /offers-to-user', () => {
         
     })
 })
+
+describe('POST /all-offers', () => {
+    
+    const email = 'becjulio@gmail.com'
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2VtYWlsIjoiYmVjanVsaW9AZ21haWwuY29tIiwiaWF0IjoxNjU1ODc3MTAxLCJleHAiOjE2NTU5NjM1MDF9.gtZmbxje_hxpaWcqe190tc_h4TQ-2ozg_N92skSxawM'
+
+    test('Detalles de la propuesta cargados exitosamente.', async () => {
+
+        const idOferta = 53
+
+        const response = await api.post('/all-offers').set('token', token).send({idOffer:idOferta}).expect(200)
+
+        expect(response.body.success).toBe(true)
+        //expect(response.body.myPost.email).toBe(email)
+        expect(response.body.nameOfferOwner).toBe('Santiago Pollo')
+    })
+})
+
+describe('POST /get-profile', () => {
+
+    const correo = 'becjulio@gmail.com'
+
+    test('Datos del perfil obtenidos correctamente.', async () => {
+
+        const response = await api.post('/get-profile').send({email:correo}).expect(200)
+        
+        expect(response.body.success).toBe(true)
+        expect(response.body.perfilInfo[0].email).toBe(correo)
+    })
+})
+
+describe('GET /get-profile-offers', () => {
+
+    const email = 'becjulio@gmail.com'
+    const token = jwtGenerator(email)
+
+    test('Ofertas del perfil obtenidas exitosamente.', async () => {
+
+        const response = await api.get('/get-profile-offers').set('token', token).expect(200)
+
+        expect(response.body.success).toBe(true)
+        expect(response.body.offers[0].email_receptor)
+        expect(response.body.offers[0].email_proponente)
+    })
+})
+
+/*describe.skip('DELETE /delete-post', () => {
+
+    test('Eliminar publicacion por id.', async () => {
+
+        const idObject = {id:53}// debe ser la ultima publicacion por id, se debe estar atento a la db
+
+        const response = await api.delete('/delete-post').send(idObject).expect(200)
+        expect(response.body.deleteSuccess).toBe(true)
+        expect(response.body.msg).toBe('Publicacion borrada exitosamente.')
+    })
+
+})*/

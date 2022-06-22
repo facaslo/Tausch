@@ -18,7 +18,7 @@ const getOffers = async (req) => {
         ON propuesta_tiene_publicacion.id_propuesta = propuesta.id_propuesta)
         JOIN perfil ON propuesta.email_proponente = perfil.email)
         JOIN publicacion ON publicacion.id = propuesta_tiene_publicacion.id_publicacion
-        WHERE propuesta.id_propuesta = ${req.body.idOffer}`).then(res => res.rows).catch(e => console.log(e))
+        WHERE propuesta.id_propuesta = '${req.body.idOffer}'`).then(res => res.rows).catch(e => console.log(e))
 
     }
     finally{

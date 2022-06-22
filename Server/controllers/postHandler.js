@@ -132,7 +132,7 @@ const postNewOffer = [
 ]
 
 const postEditProfile = [
-    /*check('phoneNumber')
+    check('phoneNumber')
         .exists()
         .isNumeric(),
     check('facebook')
@@ -140,8 +140,7 @@ const postEditProfile = [
     check('instagram')
         .exists(),
     check('twitter')
-        .exists(),*/
-    
+        .exists(),    
     (req, res, next) => {
        
         validateEditProfile(req, res, next)
