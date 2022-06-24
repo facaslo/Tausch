@@ -32,7 +32,7 @@ export default function NotificationBell(props){
                                 return(                                                                                             
                                 <li class="dropdown-item">
                                     <p onClick={async ()=> { await props.openNotification(item.id_propuesta)}}  className = {item.notificacion_abierta? "text-reset text-decoration-none fst-italic fs-5 OpenedNotification pointerCursor" :"text-reset text-decoration-none fst-italic fs-5 pointerCursor"}>
-                                    Haz hecho una propuesta al usuario <i>{item.nombre}</i> por el producto: {item.titulo}
+                                    Has hecho una propuesta al usuario <i>{item.nombre}</i> por el producto: {item.titulo}
                                     </p>    
                                 </li>                                       
                                 
@@ -45,7 +45,7 @@ export default function NotificationBell(props){
                                 return(                              
                                     <li class="dropdown-item"> 
                                     <p onClick={async ()=> { await props.openNotification(item.id_propuesta)}}  className = {item.notificacion_abierta? "text-reset text-decoration-none fst-italic fs-5 OpenedNotification pointerCursor" :"text-reset text-decoration-none fst-italic fs-5 pointerCursor"}>
-                                    Haz aceptado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
+                                    Has aceptado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
                                     </p>
                                     </li>                                       
                                 )
@@ -66,7 +66,7 @@ export default function NotificationBell(props){
                                 return(                              
                                     <li class="dropdown-item"> 
                                     <p onClick={async ()=> { await props.openNotification(item.id_propuesta)}}  className = {item.notificacion_abierta? "text-reset text-decoration-none fst-italic fs-5 OpenedNotification pointerCursor" :"text-reset text-decoration-none fst-italic fs-5 pointerCursor"}>
-                                    Haz rechazado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
+                                    Has rechazado la oferta del usuario <i>{item.nombre}</i> por tu producto: {item.titulo}
                                     </p>
                                     </li>                                       
                                 )
