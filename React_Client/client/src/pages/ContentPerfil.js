@@ -1,6 +1,5 @@
 import React, {useState,useEffect} from "react";
-import NavBarPerfil from "../components/NavBar/NavBarPerfil";
-import { FaFacebook, FaInstagramSquare, FaTwitter, FaUserEdit, FaEdit, FaPhoneAlt } from "react-icons/fa";
+import { FaFacebook, FaInstagramSquare, FaTwitter, FaPhoneAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
@@ -89,10 +88,6 @@ export default function ContentPerfil () {
         })();
     },[]);
 
-    {/*const activarcaja = () => {
-        document.getElementById('basic-addon1').disabled=true
-    }*/}
-
     const updateData=async()=>{
         let datosContacto={}
 
@@ -139,16 +134,13 @@ export default function ContentPerfil () {
 
     return(
         <><Dialog visible={editedData} onHide={() => setEditedData(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
-        <div className="flex align-items-center flex-column pt-6 px-3">
-        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--purple-500)' }}></i>
-        <br/>
-        <br/>
-        <h5>¡Se han actualizado tu datos de contacto!</h5>
-        </div>
+            <div className="flex align-items-center flex-column pt-6 px-3">
+                <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--purple-500)' }}></i>
+                <br/>
+                <br/>
+                <h5>¡Se han actualizado tu datos de contacto!</h5>
+            </div>
         </Dialog>
-
-
-            {/*<NavBarPerfil/>*/}
             <div className="general-container">
                 <div className="card border-light">
                     <div className="card-body p-4">
@@ -212,13 +204,13 @@ export default function ContentPerfil () {
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                                        <h4 className="font-bold text-primary">Tus publicaciones</h4>
+                                        <h4>Tus publicaciones</h4>
                                     </button>
                                 </h2>
                                 
                                 <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                                     <div class="accordion-body">
-                                        <h4><strong>Publicaciones activas.</strong></h4>
+                                        <br /><h4><strong>Publicaciones activas.</strong></h4>
                                         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                                         
                                         {productOptions.map((item) => {
@@ -243,7 +235,7 @@ export default function ContentPerfil () {
                                         })}
                                         
                                         </div>
-                                        <h4><strong>Publicaciones inactivas.</strong></h4>
+                                        <br /><h4><strong>Publicaciones inactivas.</strong></h4>
                                         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
                                         {productOptions.map((item) => {
                                             if (!item.activa){
@@ -277,6 +269,7 @@ export default function ContentPerfil () {
                                 </h2>
                                 <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                                     <div class="accordion-body">
+                                        <h4><strong>En esta sección encontrarás el listado de propuestas recibidas.</strong></h4><br />
                                             {offerData.map((item)=>{
                                                 if (item.estado_propuesta==='en espera' && item.email_receptor===datos.email){
                                                     return(
@@ -297,6 +290,7 @@ export default function ContentPerfil () {
                                 </h2>
                                 <div id="panelsStayOpen-collapseFour" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
                                     <div class="accordion-body">
+                                        <h4><strong>En esta sección encontrarás el listado de tus propuestas en espera.</strong></h4><br />
                                             {offerData.map((item)=>{
                                                 if (item.estado_propuesta==='en espera' && item.email_proponente===datos.email){
                                                     return(
@@ -312,11 +306,12 @@ export default function ContentPerfil () {
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="panelsStayOpen-headingFive">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
-                                        <h4>Tus trueques en curso</h4>
+                                        <h4  className="font-bold text-primary">Tus trueques en curso</h4>
                                     </button>
                                 </h2>
                                 <div id="panelsStayOpen-collapseFive" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
                                     <div class="accordion-body">
+                                        <h4><strong>En esta sección encontrarás el listado de tus trueques en curso.</strong></h4><br />
                                             {offerData.map((item)=>{
                                                 if (item.estado_propuesta==='aceptada'){
                                                     return(
@@ -337,6 +332,7 @@ export default function ContentPerfil () {
                                 </h2>
                                 <div id="panelsStayOpen-collapseSix" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSix">
                                     <div class="accordion-body">
+                                        <h4><strong>En esta sección encontrarás el listado de trueques concluidos.</strong></h4><br />
                                             {offerData.map((item)=>{
                                                 if (item.estado_propuesta==='concluida'){
                                                     return(

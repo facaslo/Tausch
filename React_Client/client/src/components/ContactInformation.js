@@ -41,7 +41,7 @@ function ContactInformation (parameters) {
             <div className="general-container">
                 <div className="card border-light d-block my-auto">
                     <div className="card-body">
-                        <h5 className="card-title">Información de contacto de {datos.nombres} {datos.apellidos}</h5>
+                        <h5 className="card-title">Información de contacto de {datos.nombres} {datos.apellidos}</h5><br />
                         <div className="input-group mb-3">
                             <span className="input-group-text" id="basic-addon1"><FaPhoneAlt size={20}/></span>
                             <input type="text" className="form-control" placeholder={datos.celular} aria-label="Celular" aria-describedby="basic-addon1" keyfilter={/^\d{0,10}$/} disabled="true"/>

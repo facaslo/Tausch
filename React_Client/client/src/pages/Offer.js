@@ -233,244 +233,242 @@ function Offer () {
 
     const Loading = () => {
         if(loading === false){
-            return(
-            <>
-                    <Dialog visible={showAcceptedMessage} onHide={() => setShowAcceptedMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
-                        <div className="flex align-items-center flex-column pt-6 px-3">
-                        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
-                        <br/>
-                        <br/>
-                        <h5>Has aceptado la oferta, ya puedes ver los datos del oferente para planear el trueque.</h5>
-                        </div>
-                    </Dialog>
-
-                    <Dialog visible={showDeclineMessage} onHide={() => setShowDeclineMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
-                        <div className="flex align-items-center flex-column pt-6 px-3">
-                        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
-                        <br/>
-                        <br/>
-                        <h5>Has rechazado la oferta.</h5>
-                        </div>
-                    </Dialog>
-                    <Dialog visible={showCancelMessage} onHide={() => setShowCancelMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
-                        <div className="flex align-items-center flex-column pt-6 px-3">
-                        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
-                        <br/>
-                        <br/>
-                        <h5>Has cancelado el trueque.</h5>
-                        </div>
-                    </Dialog>
-                    <Dialog visible={showConfirmMessage} onHide={() => setShowConfirmMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
-                        <div className="flex align-items-center flex-column pt-6 px-3">
-                        <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
-                        <br/>
-                        <br/>
-                        <h5>Has confirmado el trueque.</h5>
-                        </div>
-                    </Dialog>
-
-                    <Dialog visible={showNotSelectedMessage} onHide={() => setShowNotSelectedMessage(false)} position="top" footer={dialogFooterNotSelected} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
-                        <div className="flex align-items-center flex-column pt-6 px-3">
-                        <i className="pi pi-times-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
-                        <br/>
-                        <br/>
-                        <h5>Debes seleccionar por lo menos un producto ofertado para poder aceptar la oferta.</h5>
-                        </div>
-                    </Dialog>
-
-                    <div className="card-group">
-                        <div className="card border-primary mb-3 mt-3">
-                            <div className="card-header text-center text-dark bg-transparent">
-                                <h4>Publicación de {datos.nombres} {datos.apellidos}</h4>
+            return (
+                <>
+                    <div className="general-container">
+                        <Dialog visible={showAcceptedMessage} onHide={() => setShowAcceptedMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                            <div className="flex align-items-center flex-column pt-6 px-3">
+                                <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
+                                <br/>
+                                <br/>
+                                <h5>Has aceptado la oferta, ya puedes ver los datos del oferente para planear el trueque.</h5>
                             </div>
-                            <div className="card-body">
-                            {/*<PublicationInOffer argumento_id = {id_pub_receptor}/>*/}
-                            <>
-                                    <div flex justify-content-center>
-                                        <div className="flex align-items-center justify-content-center">
+                        </Dialog>
 
+                        <Dialog visible={showDeclineMessage} onHide={() => setShowDeclineMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                            <div className="flex align-items-center flex-column pt-6 px-3">
+                                <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                                <br/>
+                                <br/>
+                                <h5>Has rechazado la oferta.</h5>
+                            </div>
+                        </Dialog>
+                        <Dialog visible={showCancelMessage} onHide={() => setShowCancelMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                            <div className="flex align-items-center flex-column pt-6 px-3">
+                                <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                                <br/>
+                                <br/>
+                                <h5>Has cancelado el trueque.</h5>
+                            </div>
+                        </Dialog>
+                        <Dialog visible={showConfirmMessage} onHide={() => setShowConfirmMessage(false)} position="top" footer={dialogFooterAccept} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                            <div className="flex align-items-center flex-column pt-6 px-3">
+                                <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
+                                <br/>
+                                <br/>
+                                <h5>Has confirmado el trueque.</h5>
+                            </div>
+                        </Dialog>
+
+                        <Dialog visible={showNotSelectedMessage} onHide={() => setShowNotSelectedMessage(false)} position="top" footer={dialogFooterNotSelected} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                            <div className="flex align-items-center flex-column pt-6 px-3">
+                                <i className="pi pi-times-circle" style={{ fontSize: '5rem', color: 'var(--red-500)' }}></i>
+                                <br/>
+                                <br/>
+                                <h5>Debes seleccionar por lo menos un producto ofertado para poder aceptar la oferta.</h5>
+                            </div>
+                        </Dialog>
+
+                        <div className="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-3">
+                            <div className="col m-0">
+                                <div class="card border-primary h-100">
+                                    <div className="card-header bg-transparent border-primary">
+                                        <h4 className='text-center text-dark'><strong>Publicación de </strong> {datos.nombres} {datos.apellidos}</h4>
+                                    </div>
+                                    {/*<PublicationInOffer argumento_id = {id_pub_receptor}/>*/}
+                                    <div className="row">
+                                        <div className="col ml-2">
+                                            <br />
                                             <Galleria value={imagenPublicacion} responsiveOptions={responsiveOptions} numVisible={1} style={{  maxWidth:'200px' }}
-                                                    showThumbnails={false} showIndicators item={itemTemplate} circular autoPlay transitionInterval={3000} />
-                                                
-
-                                            {/*<Divider layout="horizontal" />*/}
-
-
-                                            <Card title={datos.titulo} subTitle={datos.categoria+subcategoryText}>
-                                                <p className="flex justify-content-start text-primary" >{datos.estado_item}</p>
-                                                <span className="flex justify-content-start" ><b>Publicado: </b>&nbsp;{String (datos.fecha_publicacion).slice(0,10) }</span>
+                                                    showThumbnails={false} showIndicators item={itemTemplate} circular autoPlay transitionInterval={3000} /> 
+                                        </div>
+                                        <div className="col">                                    
+                                            <div className="card-body text-start">
+                                                <h5 className="card-title"><br />{datos.titulo}</h5>
+                                                <p className="card-text">{datos.categoria+subcategoryText}</p>
+                                                <h5 className="text-primary" >{datos.estado_item}</h5>
+                                                <span><b>Publicado: </b>&nbsp;{String (datos.fecha_publicacion).slice(0,10) }</span>
                                                 <br/>
                                                 <br/>
-                                                <span className="flex justify-content-start">{datos.descripcion}</span>
+                                                <span>{datos.descripcion}</span>
                                                 <br/>
-                                                <span className="flex justify-content-start"><b>{datos.numero_propuestas}</b>&nbsp;Propuestas actualmente</span>
-                                                
-                                            </Card>
-
-                                        </div>
+                                                <br/>
+                                                <span><b>{datos.numero_propuestas}</b>&nbsp;Propuestas actualmente</span>
+                                            </div>
+                                        </div>  
                                     </div>
-                                    
-                                </>
-                            </div>
-                        </div>
-                        <div className="card border-primary mb-3 mt-3">
-                            <div className="card-header text-center text-dark bg-transparent">
-                                <h4>Información de la Oferta</h4>
-                            </div>
-                            <div className="card-body">
-                                <h5 className="card-title">Mensaje del oferente:</h5>
-                                <p className="card-text">{datosOferta.mensaje}</p>
-                                <h5 className="card-text text-primary">Oferta {datosOferta.estadoOferta}</h5>
-                                <p className="card-text"><small className="text-muted">Fecha de la oferta: {String (datosOferta.fechaOferta).slice(0,10)}</small></p>
-                                
-                                <div className={datosOferta.estadoOferta==='concluida'? "":"no-display"}>
-                                    <p className="card-text"><small className="text-muted">Fecha de finalización del trueque: {String (datosOferta.fechaTrueque).slice(0,10)}</small></p>
                                 </div>
-
-                                {/*BOTONES DEL RECEPTOR PARA ACEPTAR/RECHZAR OFERTA, CONFIRMAR TRUEQUE Y VER DATOS DE CONTACTO*/}
-                                <div className={isReceptor ? "":"no-display"}>
-                                    
-                                    {/*OFERTA EN ESPERA, BOTONES ACEPTAR/RECHAZAR PARA EL RECEPTOR*/}
-                                    <div className={datosOferta.estadoOferta === "en espera" ? "":"no-display"}>
-                                        <div class="row">
-                                            <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Aceptar oferta" icon="pi pi-check" className="p-button-success" onClick={() => {acceptOffer(id)} } />
-                                            </div>
-                                            <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={() => {declineOffer(id)}}/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    {/*OFERTA EN ESTADO aceptada*/}
-                                    <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
-                                        <div className={ !datosOferta.confirmacionReceptor ? "":"no-display"}>
-                                            <p>Comunícate con la otra persona para acordar el lugar y fecha del trueque</p>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={(cambiarEstadoContactInfo)} />
-                                            <Modal className="contenido-modal" estado={stateContactInfo} cambiarEstado={cambiarEstadoContactInfo}><ContactInformation email={datosOferta.emailOferente}/></Modal>
-                                        </div>
-                                    
-                                        {/*SI AUN NO CONFIRMO*/}
-                                        <div className={ !datosOferta.confirmacionReceptor ? "":"no-display"}>
-                                            <br/>
-                                        <p>Una vez que hallan realizado el trueque da click en Confirmar Trueque para concluirlo, si no se llegó a un acuerdo da click a Cancelar Trueque</p>
-                                        <div class="row">
-                                            <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={()=>{confirm(id, 'receptor')}} />
-                                            </div>
-                                            <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={()=>{cancelOffer(id)}}/>
-                                            </div>
-                                        </div>
-                                        </div>
-
-                                        {/*SI YA CONFIRME EL TRUEQUE PERO EL OTRO NO*/}
-                                        <div className={datosOferta.confirmacionReceptor ? "":"no-display"}>
-                                            <br/>
-                                            <span className="text-danger"><p>Gracias por confirmar. Espera a que la otra persona también confirme que se realizo el trueque.</p></span>
-                                        </div>
-                                    </div>
-                                    {/*SI LA OFERTA YA FUE CONCLUIDA o RECHAZADA NO TOCA HACER NADA*/}
-                                </div>
-
-                                {/*BOTONES DEL OFERENTE PARA CONFIRMAR TRUEQUE Y VER DATOS DE CONTACTO*/}
-                                <div className={isOferente ? "":"no-display"}>
-                                    
-                                    {/*OFERTA EN ESPERA*/}
-                                    <div className={datosOferta.estadoOferta === "en espera" ? "":"no-display"}>
-                                        <br/>
-                                        <span className="text-danger"><p>Espera a que {datos.nombres} {datos.apellidos} acepte tu oferta</p></span>
-                                    </div>
-                                    
-                                    {/*OFERTA EN ESTADO aceptada BOTONES PARA CONFIRMAR/CANCELAR/VER DATOS*/}
-                                    <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
-                                        <div className={ !datosOferta.confirmacionOferente ? "":"no-display"}>
-                                            <p>Comunícate con la otra persona para acordar el lugar y fecha del trueque</p>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={(cambiarEstadoContactInfo)} />
-                                            <Modal className="contenido-modal" estado={stateContactInfo} cambiarEstado={cambiarEstadoContactInfo}><ContactInformation email={datos.email}/></Modal>
-                                        </div>
-                                    
-                                        {/*SI AUN NO CONFIRMO*/}
-                                        <div className={ !datosOferta.confirmacionOferente ? "":"no-display"}>
-                                        <br/>
-                                        <p>Una vez que hallan realizado el trueque da click en Confirmar Trueque para concluirlo, si no se llegó a un acuerdo da click a Cancelar Trueque</p>
-                                        <div class="row">
-                                            <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={()=>{confirm(id, 'proponente')}} />
-                                            </div>
-                                            <div class="col-6 d-flex justify-content-center">
-                                                <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={()=>{cancelOffer(id)}}/>
-                                            </div>
-                                        </div>
-                                        </div>
-
-                                        {/*SI YA CONFIRME EL TRUEQUE PERO EL OTRO NO*/}
-                                        <div className={datosOferta.confirmacionOferente ? "":"no-display"}>
-                                            <br/>
-                                            <span className="text-danger"><p>Gracias por confirmar. Espera a que la otra persona también confirme que se realizo el trueque.</p></span>
-                                        </div>
-                                    </div>
-                                    {/*SI LA OFERTA YA FUE CONCLUIDA O RECHAZADA NO TOCA HACER NADA*/}
-                                </div>
-
-
                             </div>
-                        </div>
+                            
+                            <div className="col">
+                                <div class="card border-primary h-100">
+                                    <div className="card-header text-center text-dark border-primary bg-transparent">
+                                        <h4><strong>Información de la Oferta</strong></h4>
+                                    </div>
+                                    <div className="card-body">
+                                        <h5 className="card-title text-left"><br />Mensaje del oferente:</h5>
+                                        <p className="card-text">{datosOferta.mensaje}</p>
+                                        <h5 className="card-text text-primary fw-bold">Oferta {datosOferta.estadoOferta}</h5>
+                                        <p className="card-text"><small className="text-muted">Fecha de la oferta: {String (datosOferta.fechaOferta).slice(0,10)}</small></p>
+                                        
+                                        <div className={datosOferta.estadoOferta==='concluida'? "":"no-display"}>
+                                            <p className="card-text"><small className="text-muted">Fecha de finalización del trueque: {String (datosOferta.fechaTrueque).slice(0,10)}</small></p>
+                                        </div>
 
-
-                        <div className="card border-primary mb-3 mt-3">
-                            <div className="card-header text-center text-dark bg-transparent">
-                                <h4>Productos ofrecidos por {datosOferta.nombreOferente}</h4>
-                            </div>
-                            <div className="card-body">
-                                {
-                                    offers.map((offer) => {
-                                        return (
-                                            <div key={offer.id} className="field-checkbox">
-
-                                                <div className={datosOferta.estadoOferta === "en espera" && isReceptor ? "":"no-display"}>
-                                                    <Checkbox inputId={offer.id} name="category" value={offer} onChange={onOfferChange} checked={selectedOffers.some((item) => item.id === offer.id)}  />
-                                                </div>
-
-                                                <div className="card-group">
-                                              
-                                                        <div className="card-img-flex">
-                                                            <img src={offer.imagen} width="100px" />
-                                                        </div>
-                                                        <div className="card border-light">
-                                                            <h5 htmlFor={offer.titulo}>{offer.titulo}</h5>
-                                                            <p>
-                                                                {offer.categoria}<br/>
-                                                                <span className="text-primary">{offer.estado_item}</span><br/>
-                                                                {offer.descripcion}<br/>
-                                                            </p>
-
-                                                        </div>
-                                                 
+                                        {/*BOTONES DEL RECEPTOR PARA ACEPTAR/RECHZAR OFERTA, CONFIRMAR TRUEQUE Y VER DATOS DE CONTACTO*/}
+                                        <div className={isReceptor ? "":"no-display"}>
+                                            
+                                            {/*OFERTA EN ESPERA, BOTONES ACEPTAR/RECHAZAR PARA EL RECEPTOR*/}
+                                            <div className={datosOferta.estadoOferta === "en espera" ? "":"no-display"}>
+                                                <div className="row">
+                                                    <div className="col-6 d-flex justify-content-center">
+                                                        <Button label="Aceptar oferta" icon="pi pi-check" className="p-button-success" onClick={() => {acceptOffer(id)} } />
+                                                    </div>
+                                                    <div class="col-6 d-flex justify-content-center">
+                                                        <Button label="Rechazar oferta" icon="pi pi-times-circle" className="p-button-danger" onClick={() => {declineOffer(id)}}/>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        )
-                                    })
-                                }
+                                            
+                                            {/*OFERTA EN ESTADO aceptada*/}
+                                            <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
+                                                <div className={ !datosOferta.confirmacionReceptor ? "":"no-display"}>
+                                                    <p>Comunícate con la otra persona para acordar el lugar y fecha del trueque</p>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={(cambiarEstadoContactInfo)} />
+                                                    <Modal className="contenido-modal" estado={stateContactInfo} cambiarEstado={cambiarEstadoContactInfo}><ContactInformation email={datosOferta.emailOferente}/></Modal>
+                                                </div>
+                                            
+                                                {/*SI AUN NO CONFIRMO*/}
+                                                <div className={ !datosOferta.confirmacionReceptor ? "":"no-display"}>
+                                                    <br/>
+                                                    <p>Una vez que hallan realizado el trueque da click en Confirmar Trueque para concluirlo, si no se llegó a un acuerdo da click a Cancelar Trueque</p>
+                                                    <div class="row">
+                                                        <div class="col-6 d-flex justify-content-center">
+                                                            <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={()=>{confirm(id, 'receptor')}} />
+                                                        </div>
+                                                        <div class="col-6 d-flex justify-content-center">
+                                                            <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={()=>{cancelOffer(id)}}/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/*SI YA CONFIRME EL TRUEQUE PERO EL OTRO NO*/}
+                                                <div className={datosOferta.confirmacionReceptor ? "":"no-display"}>
+                                                    <br/>
+                                                    <span className="text-danger"><p>Gracias por confirmar. Espera a que la otra persona también confirme que se realizo el trueque.</p></span>
+                                                </div>
+                                            </div>
+                                            {/*SI LA OFERTA YA FUE CONCLUIDA o RECHAZADA NO TOCA HACER NADA*/}
+                                        </div>
+
+                                        {/*BOTONES DEL OFERENTE PARA CONFIRMAR TRUEQUE Y VER DATOS DE CONTACTO*/}
+                                        <div className={isOferente ? "":"no-display"}>
+                                            
+                                            {/*OFERTA EN ESPERA*/}
+                                            <div className={datosOferta.estadoOferta === "en espera" ? "":"no-display"}>
+                                                <br/>
+                                                <span className="text-danger fw-bold"><p>Espera a que {datos.nombres} {datos.apellidos} acepte tu oferta</p></span>
+                                            </div>
+                                            
+                                            {/*OFERTA EN ESTADO aceptada BOTONES PARA CONFIRMAR/CANCELAR/VER DATOS*/}
+                                            <div className={datosOferta.estadoOferta === "aceptada" ? "":"no-display"}>
+                                                <div className={ !datosOferta.confirmacionOferente ? "":"no-display"}>
+                                                    <p>Comunícate con la otra persona para acordar el lugar y fecha del trueque</p>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <Button label="Ver datos de la otra persona" icon="pi pi-search" className="p-button" onClick={(cambiarEstadoContactInfo)} />
+                                                    <Modal className="contenido-modal" estado={stateContactInfo} cambiarEstado={cambiarEstadoContactInfo}><ContactInformation email={datos.email}/></Modal>
+                                                </div>
+                                            
+                                                {/*SI AUN NO CONFIRMO*/}
+                                                <div className={ !datosOferta.confirmacionOferente ? "":"no-display"}>
+                                                    <br/>
+                                                    <p>Una vez que hallan realizado el trueque da click en Confirmar Trueque para concluirlo, si no se llegó a un acuerdo da click a Cancelar Trueque</p>
+                                                    <div class="row">
+                                                        <div class="col-6 d-flex justify-content-center">
+                                                            <Button label="Confirmar Trueque" icon="pi pi-sort-alt" className="p-button-success" onClick={()=>{confirm(id, 'proponente')}} />
+                                                        </div>
+                                                        <div class="col-6 d-flex justify-content-center">
+                                                            <Button label="Cancelar Trueque" icon="pi pi-sort-alt-slash" className="p-button-danger" onClick={()=>{cancelOffer(id)}}/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/*SI YA CONFIRME EL TRUEQUE PERO EL OTRO NO*/}
+                                                <div className={datosOferta.confirmacionOferente ? "":"no-display"}>
+                                                    <br/>
+                                                    <span className="text-danger"><p>Gracias por confirmar. Espera a que la otra persona también confirme que se realizo el trueque.</p></span>
+                                                </div>
+                                            </div>
+                                            {/*SI LA OFERTA YA FUE CONCLUIDA O RECHAZADA NO TOCA HACER NADA*/}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="col">
+                                <div class="card border-primary h-100">
+                                    <div className="card-header text-center text-dark border-primary bg-transparent">
+                                        <h4><strong>Productos ofrecidos por </strong>{datosOferta.nombreOferente}</h4>
+                                    </div>
+                                    <div className="card-body">
+                                        {
+                                            offers.map((offer) => {
+                                                return (
+                                                    <div key={offer.id} className="field-checkbox">
+
+                                                        <div className={datosOferta.estadoOferta === "en espera" && isReceptor ? "":"no-display"}>
+                                                            <Checkbox inputId={offer.id} name="category" value={offer} onChange={onOfferChange} checked={selectedOffers.some((item) => item.id === offer.id)}  />
+                                                        </div>
+
+                                                        <div className="card-group">
+                                                    
+                                                                <div className="card-img-flex m-2">
+                                                                    <br />
+                                                                    <img src={offer.imagen} width="100px" />
+                                                                </div>
+                                                                <div className="card border-light text-start">
+                                                                    <h5 className='fw-bold ml-2' htmlFor={offer.titulo}><br />{offer.titulo}</h5>
+                                                                    <p className='ml-2'>
+                                                                        {offer.categoria}<br/>
+                                                                        <span className="text-primary fw-bold">{offer.estado_item}</span><br/>
+                                                                        {offer.descripcion}<br/>
+                                                                    </p>
+
+                                                                </div>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-            </>
+                </>
             )
-        }
-        else{            
+        } else {            
             return (
                 <div className='flex'>
                     <ProgressSpinner/> 
                 </div> 
             )
         }
-        
     }   
 
     const responsiveOptions = [

@@ -25,7 +25,26 @@
   border: 5px solid #fff;
   border-radius: 50%;
 }
-
+.capitalLetter
+{
+   float: left;
+   color:black;
+   background:white;
+   border: none;
+   font-size:60px;
+   line-height:50px;
+   padding:2px;
+   margin-right: 5px;
+}
+.imgHow {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20vh;
+  opacity: 1;
+  object-fit: cover;
+}
 
 #one {
   background-color:  #00B8D4;
@@ -41,4 +60,20 @@
 }
 #five {
   background-color:  #388E3C;
+}
+.waviy {
+  position: relative;
+}
+.waviy span {
+  position: relative;
+  display: inline-block;
+  font-size: 40px;
+  color: rgb(0, 0, 0);
+  animation: flip 2s infinite;
+  animation-delay: calc(.2s * var(--i))
+}
+@keyframes flip {
+  0%,80% {
+    transform: rotateY(360deg) 
+  }
 }
