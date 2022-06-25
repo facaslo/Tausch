@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Modal from "../Modal";
 import { Buttonn } from "../Buttonn"
 import { MenuItems } from "./MenuItems"
-import ReactFinalFormDemo  from '../../FormularioRegistro';
-import ReactFormLogin  from '../../FormularioLogin';
+import ReactFinalFormDemo  from '../Forms/FormularioRegistro';
+import ReactFormLogin  from '../Forms/FormularioLogin';
 import { NavLink } from "react-router-dom";
 
 

@@ -7,15 +7,13 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './pages/Index';
 import Who from './pages/Who';
 import How from './pages/How';
-import Community from './pages/Community';
-import Lookfor from './pages/Lookfor';
 import CreatePublication from './pages/CreatePublication';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
-import Publication from './Publication';
+import Publication from './pages/Publication';
 import ContentPerfil from './pages/ContentPerfil';
 import Offer from './pages/Offer'
 
@@ -29,8 +27,6 @@ ReactDOM.render(
             <Route exact path='/' element={<Home />}/>
             <Route exact path='/who' element={<Who />}/>
             <Route exact path='/how' element={<How />}/>
-            <Route exact path='/community' element={<Community />}/>
-            <Route exact path='/lookfor' element={<Lookfor />}/>
             <Route exact path='/createpublication' element={<CreatePublication />}/>
             <Route exact path='/publication/:id' element={<Publication />}/>
             <Route exact path='/contentperfil' element={<ContentPerfil />}/>

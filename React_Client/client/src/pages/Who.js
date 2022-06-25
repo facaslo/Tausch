@@ -1,6 +1,5 @@
 import React from "react";
 import './General-container.css'
-import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
 function Who () {
     return(

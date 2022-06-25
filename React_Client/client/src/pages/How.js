@@ -1,5 +1,4 @@
 import React from "react";
-import { Image } from 'primereact/image';
 import './General-container.css'
 
 function How () {

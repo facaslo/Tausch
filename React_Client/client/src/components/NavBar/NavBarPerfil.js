@@ -1,6 +1,4 @@
 import React, {useState,useEffect} from "react";
-import { FaBell } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import "./NavBarPerfil.css"
 import "./notificationBell"
 import NotificationBell from "./notificationBell";

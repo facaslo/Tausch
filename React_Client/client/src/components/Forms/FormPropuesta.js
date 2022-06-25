@@ -2,18 +2,16 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
-import './index.css';
+import '../../index.css';
 import './FormReg.css';
 
 
 import React, { useEffect, useRef,useState } from 'react';
 import { Form, Field } from 'react-final-form';
-import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
 import { Dialog } from 'primereact/dialog';
 import { classNames } from 'primereact/utils';
-import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { PickList } from 'primereact/picklist';
 

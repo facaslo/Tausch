@@ -2,8 +2,7 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
-import './index.css';
-import ReactDOM from 'react-dom';
+import '../../index.css';
 
 import React, { useEffect, useRef,useState } from 'react';
 import { Form, Field } from 'react-final-form';
@@ -14,8 +13,6 @@ import { Dialog } from 'primereact/dialog';
 import { classNames } from 'primereact/utils';
 import { Dropdown } from 'primereact/dropdown';
 import { FileUpload } from 'primereact/fileupload';
-import { Toast } from 'primereact/toast';
-import { Tooltip } from 'primereact/tooltip';
 import './FormReg.css';
 
 

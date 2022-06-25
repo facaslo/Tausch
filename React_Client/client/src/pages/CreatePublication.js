@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import FormPublication from '../FormPublication';
+import FormPublication from '../components/Forms/FormPublication';
 
 const CreatePublication = () => {
     

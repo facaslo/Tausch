@@ -4,12 +4,10 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import 'primeicons/primeicons.css';
 import { Checkbox } from 'primereact/checkbox';
 import { Galleria } from 'primereact/galleria';
-import { Divider } from 'primereact/divider';
-import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import "./General-container.css"
-import '../Publication.css'; //Aqui esta el no-display
+import './Publication.css'; //Aqui esta el no-display
 import ContactInformation from '../components/ContactInformation';
 import Modal from '../components/Modal';
 

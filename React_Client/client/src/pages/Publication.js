@@ -2,8 +2,8 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
-import './index.css';
-import './FormReg.css';
+import '../App';
+import '../components/Forms/FormReg.css';
 import './Publication.css';
 
 import React, { useState, useEffect } from 'react';
@@ -11,11 +11,10 @@ import { useParams } from "react-router-dom";
 import { Divider } from 'primereact/divider';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { Image } from 'primereact/image';
 import { Galleria } from 'primereact/galleria';
 import { Dialog } from 'primereact/dialog';
-import Modal from "./components/Modal";
-import FormProposal from './FormPropuesta';
+import Modal from "../components/Modal";
+import FormProposal from '../components/Forms/FormPropuesta';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { ConfirmDialog ,  confirmDialog } from 'primereact/confirmdialog';
 

@@ -2,14 +2,12 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
-import './index.css';
-import ReactDOM from 'react-dom';
+import '../../index.css';
 
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-//import { Calendar } from 'primereact/calendar';
 import { Password } from 'primereact/password';
 import { Checkbox } from 'primereact/checkbox';
 import { Dialog } from 'primereact/dialog';
@@ -85,8 +83,7 @@ function ReactFinalFormDemo () {
         errors.age = " La edad solo puede contener dígitos.";
         }
 
-        if (
-        !/^\d{0,10}$/i.test(data.phoneNumber)         ){
+        if (!/^\d{0,10}$/i.test(data.phoneNumber)){
         errors.phoneNumber = " El número de teléfono o celular solo puede contener numeros y tener una longitud máxima de 10";
         }        
 
