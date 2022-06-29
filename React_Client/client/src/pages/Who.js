@@ -32,6 +32,8 @@ function Who () {
                                         <hr />
                                         <h5 className="dark-grey-text mt-4">
                                             Desarrollador fullstack.
+                                            <br/>
+                                            fccastrol@unal.edu.co
                                         </h5>
                                     </div>
                                 </div>
@@ -47,6 +49,8 @@ function Who () {
                                         <hr />
                                         <h5 className="dark-grey-text mt-4">
                                             Desarrolladora fullstack.
+                                            <br/>
+                                            yybeltranr@unal.edu.co
                                         </h5>
                                     </div>
                                 </div>
@@ -66,6 +70,8 @@ function Who () {
                                         <hr />
                                         <h5 className="dark-grey-text mt-4">
                                             Desarrollador fullstack.
+                                            <br/>
+                                            scassiano@unal.edu.co
                                         </h5>
                                     </div>
                                 </div>
@@ -80,7 +86,9 @@ function Who () {
                                         <h4 className="card-title mb-4">Julio Bedoya</h4>
                                         <hr />
                                         <h5 className="dark-grey-text mt-4">
-                                            Desarrollador fullstack.    
+                                            Desarrollador fullstack.
+                                            <br/>
+                                            jubedoyag@unal.edu.co    
                                         </h5>
                                     </div>
                                 </div>
@@ -96,6 +104,8 @@ function Who () {
                                         <hr />
                                         <h5 className="dark-grey-text mt-4">
                                             Desarrollador fullstack.
+                                            <br/>
+                                            sarodriguezca@unal.edu.co
                                         </h5>
                                     </div>
                                 </div>

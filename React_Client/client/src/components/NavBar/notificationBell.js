@@ -105,7 +105,7 @@ export default function NotificationBell(props){
                     })
                     :
                     //Si la cantidad de propuestas es igual a cero imprime este mensaje
-                    <li class="dropdown-item">No has recibido ninguna propuesta de trueque</li>
+                    <li class="dropdown-item">No tienes ninguna notificación</li>
                 }
                 <li class="dropdown-item"> 
                 <button type="button" className="btn btn-dark" onClick={props.sendDeleteMessagesRequest}> Borrar mensajes </button>

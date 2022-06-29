@@ -28,7 +28,7 @@ function How () {
                                         </strong>
                                 </span>
                                     ,  es una aplicación web que te permite intercambiar artículos que ya no usas
-                                    u ofrecer tus servicios a cambio de aquellos otros servicios o artículos que necesitas o quieres, 
+                                    u ofrecer tus servicios a cambio de otros servicios o artículos que necesitas o quieres, 
                                     <span className="text-primary fw-bold"> sin gastar dinero. </span>
                                     Para poder ofrecer productos o servicios y realizar intercambios deberás estár registrado en la página.
                                 </h5>
