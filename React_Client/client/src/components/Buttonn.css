@@ -20,8 +20,7 @@
 }
 
 .btn:hover {
-    padding: 8px 15px;
-    transition: all 0.3s ease-out;
+    padding: 8px 15px;    
     background: rgb(128, 120, 185);
     color: aliceblue;
     transition:  90ms;
