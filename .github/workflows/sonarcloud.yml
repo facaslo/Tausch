@@ -45,7 +45,9 @@ jobs:
     steps:
       - name: Install dependencies
         run: yarn
-      - name: Test and coverage
+      - name: Cd to Server
+        run: cd ./Server
+      - name: Test and coverage      
         run: yarn jest --coverage
       - name: Analyze with SonarCloud         
 
