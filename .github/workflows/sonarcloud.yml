@@ -62,7 +62,7 @@ jobs:
             # mandatory
             -Dsonar.projectKey=facaslo97_Tausch
             -Dsonar.organization=facaslo97
-            -Dsonar.projectBaseDir=./Server 
+            -Dsonar.sources=./Server 
             -Dsonar.exclusions=++/test/*.js,**/test/*-json
             -Dsonar.test.inclusions=**/test/*.test.js
             -Dsonar.tests=**/test 
