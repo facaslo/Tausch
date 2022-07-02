@@ -47,7 +47,8 @@ jobs:
         run: yarn          
       - uses: actions/checkout@v3
       - name: Test backend server
-        run: |           
+        run: |         
+          npm install cross-env  
           cd Server
           yarn test
       - name: Analyze with SonarCloud        
