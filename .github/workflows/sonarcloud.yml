@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: yarn      
       - name: Test and coverage      
-        run: yarn jest --coverage
+        run: yarn jest ./Server --coverage
       - name: Analyze with SonarCloud         
 
         # You can pin the exact commit or the version.
