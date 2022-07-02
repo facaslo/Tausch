@@ -63,7 +63,7 @@ jobs:
             -Dsonar.organization=facaslo97            
             -Dsonar.exclusions=Server/test/*.js,Server/test/*-json            
             -Dsonar.language=js
-            -Dsonar.testExecutionReportPaths=Server/coverage/sonar-cloud-reporter.xml
+            -Dsonar.testExecutionReportPaths=Server/coverage/clover.xml
             -Dsonar.test.inclusions=Server/test/*.test.js
             -Dsonar.tests=Server/test
             # -Dsonar.sources=./Server 
