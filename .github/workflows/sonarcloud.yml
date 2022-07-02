@@ -60,7 +60,7 @@ jobs:
             # mandatory
             -Dsonar.projectKey=facaslo97_Tausch
             -Dsonar.organization=facaslo97            
-            -Dsonar.exclusions=++/test/*.js,**/test/*-json
+            -Dsonar.exclusions=**/test/*.js,**/test/*-json
             -Dsonar.test.inclusions=**/test/*.test.js
             -Dsonar.tests=**/test 
             -Dsonar.language=js
