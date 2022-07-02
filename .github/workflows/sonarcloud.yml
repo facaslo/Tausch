@@ -44,11 +44,7 @@ jobs:
     
     steps:
       - name: Install dependencies
-        run: yarn
-      - name: Cd to Server
-        run: cd ../
-      - name: List directories
-        run: ls 
+        run: yarn      
       - name: Test and coverage      
         run: yarn jest --coverage
       - name: Analyze with SonarCloud         
@@ -66,6 +62,7 @@ jobs:
             # mandatory
             -Dsonar.projectKey=facaslo97_Tausch
             -Dsonar.organization=facaslo97
+            -Dsonar.projectBaseDir=./Server 
             -Dsonar.exclusions=++/test/*.js,**/test/*-json
             -Dsonar.test.inclusions=**/test/*.test.js
             -Dsonar.tests=**/test 
