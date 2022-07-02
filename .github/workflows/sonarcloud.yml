@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Cd to Server
-        run: pwd
+        run: cd ../
       - name: List directories
         run: ls 
       - name: Test and coverage      
