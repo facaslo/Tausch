@@ -61,12 +61,12 @@ jobs:
             # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
             # mandatory
             -Dsonar.projectKey=facaslo97_Tausch
-            -Dsonar.organization=facaslo97
-             # -Dsonar.sources=./Server 
+            -Dsonar.organization=facaslo97            
             -Dsonar.exclusions=++/test/*.js,**/test/*-json
             -Dsonar.test.inclusions=**/test/*.test.js
             -Dsonar.tests=**/test 
             -Dsonar.language=js
+            # -Dsonar.sources=./Server 
             # Comma-separated paths to directories containing main source files.
             #-Dsonar.sources= # optional, default is project base directory
             # When you need the analysis to take place in a directory other than the one from which it was launched
