@@ -59,11 +59,13 @@ jobs:
             # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
             # mandatory
             -Dsonar.projectKey=facaslo97_Tausch
+            -Dsonar.javascript.lcov.reportPaths=Server/coverage/lcov.info
             -Dsonar.organization=facaslo97            
             -Dsonar.exclusions=Server/test/*.js,Server/test/*-json            
             -Dsonar.language=js
-            # -Dsonar.test.inclusions=Server/test/*.test.js
-            # -Dsonar.tests=Server/test
+            -Dsonar.testExecutionReportPaths=Server/coverage/sonar-cloud-reporter.xml
+            -Dsonar.test.inclusions=Server/test/*.test.js
+            -Dsonar.tests=Server/test
             # -Dsonar.sources=./Server 
             # Comma-separated paths to directories containing main source files.
             #-Dsonar.sources= # optional, default is project base directory
