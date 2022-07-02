@@ -47,9 +47,8 @@ jobs:
         run: yarn          
       - uses: actions/checkout@v3
       - name: Test backend server
-        run: | 
-          ls
-          cd Tausch/Server
+        run: |           
+          cd Server
           yarn jest --coverage
       - name: Analyze with SonarCloud        
         # You can pin the exact commit or the version.
