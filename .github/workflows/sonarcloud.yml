@@ -61,7 +61,7 @@ jobs:
             -Dsonar.projectKey=facaslo97_Tausch
             -Dsonar.javascript.lcov.reportPaths=Server/coverage/lcov.info
             -Dsonar.organization=facaslo97            
-            -Dsonar.exclusions=Server/test/*.js,Server/test/*-json            
+            -Dsonar.exclusions=Server/test/*.js,Server/test/*-json,React_Client/client/src/components/Forms/*.js,Server/middleware/__mocks__/*.js
             -Dsonar.language=js
             -Dsonar.coverage.exclusions=**/**
             #-Dsonar.testExecutionReportPaths=Server/coverage/clover.xml
