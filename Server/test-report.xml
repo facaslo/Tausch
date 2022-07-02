@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\test\app.test.js">
+    <testCase name="POST /register Registro invalido, email no valido." duration="80"/>
+    <testCase name="POST /new-post Publicacion creada exitosamente." duration="0"/>
+    <testCase name="POST /new-post Usuario sin Token." duration="9"/>
+    <testCase name="POST /new-post Error al crear la publicacion." duration="9"/>
+    <testCase name="GET /publication_list Recibir primera pagina de posts (primeras 12 publicaciones)." duration="3303"/>
+    <testCase name="GET /publication_list Recibir primera pagina de posts (primeras 12 publicaciones) de la categoria Arte." duration="1688"/>
+    <testCase name="GET /user-posts Obtener publicaciones del usuario." duration="134">
+      <failure message="Error: expect(received).toBe(expected) // Object.is equality"><![CDATA[Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+    at Object.toBe (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\test\app.test.js:144:47)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
+    </testCase>
+    <testCase name="GET /user-posts Solicitud por parte de un usuario sin token." duration="5"/>
+    <testCase name="GET /offers-to-user Obtener propuestas hechas al usuario." duration="105"/>
+    <testCase name="GET /offers-to-user Solicitud por parte de un usuario sin token." duration="8"/>
+    <testCase name="POST /all-offers Detalles de la propuesta cargados exitosamente." duration="8">
+      <failure message="Error: expected 200 &quot;OK&quot;, got 403 &quot;Forbidden&quot;"><![CDATA[Error: expected 200 "OK", got 403 "Forbidden"
+    at Object.expect (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\test\app.test.js:190:101)
+    at Promise.then.completed (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\jest-circus\build\utils.js:333:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\jest-circus\build\utils.js:259:10)
+    at _callCircusTest (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\jest-circus\build\run.js:276:40)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at _runTest (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\jest-circus\build\run.js:208:3)
+    at _runTestsForDescribeBlock (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\jest-circus\build\run.js:96:9)
+----
+    at Test._assertStatus (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\supertest\lib\test.js:252:14)
+    at C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\supertest\lib\test.js:306:17
+    at Test._assertFunction (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\supertest\lib\test.js:285:13)
+    at Test.assert (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\supertest\lib\test.js:164:23)
+    at Server.localAssert (C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\node_modules\supertest\lib\test.js:120:14)
+    at Object.onceWrapper (node:events:645:28)
+    at Server.emit (node:events:526:28)
+    at emitCloseNT (node:net:1677:8)
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)]]></failure>
+    </testCase>
+    <testCase name="POST /get-profile Datos del perfil obtenidos correctamente." duration="134"/>
+    <testCase name="GET /get-profile-offers Ofertas del perfil obtenidas exitosamente." duration="109"/>
+  </file>
+  <file path="C:\Users\Facas\Documents\Proyecto ingesoft 2\Tausch\Server\test\mock.app.test.js">
+    <testCase name="POST /register Registro exitoso." duration="48"/>
+    <testCase name="POST /register Registro incorrecto, usuario existente." duration="9"/>
+    <testCase name="POST /login Inicio de sesion exitoso." duration="8"/>
+    <testCase name="POST /login Inicio de sesion fallido, cuenta no activada." duration="6"/>
+    <testCase name="POST /login Inicio de sesion invalido, contraseña incorrecta." duration="7"/>
+    <testCase name="PUT /edit-profile Datos correctamente editados." duration="6"/>
+    <testCase name="PUT /edit-profile Campo de telefono no valido." duration="8"/>
+    <testCase name="POST /new-offer Creacion de propuesta exitosa." duration="5"/>
+    <testCase name="POST /new-offer Exceso de caracteres en mensaje." duration="8"/>
+  </file>
+</testExecutions>
