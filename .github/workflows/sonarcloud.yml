@@ -47,6 +47,8 @@ jobs:
         run: yarn
       - name: Cd to Server
         run: pwd
+      - name: List directories
+        run: ls 
       - name: Test and coverage      
         run: yarn jest --coverage
       - name: Analyze with SonarCloud         
