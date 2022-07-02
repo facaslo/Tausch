@@ -46,7 +46,8 @@ jobs:
       - name: Install dependencies
         run: yarn          
       - uses: actions/checkout@v3
-        run: | 
+      - name: Test backend server
+      - run: | 
           cd Tausch/Tausch/Server
           yarn jest --coverage
       - name: Analyze with SonarCloud        
